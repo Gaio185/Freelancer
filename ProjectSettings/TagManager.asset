@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Camera
+  - Undefined
+  - canPickUp
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - 
   - Target
   - Occlusion
-  - 
-  - 
-  - 
+  - holdLayer
+  - VaultLayer
+  - Wall
   - 
   - 
   - 
