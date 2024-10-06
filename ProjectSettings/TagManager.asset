@@ -3,18 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - canPickUp
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - whatIsGround
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - holdLayer
+  - VaultLayer
+  - Wall
   - 
   - 
   - 
