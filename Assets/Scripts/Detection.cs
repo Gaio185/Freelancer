@@ -11,7 +11,7 @@ public class Detection : MonoBehaviour
     public float angle;
     [Range(0, 360)]
     public float cutoffAngle;
-
+    public bool isMoving;
 
     public GameObject playerRef;
 
@@ -19,6 +19,7 @@ public class Detection : MonoBehaviour
     public LayerMask obstacleMask;
 
     private Quaternion rotationRef;
+    private Vector3 forwardRef;
 
     public bool canSeePlayer;
 
@@ -26,16 +27,17 @@ public class Detection : MonoBehaviour
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
         rotationRef = transform.rotation;
+        forwardRef = transform.forward;
         StartCoroutine(DetectionRoutine());
     }
 
     void Update()
     {
-        if(canSeePlayer)
+        if(canSeePlayer && !isMoving)
         {
             transform.rotation = Quaternion.Slerp((transform.rotation),Quaternion.LookRotation(playerRef.transform.position - transform.position), 5 * Time.deltaTime);
         }
-        else if(tag == "Camera")
+        else if(!isMoving)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, rotationRef, 5 * Time.deltaTime);
         }
@@ -60,12 +62,13 @@ public class Detection : MonoBehaviour
 
         if(rangeChecks.Length != 0)
         {
-            if(Vector3.Distance(transform.position, playerRef.transform.position) > cutoffRadius || tag != "Camera")
+            Transform target = rangeChecks[0].transform;
+
+            if (Vector3.Distance(transform.position, target.transform.position) > cutoffRadius || tag != "Camera")
             {
-                Transform target = rangeChecks[0].transform;
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
 
-                if ((Vector3.Angle(transform.forward, directionToTarget) < angle / 2) && (Vector3.Angle(transform.position, directionToTarget) < cutoffAngle/2))
+                if ((Vector3.Angle(transform.forward, directionToTarget) < angle / 2) && (Vector3.Angle(forwardRef, directionToTarget) < cutoffAngle /2))
                 {
                     float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
