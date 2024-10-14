@@ -1010,6 +1010,7 @@ GameObject:
   - component: {fileID: 83555064}
   - component: {fileID: 83555063}
   - component: {fileID: 83555062}
+  - component: {fileID: 83555067}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1109,6 +1110,20 @@ Transform:
   - {fileID: 1661307581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &83555067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83555061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f3156923ab2145bf6190741282ccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunBatonModel: {fileID: 1725193657}
+  taserGunModel: {fileID: 967862146}
 --- !u!1 &94619149
 GameObject:
   m_ObjectHideFlags: 0
@@ -19341,7 +19356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1681804520656817133, guid: 74a468bcb8f88ec46a0383b1ae12ea30, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1681804520656817133, guid: 74a468bcb8f88ec46a0383b1ae12ea30, type: 3}
       propertyPath: m_TagString
@@ -19418,6 +19433,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 886205687}
   m_SourcePrefab: {fileID: 100100000, guid: 74a468bcb8f88ec46a0383b1ae12ea30, type: 3}
+--- !u!1 &967862146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1681804520656817133, guid: 74a468bcb8f88ec46a0383b1ae12ea30, type: 3}
+  m_PrefabInstance: {fileID: 967862145}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &994781411
 GameObject:
   m_ObjectHideFlags: 0
@@ -32555,7 +32575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6353247337890989569, guid: 6fd2fc7b79a33554b95a7d0c77040cae, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6353247337890989569, guid: 6fd2fc7b79a33554b95a7d0c77040cae, type: 3}
       propertyPath: m_TagString
@@ -32580,6 +32600,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1251554220}
   m_SourcePrefab: {fileID: 100100000, guid: 6fd2fc7b79a33554b95a7d0c77040cae, type: 3}
+--- !u!1 &1725193657 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6353247337890989569, guid: 6fd2fc7b79a33554b95a7d0c77040cae, type: 3}
+  m_PrefabInstance: {fileID: 1725193656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1746212122
 GameObject:
   m_ObjectHideFlags: 0
@@ -34424,7 +34449,7 @@ Transform:
   m_GameObject: {fileID: 1851002886}
   serializedVersion: 2
   m_LocalRotation: {x: -0.55202025, y: -0.5182687, z: -0.4814137, w: -0.44148847}
-  m_LocalPosition: {x: -8.68, y: -8.073, z: 4.942}
+  m_LocalPosition: {x: -8.680004, y: -8.073, z: 4.9420013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34439,7 +34464,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851002886}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 038a95e619080ee41af702593018d96a, type: 3}
   m_Name: 
