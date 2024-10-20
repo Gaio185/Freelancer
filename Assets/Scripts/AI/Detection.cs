@@ -34,7 +34,7 @@ public class Detection : MonoBehaviour
 
     void Update()
     {
-        if(canSeePlayer && !isMoving)
+        if(canSeePlayer && tag == "Camera")
         {
             transform.rotation = Quaternion.Slerp((transform.rotation),Quaternion.LookRotation(playerRef.transform.position - transform.position), 5 * Time.deltaTime);
         }
