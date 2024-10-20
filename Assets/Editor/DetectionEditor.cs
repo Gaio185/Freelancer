@@ -14,6 +14,7 @@ public class NewBehaviourScript : Editor
         {
             Handles.DrawWireArc(detection.transform.position, Vector3.up, Vector3.forward, 360, detection.cutoffRadius);
         }
+        Handles.DrawWireArc(detection.transform.position, Vector3.up, Vector3.forward, 360, detection.awarenessRadius);
 
         Vector3 viewAngleA = DirectionFromAngle(detection.transform.eulerAngles.y, -detection.angle / 2);
         Vector3 viewAngleB = DirectionFromAngle(detection.transform.eulerAngles.y, detection.angle / 2);
