@@ -7,6 +7,7 @@ TagManager:
   - Camera
   - Undefined
   - canPickUp
+  - Enemy
   layers:
   - Default
   - TransparentFX
