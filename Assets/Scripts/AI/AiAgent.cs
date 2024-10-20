@@ -9,6 +9,7 @@ public class AiAgent : MonoBehaviour
     public AiStateId initialState;
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
+    public Transform[] patrolPoints;
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
 
@@ -19,6 +20,7 @@ public class AiAgent : MonoBehaviour
         detection = GetComponent<Detection>();
         navMeshAgent = GetComponent<NavMeshAgent>();    
         stateMachine = new AIStateMachine(this);
+        stateMachine.RegisterStates(new AIPatrolState());
         stateMachine.RegisterStates(new AIHuntPlayerState());
         stateMachine.RegisterStates(new AIStunnedState());
         stateMachine.RegisterStates(new AIIdleState());

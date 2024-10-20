@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Detection : MonoBehaviour
 {
-
+    public float detectionTimer;
     public float radius;
     public float awarenessRadius;
     public float cutoffRadius;
@@ -21,8 +22,10 @@ public class Detection : MonoBehaviour
 
     private Quaternion rotationRef;
     private Vector3 forwardRef;
+    private float timer;
 
     public bool canSeePlayer;
+    public bool playerDetected;
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class Detection : MonoBehaviour
         rotationRef = transform.rotation;
         forwardRef = transform.forward;
         StartCoroutine(DetectionRoutine());
+        timer = detectionTimer;
     }
 
     void Update()
@@ -46,6 +50,16 @@ public class Detection : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(transform.forward), 5 * Time.deltaTime);
         }
+
+        if (canSeePlayer && !playerDetected)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            timer = detectionTimer;
+        }
+        
     }
 
     private IEnumerator DetectionRoutine()
@@ -74,13 +88,18 @@ public class Detection : MonoBehaviour
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
 
                 if ((Vector3.Angle(transform.forward, directionToTarget) < angle / 2) && (Vector3.Angle(forwardRef, directionToTarget) < cutoffAngle /2))
+
                 {
                     float distanceToTarget = Vector3.Distance(transform.position, target.position);
 
                     if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                     {
                         canSeePlayer = true;
-                        Debug.Log("Player Detected");
+                        if(timer <= 0.0f)
+                        {
+                            playerDetected = true;
+                            Debug.Log("Player Detected");
+                        }
                     }
                     else
                     {

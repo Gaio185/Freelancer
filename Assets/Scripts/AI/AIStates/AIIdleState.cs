@@ -22,7 +22,7 @@ public class AIIdleState : AiState
         {
             agent.detection.isMoving = false;
         }
-        if (agent.detection.canSeePlayer)
+        if (agent.detection.playerDetected)
         {
             agent.stateMachine.ChangeState(AiStateId.Hunt);
         }

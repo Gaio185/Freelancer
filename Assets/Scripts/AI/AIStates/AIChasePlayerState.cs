@@ -8,8 +8,8 @@ using static UnityEngine.GraphicsBuffer;
 public class AIHuntPlayerState : AiState
 {
     public Transform playerTransform;
-    float timer = 0.0f;
-    float huntTimer = 0.0f;
+    private float timer = 0.0f;
+    private float huntTimer = 0.0f;
 
     public AiStateId GetId()
     {
@@ -26,7 +26,7 @@ public class AIHuntPlayerState : AiState
         }
 
         agent.detection.isMoving = true;
-
+        agent.navMeshAgent.isStopped = false;
         huntTimer = agent.config.searchTime;
     }
 
@@ -61,8 +61,9 @@ public class AIHuntPlayerState : AiState
             if(huntTimer < 0.0f)
             {
                 Debug.Log("LeftHuntState");
+                agent.detection.playerDetected = false;
                 agent.navMeshAgent.ResetPath();
-                agent.stateMachine.ChangeState(AiStateId.Idle);
+                agent.stateMachine.ChangeState(agent.initialState);
             }
         }
         else
