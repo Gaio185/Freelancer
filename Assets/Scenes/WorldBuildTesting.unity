@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9606,7 +9606,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionTimer: 0
   radius: 4.54
+  awarenessRadius: 0
   cutoffRadius: 0
   angle: 67
   cutoffAngle: 180
@@ -9619,6 +9621,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   canSeePlayer: 0
+  playerDetected: 0
 --- !u!136 &231722091
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15159,7 +15162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionTimer: 0
   radius: 7.38
+  awarenessRadius: 0
   cutoffRadius: 3.96
   angle: 53
   cutoffAngle: 180
@@ -15172,6 +15177,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   canSeePlayer: 0
+  playerDetected: 0
 --- !u!65 &334069514
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -55373,7 +55379,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionTimer: 0
   radius: 4.54
+  awarenessRadius: 0
   cutoffRadius: 0
   angle: 67
   cutoffAngle: 180
@@ -55386,6 +55394,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   canSeePlayer: 0
+  playerDetected: 0
 --- !u!136 &903973302
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -86986,7 +86995,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionTimer: 0
   radius: 4.54
+  awarenessRadius: 0
   cutoffRadius: 0
   angle: 67
   cutoffAngle: 180
@@ -86999,6 +87010,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   canSeePlayer: 0
+  playerDetected: 0
 --- !u!136 &1536073692
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -87100,6 +87112,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialState: 0
+  navMeshAgent: {fileID: 0}
+  config: {fileID: 0}
+  patrolPoints: []
+  startingPosition: {x: 0, y: 0, z: 0}
+  detection: {fileID: 0}
 --- !u!195 &1536073697
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -87334,7 +87351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionTimer: 0
   radius: 8.19
+  awarenessRadius: 0
   cutoffRadius: 4.28
   angle: 71
   cutoffAngle: 180
@@ -87347,6 +87366,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   canSeePlayer: 0
+  playerDetected: 0
 --- !u!65 &1540678461
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115766,6 +115786,69 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1971506278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1971506280}
+  - component: {fileID: 1971506279}
+  m_Layer: 0
+  m_Name: NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1971506279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971506278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 1e31de559bf1c0142ab76495bfe2a460, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &1971506280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971506278}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -227.94376, y: 18.27533, z: 90.94367}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1973693767
 GameObject:
   m_ObjectHideFlags: 0
@@ -131526,3 +131609,4 @@ SceneRoots:
   - {fileID: 1455986763}
   - {fileID: 13941301}
   - {fileID: 251129924}
+  - {fileID: 1971506280}
