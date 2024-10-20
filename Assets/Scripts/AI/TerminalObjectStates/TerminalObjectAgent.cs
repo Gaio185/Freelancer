@@ -9,6 +9,7 @@ public class TOAgent : MonoBehaviour
     public TerminalObjectStateMachine stateMachine;
     public TOStateId initialState;
     public TerminalObjectConfig config;
+    public AiAgent[] agents;
     [HideInInspector] public Detection detection;
 
     void Start()

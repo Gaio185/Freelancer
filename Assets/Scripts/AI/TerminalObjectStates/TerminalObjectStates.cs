@@ -6,6 +6,7 @@ public enum TOStateId
 {
     On,
     Off,
+    Alert,
     Shoot
 }
 
