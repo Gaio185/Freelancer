@@ -6,6 +6,7 @@ public class Detection : MonoBehaviour
 {
 
     public float radius;
+    public float awarenessRadius;
     public float cutoffRadius;
     [Range(0, 360)]
     public float angle;
@@ -40,6 +41,10 @@ public class Detection : MonoBehaviour
         else if(!isMoving)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, rotationRef, 5 * Time.deltaTime);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(transform.forward), 5 * Time.deltaTime);
         }
     }
 

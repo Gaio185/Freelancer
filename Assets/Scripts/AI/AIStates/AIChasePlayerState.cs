@@ -2,23 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
-public class AIChasePlayerState : AiState
+public class AIHuntPlayerState : AiState
 {
     public Transform playerTransform;
 
     public AiStateId GetId()
     {
-        return AiStateId.Chase;
+        return AiStateId.Hunt;
     }
 
     public void Enter(AiAgent agent)
     {
+        Debug.Log("Hunt");
+
         if(playerTransform == null)
         {
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
 
+        agent.detection.isMoving = true;
     }
 
     public void Update(AiAgent agent)
@@ -39,13 +43,19 @@ public class AIChasePlayerState : AiState
             {
                 agent.navMeshAgent.destination = playerTransform.position;
             }
-
         }
+
+        if (Vector3.Distance(agent.transform.position, playerTransform.position) > agent.detection.awarenessRadius)
+        {
+            Debug.Log("LeftHuntState");
+            agent.navMeshAgent.ResetPath();
+            agent.stateMachine.ChangeState(AiStateId.Idle);
+        }
+        
     }
 
     public void Exit(AiAgent agent)
     {
-
     }
 
     

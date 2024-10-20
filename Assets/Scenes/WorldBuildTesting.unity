@@ -6089,6 +6089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4.54
+  awarenessRadius: 0
   cutoffRadius: 0
   angle: 67
   cutoffAngle: 180
@@ -9239,6 +9240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 7.38
+  awarenessRadius: 0
   cutoffRadius: 3.96
   angle: 53
   cutoffAngle: 180
@@ -35323,7 +35325,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 817605380}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &817605383
 Camera:
   m_ObjectHideFlags: 0
@@ -37614,6 +37616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4.54
+  awarenessRadius: 0
   cutoffRadius: 0
   angle: 67
   cutoffAngle: 180
@@ -50624,6 +50627,8 @@ MonoBehaviour:
   initialState: 0
   navMeshAgent: {fileID: 1299583865}
   config: {fileID: 11400000, guid: e042edb695458d442b02b838ba28ef36, type: 2}
+  startingPosition: {x: 0, y: 0, z: 0}
+  detection: {fileID: 0}
 --- !u!114 &1299583867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50637,8 +50642,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4.54
+  awarenessRadius: 12.16
   cutoffRadius: 0
-  angle: 67
+  angle: 64
   cutoffAngle: 180
   isMoving: 0
   playerRef: {fileID: 1661307580}
@@ -50731,7 +50737,7 @@ Transform:
   m_GameObject: {fileID: 1299583864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -232.36, y: 13.7, z: 96.85}
+  m_LocalPosition: {x: -232.36, y: 13.7, z: 96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56669,6 +56675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4.54
+  awarenessRadius: 0
   cutoffRadius: 0
   angle: 67
   cutoffAngle: 180
@@ -56817,6 +56824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 8.19
+  awarenessRadius: 0
   cutoffRadius: 4.28
   angle: 71
   cutoffAngle: 180

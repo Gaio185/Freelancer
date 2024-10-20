@@ -9,13 +9,19 @@ public class AiAgent : MonoBehaviour
     public AiStateId initialState;
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
+    [HideInInspector] public Vector3 startingPosition;
+    [HideInInspector] public Detection detection;
 
     // Start is called before the first frame update
     void Start()
     {
+        startingPosition = transform.position;
+        detection = GetComponent<Detection>();
         navMeshAgent = GetComponent<NavMeshAgent>();    
         stateMachine = new AIStateMachine(this);
-        stateMachine.RegisterStates(new AIChasePlayerState());
+        stateMachine.RegisterStates(new AIHuntPlayerState());
+        stateMachine.RegisterStates(new AIStunnedState());
+        stateMachine.RegisterStates(new AIIdleState());
         stateMachine.ChangeState(initialState);
     }
 
