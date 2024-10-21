@@ -15,6 +15,7 @@ public class AIPatrolState : AiState
     public void Enter(AiAgent agent)
     {
         Debug.Log("Patrol");
+        agent.navMeshAgent.isStopped = false;
         targetPoint = 0;
     }
 

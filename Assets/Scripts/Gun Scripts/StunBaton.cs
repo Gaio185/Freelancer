@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class StunBaton : MonoBehaviour
 {
-    public float damage = 10f;
-    public float range = 100f;
-    public float fireRate = 15f;
+    public float range = 30f;
+    public float cooldown = 5.0f;
     public float impactForce = 30f;
+    public PlayerWeapon weaponsScript;
 
     public Camera fpscamera;
     //public ParticleSystem muzzleflash;
     //public GameObject impactEffect;
-
-    private float nextTimeToFire = 0f;
+    private float timer = 0.0f;
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+        if(timer >= 0)
         {
-            nextTimeToFire = Time.time + 1f / fireRate;
+           timer -= Time.deltaTime;
+        }
+        
+        
+        if (Input.GetButton("Fire1") && timer <= 0)
+        {
+            timer = cooldown;
             Shoot();
         }
 
@@ -36,10 +41,10 @@ public class StunBaton : MonoBehaviour
         {
             UnityEngine.Debug.Log(hit.transform.name);
 
-            Target target = hit.transform.GetComponent<Target>();
+            AiAgent target = hit.transform.GetComponent<AiAgent>();
             if (target != null)
             {
-                target.TakeDamage(damage);
+                target.stateMachine.ChangeState(AiStateId.Stunned);
             }
 
             if (hit.rigidbody != null)
