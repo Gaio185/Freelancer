@@ -19,6 +19,8 @@ public class AIStunnedState : AiState
 
     public void Update(AiAgent agent)
     {
+        agent.detection.canSeePlayer = false;
+        agent.detection.playerDetected = false;
         timer -= Time.deltaTime;
         if (timer <= 0)
         {

@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TaserGun : MonoBehaviour
 {
-    public float range = 100f;
+    public float range = 200f;
     public float impactForce = 30f;
     public float cooldown = 10.0f;
 
@@ -19,7 +19,7 @@ public class TaserGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer >= 0)
+        if (timer > 0)
         {
             timer -= Time.deltaTime;
         }

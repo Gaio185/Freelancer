@@ -13,7 +13,8 @@ public class AIIdleState : AiState
     public void Enter(AiAgent agent)
     {
         Debug.Log("Idle");
-        agent.navMeshAgent.destination = agent.startingPosition; 
+        agent.navMeshAgent.destination = agent.startingPosition;
+        agent.navMeshAgent.isStopped = false;
     }
 
     public void Update(AiAgent agent)

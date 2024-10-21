@@ -7,7 +7,6 @@ public class StunBaton : MonoBehaviour
     public float range = 30f;
     public float cooldown = 5.0f;
     public float impactForce = 30f;
-    public PlayerWeapon weaponsScript;
 
     public Camera fpscamera;
     //public ParticleSystem muzzleflash;
