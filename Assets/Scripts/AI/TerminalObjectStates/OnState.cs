@@ -16,9 +16,13 @@ public class OnState : TOState
 
     public void Update(TOAgent agent)
     {
-        if(agent.detection.playerDetected)
+        if(agent.detection.playerDetected && agent.tag == "Camera")
         {
             agent.stateMachine.ChangeState(TOStateId.Alert);
+        }
+        else if(agent.detection.playerDetected)
+        {
+            agent.stateMachine.ChangeState(TOStateId.Shoot);
         }
     }
 

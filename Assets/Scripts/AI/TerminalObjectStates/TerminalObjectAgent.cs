@@ -18,6 +18,7 @@ public class TOAgent : MonoBehaviour
         stateMachine = new TerminalObjectStateMachine(this);
         stateMachine.RegisterStates(new OnState());
         stateMachine.RegisterStates(new AlertState());
+        stateMachine.RegisterStates(new ShootState());
         stateMachine.ChangeState(initialState);
     }
 
