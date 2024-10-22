@@ -7,6 +7,7 @@ TagManager:
   - Camera
   - Undefined
   - canPickUp
+  - Sentry
   layers:
   - Default
   - TransparentFX
