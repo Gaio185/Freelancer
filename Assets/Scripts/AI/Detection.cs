@@ -38,7 +38,7 @@ public class Detection : MonoBehaviour
 
     void Update()
     {
-        if(canSeePlayer && tag == "Camera")
+        if(canSeePlayer && (tag == "Camera" || tag == "Sentry"))
         {
             transform.rotation = Quaternion.Slerp((transform.rotation),Quaternion.LookRotation(playerRef.transform.position - transform.position), 5 * Time.deltaTime);
         }
@@ -83,7 +83,7 @@ public class Detection : MonoBehaviour
         {
             Transform target = rangeChecks[0].transform;
 
-            if (Vector3.Distance(transform.position, target.transform.position) > cutoffRadius || tag != "Camera")
+            if (Vector3.Distance(transform.position, target.transform.position) > cutoffRadius || (tag != "Camera" && tag != "Sentry"))
             {
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
 
@@ -98,7 +98,6 @@ public class Detection : MonoBehaviour
                         if(timer <= 0.0f)
                         {
                             playerDetected = true;
-                            Debug.Log("Player Detected");
                         }
                     }
                     else

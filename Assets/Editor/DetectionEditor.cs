@@ -10,7 +10,7 @@ public class NewBehaviourScript : Editor
         Detection detection = (Detection)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(detection.transform.position, Vector3.up, Vector3.forward, 360, detection.radius);
-        if(detection.tag == "Camera")
+        if(detection.tag == "Camera" || detection.tag == "Sentry")
         {
             Handles.DrawWireArc(detection.transform.position, Vector3.up, Vector3.forward, 360, detection.cutoffRadius);
         }

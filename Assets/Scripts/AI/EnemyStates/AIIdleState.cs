@@ -31,6 +31,6 @@ public class AIIdleState : AiState
 
     public void Exit(AiAgent agent)
     {
-        agent.startingPosition = agent.transform.position;
+        
     }
 }
