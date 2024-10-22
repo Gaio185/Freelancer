@@ -95,10 +95,11 @@ public class Detection : MonoBehaviour
                     if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                     {
                         canSeePlayer = true;
-                        if(timer <= 0.0f)
+                        if(timer <= 0.0f && canSeePlayer)
                         {
                             playerDetected = true;
                         }
+                        else { playerDetected = false; }
                     }
                     else
                     {
