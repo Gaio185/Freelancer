@@ -21,6 +21,7 @@ public class AIInvestigateState : AiState
         {
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
+        agent.detection.isMoving = true;
         agent.navMeshAgent.destination = playerTransform.position;
         timer = agent.config.investigateTime;
         interval = 0;
@@ -35,7 +36,9 @@ public class AIInvestigateState : AiState
             interval -= Time.deltaTime;
             agent.navMeshAgent.isStopped = false;
 
-            if(!agent.navMeshAgent.hasPath && interval <= 0)
+            Vector3 randomPosition;
+            
+            if (!agent.navMeshAgent.hasPath && interval <= 0 && RandomPoint(agent.transform.position, agent.detection.radius, out randomPosition))
             {
                 //normalizedPosition = agent.transform.position.normalized;
 
@@ -48,12 +51,8 @@ public class AIInvestigateState : AiState
                 //Random.Range(agent.transform.position.x, maxPosition.x),
                 //Random.Range(agent.transform.position.y, maxPosition.y),
                 //Random.Range(agent.transform.position.x, maxPosition.z));
-                Vector3 randomPosition;
-                if(RandomPoint(agent.transform.position, agent.detection.radius, out randomPosition))
-                {
-                    agent.navMeshAgent.destination = randomPosition;
-                    interval = agent.config.investigateInterval;
-                }
+                agent.navMeshAgent.destination = randomPosition;
+                interval = agent.config.investigateInterval;
 
             }
 

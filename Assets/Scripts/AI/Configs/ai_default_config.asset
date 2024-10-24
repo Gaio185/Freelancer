@@ -17,4 +17,4 @@ MonoBehaviour:
   huntTime: 5
   stunTime: 7
   investigateTime: 30
-  investigateInterval: 10
+  investigateInterval: 5
