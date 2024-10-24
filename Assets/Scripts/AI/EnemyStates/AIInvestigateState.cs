@@ -38,7 +38,7 @@ public class AIInvestigateState : AiState
 
             Vector3 randomPosition;
             
-            if (!agent.navMeshAgent.hasPath && interval <= 0 && RandomPoint(agent.transform.position, agent.detection.radius, out randomPosition))
+            if (!agent.navMeshAgent.hasPath && interval <= 0 && RandomPoint(agent.transform.position, agent.detection.awarenessRadius, out randomPosition))
             {
                 //normalizedPosition = agent.transform.position.normalized;
 
@@ -51,6 +51,7 @@ public class AIInvestigateState : AiState
                 //Random.Range(agent.transform.position.x, maxPosition.x),
                 //Random.Range(agent.transform.position.y, maxPosition.y),
                 //Random.Range(agent.transform.position.x, maxPosition.z));
+                randomPosition.y = agent.transform.position.y;
                 agent.navMeshAgent.destination = randomPosition;
                 interval = agent.config.investigateInterval;
 

@@ -16,9 +16,7 @@ public class AlertState : TOState
         Debug.Log("Alert");
         for (int i = 0; i < agent.agents.Length; i++)
         {
-            //placeholder code to investigate player position
-            agent.agents[i].detection.isMoving = true;
-            agent.agents[i].navMeshAgent.destination = agent.detection.playerRef.transform.position;
+            agent.agents[i].stateMachine.ChangeState(AiStateId.Investigate);
         }
         timer = agent.config.searchTime;
     }
