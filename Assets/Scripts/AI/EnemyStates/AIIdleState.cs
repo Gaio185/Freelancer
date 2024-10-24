@@ -23,10 +23,21 @@ public class AIIdleState : AiState
         {
             agent.detection.isMoving = false;
         }
+
+        if (agent.detection.canSeePlayer)
+        {
+            agent.navMeshAgent.isStopped = true;
+        }
+        else
+        {
+            agent.navMeshAgent.isStopped = false;
+        }
+
         if (agent.detection.playerDetected)
         {
             agent.stateMachine.ChangeState(AiStateId.Hunt);
         }
+        
     }
 
     public void Exit(AiAgent agent)
