@@ -6,6 +6,7 @@ public enum AiStateId
 {
     Idle,
     Patrol,
+    Investigate,
     Hunt,
     Shoot,
     Stunned

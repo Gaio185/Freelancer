@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDistance: 1
   maxTime: 1
-  searchTime: 5
+  huntTime: 5
+  stunTime: 7
+  investigateTime: 30
+  investigateInterval: 10

@@ -27,7 +27,7 @@ public class AIHuntPlayerState : AiState
 
         agent.detection.isMoving = true;
         agent.navMeshAgent.isStopped = false;
-        huntTimer = agent.config.searchTime;
+        huntTimer = agent.config.huntTime;
     }
 
     public void Update(AiAgent agent)
@@ -62,13 +62,12 @@ public class AIHuntPlayerState : AiState
             {
                 Debug.Log("LeftHuntState");
                 agent.detection.playerDetected = false;
-                agent.navMeshAgent.ResetPath();
-                agent.stateMachine.ChangeState(agent.initialState);
+                agent.stateMachine.ChangeState(AiStateId.Investigate);
             }
         }
         else
         {
-            huntTimer = agent.config.searchTime;
+            huntTimer = agent.config.huntTime;
         }
         
     }
