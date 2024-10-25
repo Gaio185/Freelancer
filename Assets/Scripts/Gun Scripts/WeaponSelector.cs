@@ -6,9 +6,12 @@ using UnityEngine.SceneManagement;
 public class WeaponSelector : MonoBehaviour
 {
     public static string selectedWeapon;
+    //public static string selectedItem;
 
-    public GameObject taserGunText;  // Reference to Taser Gun Text UI
-    public GameObject stunBatonText; // Reference to Stun Baton Text UI
+    // References to the Text objects for each weapon/item
+    public GameObject taserGunText;
+    public GameObject stunBatonText;
+    //public GameObject screwdriverText;
 
     public void SelectWeapon(string weaponName)
     {
@@ -16,11 +19,11 @@ public class WeaponSelector : MonoBehaviour
         PlayerPrefs.SetString("SelectedWeapon", weaponName);
         PlayerPrefs.Save();
 
-        // Hide both texts initially
+        // Hide all weapon texts first
         taserGunText.SetActive(false);
         stunBatonText.SetActive(false);
 
-        // Show the selected weapon's text
+        // Show the relevant weapon text
         if (selectedWeapon == "TaserGun")
         {
             taserGunText.SetActive(true);
@@ -29,5 +32,42 @@ public class WeaponSelector : MonoBehaviour
         {
             stunBatonText.SetActive(true);
         }
+
+        // Update the PlayerPrefs (if not already done)
+        PlayerPrefs.SetString("SelectedWeapon", selectedWeapon);
+        PlayerPrefs.Save();
     }
+
+    //public void SelectItem(string itemName)
+   // {
+       // selectedItem = itemName;
+       // PlayerPrefs.SetString("SelectedItem", itemName);
+       // PlayerPrefs.Save();
+
+        // Hide the screwdriver text first
+       // screwdriverText.SetActive(false);
+
+        // Show the relevant item text
+        //if (selectedItem == "Screwdriver")
+        //{
+           // screwdriverText.SetActive(true);
+       // }
+
+        // Call a method to ensure weapon text visibility
+        //EnsureWeaponTextVisibility();
+    //}
+
+    //private void EnsureWeaponTextVisibility()
+   // {
+        // Show the relevant weapon text based on what's currently selected
+        //if (PlayerPrefs.GetString("SelectedWeapon", "StunBaton") == "TaserGun")
+       // {
+        //    taserGunText.SetActive(true);
+       // }
+     //   else if (PlayerPrefs.GetString("SelectedWeapon", "StunBaton") == "StunBaton")
+        //{
+           // stunBatonText.SetActive(true);
+      //  }
+
+    //}
 }
