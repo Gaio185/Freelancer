@@ -25,7 +25,6 @@ public class AiAgent : MonoBehaviour
         stateMachine.RegisterStates(new AIStunnedState());
         stateMachine.RegisterStates(new AIIdleState());
         stateMachine.RegisterStates(new AIInvestigateState());
-        stateMachine.RegisterStates(new AIShootState());
         stateMachine.ChangeState(initialState);
     }
 
