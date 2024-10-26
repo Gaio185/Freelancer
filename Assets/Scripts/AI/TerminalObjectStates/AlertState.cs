@@ -23,7 +23,6 @@ public class AlertState : TOState
 
     public void Update(TOAgent agent)
     {
-
         if(!agent.detection.canSeePlayer)
         {
             timer -= Time.deltaTime;
