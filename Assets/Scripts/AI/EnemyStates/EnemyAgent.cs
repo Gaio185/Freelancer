@@ -10,6 +10,7 @@ public class AiAgent : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
     public Transform[] patrolPoints;
+    public Bullet bulletPrefab;
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
 
