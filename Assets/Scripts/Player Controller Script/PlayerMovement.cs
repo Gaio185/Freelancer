@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private CharacterController characterController;
 
-    private bool canMove = true;
+    public bool canMove = true;
 
     void Start()
     {
