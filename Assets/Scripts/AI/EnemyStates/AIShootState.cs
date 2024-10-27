@@ -5,8 +5,7 @@ using UnityEngine.Pool;
 
 public class AIShootState : AiState
 {
-    private ObjectPool<Bullet> bulletPool;
-    private Bullet bullet;
+    private float timer;
 
     public AiStateId GetId()
     {
@@ -18,17 +17,23 @@ public class AIShootState : AiState
         Debug.Log("Shoot");
         agent.navMeshAgent.isStopped = true;
         agent.detection.isMoving = false;
-        //Shoot(agent);
+        agent.shootBullet.Shoot();
+        timer = agent.config.shootInterval;
     }
 
     public void Update(AiAgent agent)
     {
-        bullet.fireRate -= Time.deltaTime;
-        if(agent.detection.canSeePlayer)
+        timer -= Time.deltaTime;
+        if(timer <= 0)
         {
-            //Shoot(agent);
+            if (agent.detection.canSeePlayer)
+            {
+                agent.shootBullet.Shoot();
+                timer = agent.config.shootInterval;
+            }
         }
-        else
+        
+        if(!agent.detection.canSeePlayer)
         {
             agent.stateMachine.ChangeState(AiStateId.Hunt);
         }

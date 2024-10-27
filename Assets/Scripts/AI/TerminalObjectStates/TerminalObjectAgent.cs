@@ -10,15 +10,17 @@ public class TOAgent : MonoBehaviour
     public TOStateId initialState;
     public TerminalObjectConfig config;
     public AiAgent[] agents;
+    public ShootBullet shootBullet;
     [HideInInspector] public Detection detection;
 
     void Start()
     {
         detection = GetComponent<Detection>();
+        shootBullet = GetComponent<ShootBullet>();
         stateMachine = new TerminalObjectStateMachine(this);
         stateMachine.RegisterStates(new OnState());
         stateMachine.RegisterStates(new AlertState());
-        stateMachine.RegisterStates(new ShootState());
+        stateMachine.RegisterStates(new TOShootState());
         stateMachine.ChangeState(initialState);
     }
 

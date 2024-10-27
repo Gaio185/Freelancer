@@ -33,6 +33,7 @@ public class TerminalManagement : MonoBehaviour
         {
             passwordInterface.SetActive(false);
             workspaceInterface.SetActive(true);
+            input.text = "";
             Debug.Log("Correct Password");
         }
         else

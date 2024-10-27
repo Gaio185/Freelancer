@@ -40,6 +40,11 @@ public class AIHuntPlayerState : AiState
             agent.navMeshAgent.destination = playerTransform.position;
         }
 
+        if (agent.detection.canSeePlayer)
+        {
+            agent.stateMachine.ChangeState(AiStateId.Shoot);
+        }
+
         if(timer < 0.0f)
         {
             Vector3 direction = playerTransform.position - agent.navMeshAgent.destination;

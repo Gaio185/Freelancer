@@ -10,7 +10,7 @@ public class AiAgent : MonoBehaviour
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
     public Transform[] patrolPoints;
-    public Bullet bulletPrefab;
+    public ShootBullet shootBullet;
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
 
@@ -18,6 +18,7 @@ public class AiAgent : MonoBehaviour
     void Start()
     {
         startingPosition = transform.position;
+        shootBullet = GetComponent<ShootBullet>();
         detection = GetComponent<Detection>();
         navMeshAgent = GetComponent<NavMeshAgent>();    
         stateMachine = new AIStateMachine(this);
