@@ -19,6 +19,7 @@ public class TOAgent : MonoBehaviour
         shootBullet = GetComponent<ShootBullet>();
         stateMachine = new TerminalObjectStateMachine(this);
         stateMachine.RegisterStates(new OnState());
+        stateMachine.RegisterStates(new OffState());
         stateMachine.RegisterStates(new AlertState());
         stateMachine.RegisterStates(new TOShootState());
         stateMachine.ChangeState(initialState);
