@@ -21,6 +21,8 @@ public class AIPatrolState : AiState
 
     public void Update(AiAgent agent)
     {
+        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, Quaternion.LookRotation(agent.transform.forward), 5 * Time.deltaTime);
+
         if (agent.navMeshAgent.remainingDistance <= 0.1f)
         {
             targetPoint++;

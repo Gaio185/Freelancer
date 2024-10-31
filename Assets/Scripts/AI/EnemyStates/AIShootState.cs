@@ -16,13 +16,15 @@ public class AIShootState : AiState
     {
         Debug.Log("Shoot");
         agent.navMeshAgent.isStopped = true;
-        agent.detection.isMoving = false;
-        agent.shootBullet.Shoot();
         timer = agent.config.shootInterval;
     }
 
     public void Update(AiAgent agent)
     {
+        agent.transform.rotation = Quaternion.Slerp((agent.transform.rotation),
+                    Quaternion.LookRotation(agent.detection.playerRef.transform.position - agent.transform.position),
+                    5 * Time.deltaTime);
+
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
