@@ -25,13 +25,14 @@ public class AIHuntPlayerState : AiState
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
 
-        agent.detection.isMoving = true;
         agent.navMeshAgent.isStopped = false;
         huntTimer = agent.config.huntTime;
     }
 
     public void Update(AiAgent agent)
     {
+        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, Quaternion.LookRotation(agent.transform.forward), 5 * Time.deltaTime);
+
         if (!agent.navMeshAgent.enabled) { return; }
 
         timer -= Time.deltaTime;

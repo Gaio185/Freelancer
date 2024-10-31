@@ -21,7 +21,7 @@ public class AIInvestigateState : AiState
         {
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
-        agent.detection.isMoving = true;
+        //agent.detection.isMoving = true;
         agent.navMeshAgent.destination = playerTransform.position;
         timer = agent.config.investigateTime;
         interval = 0;
@@ -29,7 +29,7 @@ public class AIInvestigateState : AiState
 
     public void Update(AiAgent agent)
     {
-
+        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, Quaternion.LookRotation(agent.transform.forward), 5 * Time.deltaTime);
         if (!agent.detection.canSeePlayer)
         {
             timer -= Time.deltaTime;

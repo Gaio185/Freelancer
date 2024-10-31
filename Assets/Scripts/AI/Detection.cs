@@ -13,14 +13,13 @@ public class Detection : MonoBehaviour
     public float angle;
     [Range(0, 360)]
     public float cutoffAngle;
-    public bool isMoving;
 
     public GameObject playerRef;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    private Quaternion rotationRef;
+    public Quaternion rotationRef;
     private Vector3 forwardRef;
     private float timer;
 
@@ -42,13 +41,9 @@ public class Detection : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp((transform.rotation),Quaternion.LookRotation(playerRef.transform.position - transform.position), 5 * Time.deltaTime);
         }
-        else if(!isMoving)
+        else if((tag == "Camera" || tag == "Sentry"))
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotationRef, 5 * Time.deltaTime);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(transform.forward), 5 * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forwardRef), 5 * Time.deltaTime);
         }
 
         if (canSeePlayer && !playerDetected)

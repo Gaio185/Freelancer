@@ -9,7 +9,6 @@ public class TerminalManagement : MonoBehaviour
 {
     public TMP_InputField input;
 
-    public GameObject computerInterface;
     public GameObject passwordInterface;
     public GameObject workspaceInterface;
     public TOAgent[] tOAgents;
@@ -21,11 +20,6 @@ public class TerminalManagement : MonoBehaviour
     public Button sentryOffButton;
 
     public GameObject player;
-
-    public static bool isComputerActive = false;
-
-    public float radius = 10f;
-    public LayerMask targetMask;
 
     private string correctPassword = "password";
 
@@ -54,31 +48,12 @@ public class TerminalManagement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isComputerActive)
+        if (Input.GetKey(KeyCode.Escape))
         {
-            Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
-            if (rangeChecks.Length > 0)
-            {
-                if (Input.GetKey(KeyCode.F))
-                {
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
-                    player.GetComponent<PlayerMovement>().canMove= false;
-                    computerInterface.SetActive(true);
-                    isComputerActive = true;
-                }
-            }
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                computerInterface.SetActive(false);
-                player.GetComponent<PlayerMovement>().canMove = true;
-                isComputerActive = false;   
-            }
+            this.gameObject.SetActive(false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            player.GetComponent<PlayerMovement>().canMove = true;
         }
 
         for (int i = 0; i < tOAgents.Length; i++)

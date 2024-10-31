@@ -21,7 +21,7 @@ public class AIIdleState : AiState
     {
         if (agent.navMeshAgent.remainingDistance < 0.1f)
         {
-            agent.detection.isMoving = false;
+            agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, agent.detection.rotationRef, 5 * Time.deltaTime);
         }
 
         if (agent.detection.canSeePlayer)

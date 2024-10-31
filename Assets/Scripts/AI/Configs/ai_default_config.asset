@@ -18,4 +18,4 @@ MonoBehaviour:
   stunTime: 7
   investigateTime: 30
   investigateInterval: 5
-  shootInterval: 3
+  shootInterval: 1
