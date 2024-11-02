@@ -1,61 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public Transform cam;
-    public Transform spawnPoint;
-    public GameObject coin;
+    public float pickUpRange;
+    public LayerMask targetMask;
 
-    public int coinCount;
-    public float throwCooldown;
-
-    public KeyCode throwKey;
-    public float throwForce;
-    public float throwUpwardForce;
-
-    bool readyToThrow;
+    private GameObject launchPoint;
+    private CoinLauncher coinLauncher;
 
     void Start()
     {
-        readyToThrow = true;
+        launchPoint = GameObject.FindGameObjectWithTag("CoinSpawn");
+        coinLauncher = launchPoint.GetComponent<CoinLauncher>();
     }
 
-    
+    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(throwKey) && readyToThrow && coinCount > 0)
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, pickUpRange, targetMask);
+
+        if (rangeChecks.Length != 0 && Input.GetKeyDown(KeyCode.F))
         {
-            ThrowCoin();
+            Destroy(this.gameObject);
+            coinLauncher.coinCount++;
         }
-    }
-
-    private void ThrowCoin()
-    {
-        readyToThrow = false;
-
-        GameObject projectile = Instantiate(coin, spawnPoint.position, spawnPoint.rotation);
-
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-
-        Vector3 forceDirection = cam.forward;
-        RaycastHit hit;
-        if(Physics.Raycast(cam.position, cam.forward, out hit, 500f)){
-            forceDirection = (hit.point - spawnPoint.position).normalized;
-        }
-
-        Vector3 forceToAdd = forceDirection * throwForce + cam.up * throwUpwardForce;
-
-        rb.AddForce(forceToAdd, ForceMode.Impulse);
-
-        coinCount--;
-
-        Invoke(nameof(ResetThrow), throwCooldown);
-    }
-
-    private void ResetThrow()
-    {
-       readyToThrow = true;
     }
 }

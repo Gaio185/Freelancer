@@ -9,6 +9,7 @@ TagManager:
   - canPickUp
   - Sentry
   - Ground
+  - CoinSpawn
   layers:
   - Default
   - TransparentFX
