@@ -11,6 +11,7 @@ public class AiAgent : MonoBehaviour
     public AiAgentConfig config;
     public Transform[] patrolPoints;
     public ShootBullet shootBullet;
+    public Transform distraction;
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
 

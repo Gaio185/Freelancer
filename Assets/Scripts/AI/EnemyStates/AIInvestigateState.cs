@@ -22,7 +22,15 @@ public class AIInvestigateState : AiState
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
         //agent.detection.isMoving = true;
-        agent.navMeshAgent.destination = playerTransform.position;
+        if (!agent.distraction)
+        {
+            agent.navMeshAgent.destination = playerTransform.position;
+        }
+        else
+        {
+            agent.navMeshAgent.destination = agent.distraction.position;
+        }
+        
         timer = agent.config.investigateTime;
         interval = 0;
     }
@@ -59,6 +67,7 @@ public class AIInvestigateState : AiState
 
             if(timer <= 0)
             {
+                agent.distraction = null;
                 agent.stateMachine.ChangeState(agent.initialState);
             }
         }else 
@@ -69,6 +78,7 @@ public class AIInvestigateState : AiState
        
         if (agent.detection.playerDetected)
         {
+            agent.distraction = null;
             agent.stateMachine.ChangeState(AiStateId.Hunt);
         }
     }

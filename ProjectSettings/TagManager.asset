@@ -8,6 +8,7 @@ TagManager:
   - Undefined
   - canPickUp
   - Sentry
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Enemy
   - Target
   - Occlusion
   - holdLayer
