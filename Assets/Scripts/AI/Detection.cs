@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class Detection : MonoBehaviour
@@ -15,6 +16,8 @@ public class Detection : MonoBehaviour
     public float cutoffAngle;
 
     public GameObject playerRef;
+    private PlayerMovement playerMovement;
+    private PlayerWeapon playerWeapon;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -23,12 +26,15 @@ public class Detection : MonoBehaviour
     private Vector3 forwardRef;
     private float timer;
 
-    public bool canSeePlayer;
-    public bool playerDetected;
+    [HideInInspector] public bool canSeePlayer;
+    [HideInInspector] public bool shouldDetect;
+    [HideInInspector] public bool playerDetected;
 
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
+        playerMovement = playerRef.GetComponent<PlayerMovement>();
+        playerWeapon = playerRef.GetComponent<PlayerWeapon>();
         rotationRef = transform.rotation;
         forwardRef = transform.forward;
         StartCoroutine(DetectionRoutine());
@@ -46,7 +52,9 @@ public class Detection : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forwardRef), 5 * Time.deltaTime);
         }
 
-        if (canSeePlayer && !playerDetected)
+        shouldDetect = ShouldBeDetected();
+
+        if (canSeePlayer && !playerDetected && shouldDetect)
         {
             timer -= Time.deltaTime;
         }
@@ -90,7 +98,7 @@ public class Detection : MonoBehaviour
                     if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstacleMask))
                     {
                         canSeePlayer = true;
-                        if(timer <= 0.0f && canSeePlayer)
+                        if(timer <= 0.0f)
                         {
                             playerDetected = true;
                         }
@@ -113,6 +121,18 @@ public class Detection : MonoBehaviour
         }else if(canSeePlayer)
         {
             canSeePlayer = false;
+        }
+    }
+
+    private bool ShouldBeDetected()
+    {
+        if(!playerMovement.hasClearance || playerWeapon.hasWeaponEquipped)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

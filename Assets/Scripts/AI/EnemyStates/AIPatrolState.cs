@@ -33,7 +33,7 @@ public class AIPatrolState : AiState
         }
         agent.navMeshAgent.destination = agent.patrolPoints[targetPoint].position;
 
-        if (agent.detection.canSeePlayer)
+        if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
             agent.navMeshAgent.isStopped = true;
         }

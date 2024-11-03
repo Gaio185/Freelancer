@@ -38,7 +38,7 @@ public class AIInvestigateState : AiState
     public void Update(AiAgent agent)
     {
         agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, Quaternion.LookRotation(agent.transform.forward), 5 * Time.deltaTime);
-        if (!agent.detection.canSeePlayer)
+        if (!agent.detection.canSeePlayer || agent.detection.canSeePlayer && !agent.detection.shouldDetect)
         {
             timer -= Time.deltaTime;
             interval -= Time.deltaTime;
@@ -62,7 +62,6 @@ public class AIInvestigateState : AiState
                 randomPosition.y = agent.transform.position.y;
                 agent.navMeshAgent.destination = randomPosition;
                 interval = agent.config.investigateInterval;
-
             }
 
             if(timer <= 0)
@@ -70,12 +69,13 @@ public class AIInvestigateState : AiState
                 agent.distraction = null;
                 agent.stateMachine.ChangeState(agent.initialState);
             }
-        }else 
+
+        }else if(agent.detection.canSeePlayer && agent.detection.shouldDetect) 
         {
             agent.navMeshAgent.isStopped = true;
             timer = agent.config.investigateTime;
         }
-       
+
         if (agent.detection.playerDetected)
         {
             agent.distraction = null;
