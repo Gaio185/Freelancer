@@ -24,7 +24,7 @@ public class AIIdleState : AiState
             agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, agent.detection.rotationRef, 5 * Time.deltaTime);
         }
 
-        if (agent.detection.canSeePlayer)
+        if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
             agent.navMeshAgent.isStopped = true;
         }
