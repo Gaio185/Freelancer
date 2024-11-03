@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class TerminalInteract : MonoBehaviour
 {
-    public GameObject computerInterface;
-
-    public float radius = 0f;
-    public LayerMask targetMask;
+    public GameObject computerInterface; // Reference to the terminal UI
+    public float radius = 3f; // Interaction radius
+    public LayerMask targetMask; // LayerMask for detecting terminals
 
     private GameObject player;
 
@@ -23,10 +22,10 @@ public class TerminalInteract : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.F))
             {
-                computerInterface.SetActive(true);
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                player.GetComponent<PlayerMovement>().canMove = false;
+                computerInterface.SetActive(true); // Show the terminal UI
+                Cursor.visible = true; // Show cursor
+                Cursor.lockState = CursorLockMode.None; // Unlock cursor
+                player.GetComponent<PlayerMovement>().canMove = false; // Disable player movement
             }
         }
     }
