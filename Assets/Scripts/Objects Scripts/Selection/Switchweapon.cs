@@ -30,8 +30,6 @@ public class Switchweapon : MonoBehaviour
     {
         // Load previously selected gear or defaults
         string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton"); // Default weapon
-        string selectedItem = PlayerPrefs.GetString("SelectedItem", "Screwdriver"); // Default item
-        string selectedGadget = PlayerPrefs.GetString("SelectedGadget", "OverrideKeyCard"); // Default gadget
 
         DeactivateAllModels(); // Ensure all models are turned off
 
@@ -47,7 +45,6 @@ public class Switchweapon : MonoBehaviour
             taserGunModel.SetActive(true); // Show the taser gun model
         }
 
-        // Log active selections
         Debug.Log($"Equipped: Weapon - {selectedWeapon}");
     }
 
@@ -58,8 +55,13 @@ public class Switchweapon : MonoBehaviour
 
     void HandleSwitching()
     {
+        // Switch to weapons (press 1)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SwitchWeapon();
+        }
         // Switch to items (press 2)
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SwitchItem();
         }
@@ -68,6 +70,26 @@ public class Switchweapon : MonoBehaviour
         {
             SwitchGadget();
         }
+    }
+
+    void SwitchWeapon()
+    {
+        DeactivateAllModels(); // Deactivate all models first
+        string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
+
+        // Activate the selected weapon
+        if (selectedWeapon == "StunBaton")
+        {
+            activeWeapon = stunBatonModel;
+            stunBatonModel.SetActive(true); // Show the stun baton model
+        }
+        else if (selectedWeapon == "TaserGun")
+        {
+            activeWeapon = taserGunModel;
+            taserGunModel.SetActive(true); // Show the taser gun model
+        }
+
+        Debug.Log($"Equipped: Weapon - {selectedWeapon}");
     }
 
     void SwitchItem()

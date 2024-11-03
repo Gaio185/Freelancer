@@ -4619,8 +4619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 798d0e70ef63ea84ca25bab757599d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button1: {fileID: 1941101163}
-  button2: {fileID: 1639692876}
+  keycardText: {fileID: 1277135290}
+  flashDriveText: {fileID: 1120985958}
 --- !u!224 &1139740248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6504,7 +6504,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1139740247}
         m_TargetAssemblyTypeName: GadgetSelector, Assembly-CSharp
-        m_MethodName: SelectGadget
+        m_MethodName: SelectItem
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7689,7 +7689,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1139740247}
         m_TargetAssemblyTypeName: GadgetSelector, Assembly-CSharp
-        m_MethodName: SelectGadget
+        m_MethodName: SelectItem
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

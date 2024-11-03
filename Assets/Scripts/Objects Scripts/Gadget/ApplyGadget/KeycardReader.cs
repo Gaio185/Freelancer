@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class KeycardReader : MonoBehaviour
 {
-    public Door connectedDoor;         // The door controlled by this reader
-    public string requiredKeycardID;    // The specific ID for normal keycard access
+    public Door controlledDoor;           // Assign the Door in the Unity Editor
+    public string requiredKeycardID;       // Specific ID for normal keycard access
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,9 +14,12 @@ public class KeycardReader : MonoBehaviour
 
         if (normalKeycard != null && normalKeycard.GetCardID() == requiredKeycardID)
         {
-            connectedDoor.Unlock();
-           Debug.Log("Door unlocked with keycard ID: " + requiredKeycardID);
-           return;
+            if (controlledDoor != null)
+            {
+                controlledDoor.Unlock();    // Unlock the door if a valid keycard is detected
+                Debug.Log("Door unlocked with keycard ID: " + requiredKeycardID);
+            }
+            return;
         }
 
         // Check if the player has an override keycard with remaining uses
@@ -25,8 +28,11 @@ public class KeycardReader : MonoBehaviour
         if (overrideKeycard != null && overrideKeycard.CanUse())
         {
             overrideKeycard.Use();
-            connectedDoor.Unlock();
-            Debug.Log("Door unlocked with override keycard.");
+            if (controlledDoor != null)
+            {
+                controlledDoor.Unlock();    // Unlock the door if an override keycard is used
+                Debug.Log("Door unlocked with override keycard.");
+            }
         }
         else
         {

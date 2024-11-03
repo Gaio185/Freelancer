@@ -1,55 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Door : MonoBehaviour
 {
-    public Vector3 openPositionOffset = new Vector3(0, 0, 3); // How far the door moves when opening
-    private Vector3 closedPosition;
-    private bool isLocked = true;
-    private bool isOpen = false;
+    public float open = 100f;
+    public float range = 10f;
 
-    void Start()
+    public GameObject door;
+    public bool isOpening = false;
+    private bool isUnlocked = false;     // Tracks if the door is unlocked
+
+    public Camera fpsCam;
+
+    // Update is called once per frame
+    void Update()
     {
-        closedPosition = transform.position;
+        if (Input.GetKeyDown("t"))
+        {
+            Shoot();
+        }
     }
 
+    // Method to unlock the door, can be called by KeycardReader or other scripts
     public void Unlock()
     {
-        isLocked = false;
-        Debug.Log("Door unlocked!");
+        isUnlocked = true;
+        Debug.Log("Door is now unlocked.");
     }
 
-    public void ToggleDoor()
+    void Shoot()
     {
-        if (!isLocked)
+        RaycastHit hit;
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            if (isOpen)
+            Debug.Log(hit.transform.name);
+
+            DoorBehaviour target = hit.transform.GetComponent<DoorBehaviour>();
+            Debug.Log(target);
+            if (target != null && isUnlocked)    // Check if the door is unlocked before opening
             {
-                CloseDoor();
+                StartCoroutine(OpenDoor());
             }
-            else
+            else if (!isUnlocked)
             {
-                OpenDoor();
+                Debug.Log("The door is locked. Use a keycard to unlock it first.");
             }
         }
-        else
-        {
-            Debug.Log("Door is locked. Please use a keycard.");
-        }
     }
 
-    void OpenDoor()
+    IEnumerator OpenDoor()
     {
-        transform.position = closedPosition + openPositionOffset;
-        isOpen = true;
-        Debug.Log("Door opened.");
-    }
-
-    void CloseDoor()
-    {
-        transform.position = closedPosition;
-        isOpen = false;
-        Debug.Log("Door closed.");
+        isOpening = true;
+        door.GetComponent<Animator>().Play("DoorOpen");
+        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(5.0f);
+        door.GetComponent<Animator>().Play("New State");
+        isOpening = false;
     }
 }
