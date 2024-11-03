@@ -8,19 +8,16 @@ using UnityEngine.UI;
 public class TerminalManagement : MonoBehaviour
 {
     public TMP_InputField input;
-
     public GameObject passwordInterface;
     public GameObject workspaceInterface;
     public TOAgent[] tOAgents;
 
     public Button cameraOnButton;
     public Button cameraOffButton;
-
     public Button sentryOnButton;
     public Button sentryOffButton;
 
     public GameObject player;
-
     private string correctPassword = "password";
 
     public void Start()
@@ -32,8 +29,7 @@ public class TerminalManagement : MonoBehaviour
     {
         if (input.text == correctPassword)
         {
-            passwordInterface.SetActive(false);
-            workspaceInterface.SetActive(true);
+            OpenWorkspace();
             input.text = "";
             Debug.Log("Correct Password");
         }
@@ -43,9 +39,18 @@ public class TerminalManagement : MonoBehaviour
         }
     }
 
-    
+    public void BypassPassword()
+    {
+        OpenWorkspace();
+        Debug.Log("Workspace unlocked with Override Pen Drive.");
+    }
 
-    // Update is called once per frame
+    private void OpenWorkspace()
+    {
+        passwordInterface.SetActive(false);
+        workspaceInterface.SetActive(true);
+    }
+
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
@@ -84,7 +89,6 @@ public class TerminalManagement : MonoBehaviour
                     sentryOffButton.interactable = true;
                 }
             }
-
         }
     }
 
