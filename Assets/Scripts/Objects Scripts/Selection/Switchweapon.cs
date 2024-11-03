@@ -16,6 +16,8 @@ public class Switchweapon : MonoBehaviour
     public GameObject overrideKeyCardModel;
     public GameObject flashdriveModel;
 
+    public bool hasWeaponEquipped;
+
     // Keep track of active objects
     private GameObject activeWeapon;
     private GameObject activeItem;
@@ -69,6 +71,9 @@ public class Switchweapon : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SwitchGadget();
+        }else if(Input.GetKeyDown(KeyCode.H))
+        {
+            DeactivateAllModels();
         }
     }
 
@@ -76,6 +81,7 @@ public class Switchweapon : MonoBehaviour
     {
         DeactivateAllModels(); // Deactivate all models first
         string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
+        hasWeaponEquipped = true;
 
         // Activate the selected weapon
         if (selectedWeapon == "StunBaton")
@@ -134,6 +140,7 @@ public class Switchweapon : MonoBehaviour
 
     void DeactivateAllModels()
     {
+        hasWeaponEquipped = false;
         // Deactivate all models
         stunBatonModel.SetActive(false);
         taserGunModel.SetActive(false);
