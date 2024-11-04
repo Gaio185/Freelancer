@@ -25,6 +25,8 @@ public class AIHuntPlayerState : AiState
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
 
+        agent.detection.playerMovement.isHunted = true;
+
         agent.navMeshAgent.isStopped = false;
         huntTimer = agent.config.huntTime;
     }

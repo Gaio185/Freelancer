@@ -45,7 +45,8 @@ public class TerminalManagement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Incorrect Password");
+            input.text = "";
+            input.placeholder.GetComponent<TextMeshProUGUI>().text = "Incorrect Password"; 
         }
     }
 
@@ -62,7 +63,7 @@ public class TerminalManagement : MonoBehaviour
         workspaceInterface.SetActive(true); // Show the workspace interface
         Cursor.visible = true; // Show cursor when opening workspace
         Cursor.lockState = CursorLockMode.None; // Unlock cursor
-        player.GetComponent<PlayerMovement>().canMove = true; // Allow player movement
+        player.GetComponent<PlayerMovement>().canMove = false; // Allow player movement
     }
 
     void Update()

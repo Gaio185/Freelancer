@@ -7,6 +7,7 @@ public class CoinLauncher : MonoBehaviour
     public Transform cam;
     public Transform spawnPoint;
     public GameObject coin;
+    public GameObject coinPlaceholder;
 
     public int coinCount;
     public float throwCooldown;
@@ -28,6 +29,15 @@ public class CoinLauncher : MonoBehaviour
         if(Input.GetKeyDown(throwKey) && readyToThrow && coinCount > 0)
         {
             ThrowCoin();
+        }
+
+        if(coinCount <= 0)
+        {
+            coinPlaceholder.SetActive(false);
+        }
+        else
+        {
+           coinPlaceholder.SetActive(true);
         }
     }
 
@@ -52,11 +62,6 @@ public class CoinLauncher : MonoBehaviour
         coinCount--;
 
         Invoke(nameof(ResetThrow), throwCooldown);
-    }
-
-    private void PickUp()
-    {
-        
     }
 
     private void ResetThrow()

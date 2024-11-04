@@ -13,6 +13,7 @@ public class AIStunnedState : AiState
 
     public void Enter(AiAgent agent)
     {
+        agent.detection.playerMovement.isHunted = false;
         agent.navMeshAgent.isStopped = true;
         timer = agent.config.stunTime;
     }

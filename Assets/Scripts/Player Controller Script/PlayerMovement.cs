@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed = 3f;
 
     [HideInInspector] public bool hasClearance;
+    [HideInInspector] public bool isHunted;
 
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        isHunted = false;
         hasClearance = true;
     }
 

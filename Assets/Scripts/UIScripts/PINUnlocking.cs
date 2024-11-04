@@ -62,8 +62,8 @@ public class PINUnlocking : MonoBehaviour
         }
         else
         {
-            Debug.Log("Incorrect PIN, try again");
             Clear();
+            placeHolder.text = "Incorrect PIN, try again"; 
         }
     }
 
