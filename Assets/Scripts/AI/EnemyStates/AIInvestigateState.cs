@@ -67,6 +67,7 @@ public class AIInvestigateState : AiState
             if(timer <= 0)
             {
                 agent.distraction = null;
+                agent.detection.playerMovement.isHunted = false;
                 agent.stateMachine.ChangeState(agent.initialState);
             }
 

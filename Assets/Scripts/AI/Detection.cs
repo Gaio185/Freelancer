@@ -16,7 +16,7 @@ public class Detection : MonoBehaviour
     public float cutoffAngle;
 
     public GameObject playerRef;
-    private PlayerMovement playerMovement;
+    public PlayerMovement playerMovement;
     private Switchweapon switchWeapon;
 
     public LayerMask targetMask;
@@ -126,13 +126,20 @@ public class Detection : MonoBehaviour
 
     private bool ShouldBeDetected()
     {
-        if(!playerMovement.hasClearance || switchWeapon.hasWeaponEquipped)
+        if (!playerMovement.isHunted)
         {
-            return true;
+            if (!playerMovement.hasClearance || switchWeapon.hasWeaponEquipped)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
-            return false;
+            return true;
         }
     }
 }
