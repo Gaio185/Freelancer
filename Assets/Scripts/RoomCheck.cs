@@ -23,7 +23,7 @@ public class RoomCheck : MonoBehaviour
                 playerMovement.hasClearance = false;
                 Debug.Log("Player does not have clearance");
             }
-           else
+           else 
             {
                 playerMovement.hasClearance = true;
                 Debug.Log("Player has clearance");
