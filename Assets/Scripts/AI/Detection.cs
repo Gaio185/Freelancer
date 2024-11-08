@@ -30,6 +30,8 @@ public class Detection : MonoBehaviour
     [HideInInspector] public bool shouldDetect;
     [HideInInspector] public bool playerDetected;
 
+    public Material visorMaterial;
+
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
@@ -62,7 +64,6 @@ public class Detection : MonoBehaviour
         {
             timer = detectionTimer;
         }
-        
     }
 
     private IEnumerator DetectionRoutine()
