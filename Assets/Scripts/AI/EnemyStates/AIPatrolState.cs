@@ -16,7 +16,7 @@ public class AIPatrolState : AiState
     {
         Debug.Log("Patrol");
         agent.navMeshAgent.isStopped = false;
-        agent.detection.visorMaterial.color = Color.green;
+        agent.visorMaterial.color = Color.green;
         targetPoint = 0;
     }
 
@@ -37,12 +37,12 @@ public class AIPatrolState : AiState
         if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
             agent.navMeshAgent.isStopped = true;
-            agent.detection.visorMaterial.color = Color.yellow;
+            agent.visorMaterial.color = Color.yellow;
         }
         else
         {
            agent.navMeshAgent.isStopped = false;
-            agent.detection.visorMaterial.color = Color.green;
+            agent.visorMaterial.color = Color.green;
         }
 
         if (agent.detection.playerDetected)

@@ -14,10 +14,13 @@ public class AiAgent : MonoBehaviour
     public Transform distraction;
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
+    public GameObject visor;
+    [HideInInspector] public Material visorMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
+        visorMaterial = visor.GetComponent<Renderer>().material;
         startingPosition = transform.position;
         shootBullet = GetComponent<ShootBullet>();
         detection = GetComponent<Detection>();

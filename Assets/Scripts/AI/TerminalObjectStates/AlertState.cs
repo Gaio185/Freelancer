@@ -19,12 +19,17 @@ public class AlertState : TOState
             agent.agents[i].stateMachine.ChangeState(AiStateId.Investigate);
         }
         timer = agent.config.searchTime;
+
+        agent.detection.lightRef.color = Color.red;
+        agent.visorMaterial.color = Color.red;
     }
 
     public void Update(TOAgent agent)
     {
         if(!agent.detection.canSeePlayer)
         {
+            agent.detection.lightRef.color = Color.yellow;
+            agent.visorMaterial.color = Color.yellow;
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
@@ -34,6 +39,8 @@ public class AlertState : TOState
         }
         else
         {
+            agent.detection.lightRef.color = Color.red;
+            agent.visorMaterial.color = Color.red;
             timer = agent.config.searchTime;
         }
         

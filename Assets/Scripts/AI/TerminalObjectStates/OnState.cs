@@ -12,6 +12,9 @@ public class OnState : TOState
     public void Enter(TOAgent agent)
     {
         Debug.Log("On");
+        agent.detection.lightRef.color = Color.green;
+        agent.detection.lightRef.enabled = true;
+        agent.visorMaterial.color = Color.green;
     }
 
     public void Update(TOAgent agent)
@@ -23,6 +26,17 @@ public class OnState : TOState
         else if(agent.detection.playerDetected)
         {
             agent.stateMachine.ChangeState(TOStateId.Shoot);
+        }
+
+        if(agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect)
+        {
+            agent.detection.lightRef.color = Color.yellow;
+            agent.visorMaterial.color = Color.yellow;
+        }
+        else
+        {
+            agent.detection.lightRef.color = Color.green;
+            agent.visorMaterial.color = Color.green;
         }
     }
 

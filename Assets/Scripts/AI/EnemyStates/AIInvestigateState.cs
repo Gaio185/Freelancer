@@ -31,7 +31,7 @@ public class AIInvestigateState : AiState
             agent.navMeshAgent.destination = agent.distraction.position;
         }
 
-        agent.detection.visorMaterial.color = Color.yellow;
+        agent.visorMaterial.color = Color.yellow;
 
         timer = agent.config.investigateTime;
         interval = 0;
@@ -61,7 +61,7 @@ public class AIInvestigateState : AiState
                 //Random.Range(agent.transform.position.x, maxPosition.x),
                 //Random.Range(agent.transform.position.y, maxPosition.y),
                 //Random.Range(agent.transform.position.x, maxPosition.z));
-                agent.detection.visorMaterial.color = Color.yellow;
+                agent.visorMaterial.color = Color.yellow;
                 randomPosition.y = agent.transform.position.y;
                 agent.navMeshAgent.destination = randomPosition;
                 interval = agent.config.investigateInterval;

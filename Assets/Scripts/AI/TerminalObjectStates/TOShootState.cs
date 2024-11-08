@@ -16,10 +16,14 @@ public class TOShootState : TOState
         Debug.Log("Shoot");
         agent.shootBullet.Shoot();
         timer = agent.config.shootInterval;
+        agent.detection.lightRef.color = Color.red;
+        agent.visorMaterial.color = Color.red;
     }
 
     public void Update(TOAgent agent)
     {
+        agent.detection.lightRef.color = Color.red;
+        agent.visorMaterial.color = Color.red;
         timer -= Time.deltaTime;
         if (timer <= 0)
         {

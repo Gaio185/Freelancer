@@ -30,7 +30,7 @@ public class Detection : MonoBehaviour
     [HideInInspector] public bool shouldDetect;
     [HideInInspector] public bool playerDetected;
 
-    public Material visorMaterial;
+    public Light lightRef;
 
     void Start()
     {
