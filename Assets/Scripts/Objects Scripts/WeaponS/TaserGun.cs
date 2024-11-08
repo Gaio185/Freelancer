@@ -8,39 +8,40 @@ public class TaserGun : MonoBehaviour
 {
     public float range = 200f;
     public float impactForce = 30f;
-    public float cooldown = 10.0f;
 
     public Camera fpscamera;
-    //public ParticleSystem muzzleflash;
-    //public GameObject impactEffect;
+    public GameObject crosshair;  // Reference to the crosshair object
+    public GameObject taserSoundObject;  // Reference to the GameObject with the audio source (Taser sound GameObject)
 
-    private float timer = 0.0f;
+    private AudioSource taserAudioSource;  // Reference to the AudioSource component
 
-    // Update is called once per frame
+    void Start()
+    {
+        taserAudioSource = taserSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
+        taserAudioSource.Stop();  // Ensure the sound is stopped when the game starts
+        crosshair.SetActive(true);  // Show crosshair by default when the weapon is equipped
+    }
+
     void Update()
     {
-        if (timer > 0)
+        // Check if Fire1 (left mouse button by default) is pressed and shoot if conditions are met
+        if (Input.GetButton("Fire1"))
         {
-            timer -= Time.deltaTime;
-        }
-
-        if (Input.GetButton("Fire1") && timer <= 0)
-        {
-            timer = cooldown;
             Shoot();
         }
-
     }
 
     void Shoot()
     {
-        //muzzleflash.Play();
+        // Play the sound instantly when the player clicks, without any cooldown
+        if (!taserAudioSource.isPlaying)
+        {
+            taserAudioSource.Play();
+        }
 
         RaycastHit hit;
         if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
         {
-            UnityEngine.Debug.Log(hit.transform.name);
-
             AiAgent target = hit.transform.GetComponent<AiAgent>();
             if (target != null)
             {
@@ -51,11 +52,23 @@ public class TaserGun : MonoBehaviour
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
-
-            //GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            //Destroy(impactGO, 2f);
         }
-
     }
 
+    void OnDisable()
+    {
+        taserAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
+    }
+
+    // To hide crosshair when switching to non-weapon items
+    public void HideCrosshair()
+    {
+        crosshair.SetActive(false);  // Hide the crosshair
+    }
+
+    // To show crosshair when switching back to weapon
+    public void ShowCrosshair()
+    {
+        crosshair.SetActive(true);  // Show the crosshair
+    }
 }

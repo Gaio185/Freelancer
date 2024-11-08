@@ -23,6 +23,9 @@ public class Switchweapon : MonoBehaviour
     private GameObject activeItem;
     private GameObject activeGadget;
 
+    // Crosshair reference
+    public GameObject crosshair;
+
     void Start()
     {
         LoadSelectedGear(); // Load and show the player's selected gear
@@ -40,11 +43,17 @@ public class Switchweapon : MonoBehaviour
         {
             activeWeapon = stunBatonModel;
             stunBatonModel.SetActive(true); // Show the stun baton model
+            crosshair.SetActive(true); // Show crosshair when weapon is equipped
         }
         else if (selectedWeapon == "TaserGun")
         {
             activeWeapon = taserGunModel;
             taserGunModel.SetActive(true); // Show the taser gun model
+            crosshair.SetActive(true); // Show crosshair when weapon is equipped
+        }
+        else
+        {
+            crosshair.SetActive(false); // Hide crosshair if no weapon is equipped
         }
 
         Debug.Log($"Equipped: Weapon - {selectedWeapon}");
@@ -71,7 +80,8 @@ public class Switchweapon : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SwitchGadget();
-        }else if(Input.GetKeyDown(KeyCode.H))
+        }
+        else if (Input.GetKeyDown(KeyCode.H))
         {
             DeactivateAllModels();
         }
@@ -88,11 +98,13 @@ public class Switchweapon : MonoBehaviour
         {
             activeWeapon = stunBatonModel;
             stunBatonModel.SetActive(true); // Show the stun baton model
+            crosshair.SetActive(true); // Show crosshair when weapon is equipped
         }
         else if (selectedWeapon == "TaserGun")
         {
             activeWeapon = taserGunModel;
             taserGunModel.SetActive(true); // Show the taser gun model
+            crosshair.SetActive(true); // Show crosshair when weapon is equipped
         }
 
         Debug.Log($"Equipped: Weapon - {selectedWeapon}");
@@ -108,12 +120,14 @@ public class Switchweapon : MonoBehaviour
         {
             activeItem = screwdriverModel;
             screwdriverModel.SetActive(true); // Show the screwdriver model
+            crosshair.SetActive(false); // Hide crosshair when item is equipped
             Debug.Log("Equipped: " + selectedItem);
         }
         else if (selectedItem == "Coin")
         {
             activeItem = coinModel;
             coinModel.SetActive(true); // Show the coin model
+            crosshair.SetActive(false); // Hide crosshair when item is equipped
             Debug.Log("Equipped: " + selectedItem);
         }
     }
@@ -128,12 +142,14 @@ public class Switchweapon : MonoBehaviour
         {
             activeGadget = overrideKeyCardModel;
             overrideKeyCardModel.SetActive(true); // Show the override keycard model
+            crosshair.SetActive(false); // Hide crosshair when gadget is equipped
             Debug.Log("Equipped: " + selectedGadget);
         }
         else if (selectedGadget == "Flashdrive")
         {
             activeGadget = flashdriveModel;
             flashdriveModel.SetActive(true); // Show the flashdrive model
+            crosshair.SetActive(false); // Hide crosshair when gadget is equipped
             Debug.Log("Equipped: " + selectedGadget);
         }
     }
