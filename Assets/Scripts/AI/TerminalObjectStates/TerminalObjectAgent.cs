@@ -12,9 +12,12 @@ public class TOAgent : MonoBehaviour
     public AiAgent[] agents;
     public ShootBullet shootBullet;
     [HideInInspector] public Detection detection;
+    public GameObject visor;
+    [HideInInspector] public Material visorMaterial;
 
     void Start()
     {
+        visorMaterial = visor.GetComponent<Renderer>().material;
         detection = GetComponent<Detection>();
         shootBullet = GetComponent<ShootBullet>();
         stateMachine = new TerminalObjectStateMachine(this);
