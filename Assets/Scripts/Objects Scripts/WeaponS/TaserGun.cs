@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class TaserGun : MonoBehaviour
 {
     public float range = 200f;
     public float impactForce = 30f;
+    public float cooldown = 5.0f;
+    private float timer;
 
     public Camera fpscamera;
     public GameObject crosshair;  // Reference to the crosshair object
@@ -15,20 +20,32 @@ public class TaserGun : MonoBehaviour
 
     private AudioSource taserAudioSource;  // Reference to the AudioSource component
 
+    public GameObject stunGunUI;
+    public Slider taserSlider;
+
     void Start()
     {
         taserAudioSource = taserSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
         taserAudioSource.Stop();  // Ensure the sound is stopped when the game starts
         crosshair.SetActive(true);  // Show crosshair by default when the weapon is equipped
+        timer = 0f;
+        taserSlider.value = 1;
     }
 
     void Update()
     {
+        timer -= Time.deltaTime;
         // Check if Fire1 (left mouse button by default) is pressed and shoot if conditions are met
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && timer <= 0)
         {
             Shoot();
+            timer = cooldown;
+            taserSlider.value = 0;
+        }else if(timer > 0)
+        {
+            taserSlider.value += (Time.deltaTime / timer) * 0.2f;
         }
+
     }
 
     void Shoot()
@@ -55,8 +72,14 @@ public class TaserGun : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        stunGunUI.SetActive(true);
+    }
+
     void OnDisable()
     {
+        stunGunUI.SetActive(false);
         taserAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
     }
 

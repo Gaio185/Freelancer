@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class USBPenOverride : MonoBehaviour
@@ -7,6 +8,10 @@ public class USBPenOverride : MonoBehaviour
     public float interactionRange = 3f; // Range within which the pen drive can interact with the terminal
     private bool playerInRange = false;  // Track if player is in range of a terminal
     private TerminalManagement targetTerminal; // Reference to the terminal within range
+    private float useCount = 3;
+
+    public GameObject overridePenDriveUI;
+    public TMP_Text countUI;
 
     private void Update()
     {
@@ -42,6 +47,8 @@ public class USBPenOverride : MonoBehaviour
         // Only attempt to bypass if a terminal is in range
         if (targetTerminal != null)
         {
+            --useCount;
+            countUI.text = "x" + useCount;
             targetTerminal.BypassPassword(); // Bypass the terminal password
             Debug.Log("Terminal bypassed with Override Pen Drive.");
         }
@@ -49,5 +56,15 @@ public class USBPenOverride : MonoBehaviour
         {
             Debug.Log("No terminal detected within range.");
         }
+    }
+
+    private void OnEnable()
+    {
+        overridePenDriveUI.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        overridePenDriveUI.SetActive(false);
     }
 }

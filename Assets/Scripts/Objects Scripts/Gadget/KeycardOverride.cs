@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class KeycardOverride : MonoBehaviour
 {
     public int usesLeft = 3; // Limited uses for the override keycard
+
+    public GameObject overrideKeycardUI;
+    public TMP_Text countUI;
 
     public bool CanUse()
     {
@@ -16,6 +20,7 @@ public class KeycardOverride : MonoBehaviour
         if (CanUse())
         {
             usesLeft--;
+            countUI.text = "x" + usesLeft;
             Debug.Log("Override Keycard used. Remaining uses: " + usesLeft);
         }
         else
@@ -24,5 +29,13 @@ public class KeycardOverride : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        overrideKeycardUI.SetActive(true);
+    }
 
+    private void OnDisable()
+    {
+        overrideKeycardUI.SetActive(false);
+    }
 }

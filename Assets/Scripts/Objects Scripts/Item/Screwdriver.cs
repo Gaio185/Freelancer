@@ -7,6 +7,8 @@ public class Screwdriver : MonoBehaviour
     public float interactionDistance = 2f; // Distance to interact with the vent door
     public LayerMask ventLayer; // LayerMask to specify the vent door layer
 
+    public GameObject screwdriverUI;
+
     void Update()
     {
         // Check if the player clicks the left mouse button
@@ -28,5 +30,15 @@ public class Screwdriver : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        screwdriverUI.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        screwdriverUI.SetActive(false);
     }
 }
