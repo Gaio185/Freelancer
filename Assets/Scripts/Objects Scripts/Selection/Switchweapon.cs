@@ -26,38 +26,38 @@ public class Switchweapon : MonoBehaviour
     // Crosshair reference
     public GameObject crosshair;
 
-    void Start()
-    {
-        LoadSelectedGear(); // Load and show the player's selected gear
-    }
+    //void Start()
+    //{
+    //    LoadSelectedGear(); // Load and show the player's selected gear
+    //}
 
-    void LoadSelectedGear()
-    {
-        // Load previously selected gear or defaults
-        string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton"); // Default weapon
+    //void LoadSelectedGear()
+    //{
+    //    // Load previously selected gear or defaults
+    //    string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton"); // Default weapon
 
-        DeactivateAllModels(); // Ensure all models are turned off
+    //    DeactivateAllModels(); // Ensure all models are turned off
 
-        // Activate the selected weapon
-        if (selectedWeapon == "StunBaton")
-        {
-            activeWeapon = stunBatonModel;
-            stunBatonModel.SetActive(true); // Show the stun baton model
-            crosshair.SetActive(true); // Show crosshair when weapon is equipped
-        }
-        else if (selectedWeapon == "TaserGun")
-        {
-            activeWeapon = taserGunModel;
-            taserGunModel.SetActive(true); // Show the taser gun model
-            crosshair.SetActive(true); // Show crosshair when weapon is equipped
-        }
-        else
-        {
-            crosshair.SetActive(false); // Hide crosshair if no weapon is equipped
-        }
+    //    // Activate the selected weapon
+    //    if (selectedWeapon == "StunBaton")
+    //    {
+    //        activeWeapon = stunBatonModel;
+    //        stunBatonModel.SetActive(true); // Show the stun baton model
+    //        crosshair.SetActive(true); // Show crosshair when weapon is equipped
+    //    }
+    //    else if (selectedWeapon == "TaserGun")
+    //    {
+    //        activeWeapon = taserGunModel;
+    //        taserGunModel.SetActive(true); // Show the taser gun model
+    //        crosshair.SetActive(true); // Show crosshair when weapon is equipped
+    //    }
+    //    else
+    //    {
+    //        crosshair.SetActive(false); // Hide crosshair if no weapon is equipped
+    //    }
 
-        Debug.Log($"Equipped: Weapon - {selectedWeapon}");
-    }
+    //    Debug.Log($"Equipped: Weapon - {selectedWeapon}");
+    //}
 
     void Update()
     {
