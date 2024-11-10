@@ -33,33 +33,33 @@ public class PickUpScript : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) // F key to pick up object
+        // Check if the F key is pressed to pick up an object
+        if (Input.GetKeyDown(KeyCode.F) && heldObj == null) // Only pick up if not holding anything
         {
-            if (heldObj == null) // If currently not holding anything
+            // Perform sphere cast for easier object pickup
+            RaycastHit hit;
+            if (Physics.SphereCast(transform.position, pickUpRadius, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
             {
-                // Perform sphere cast for easier object pickup
-                RaycastHit hit;
-                if (Physics.SphereCast(transform.position, pickUpRadius, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
+                // Make sure pickup tag is attached
+                if (hit.transform.gameObject.tag == "canPickUp")
                 {
-                    // Make sure pickup tag is attached
-                    if (hit.transform.gameObject.tag == "canPickUp")
-                    {
-                        // Pass in object hit into the PickUpObject function
-                        PickUpObject(hit.transform.gameObject);
-                    }
-                }
-            }
-            else
-            {
-                if (canDrop == true)
-                {
-                    StopClipping(); // Prevents object from clipping through walls
-                    DropObject();
+                    // Pass in object hit into the PickUpObject function
+                    PickUpObject(hit.transform.gameObject);
                 }
             }
         }
 
-        if (heldObj != null) // If player is holding object
+        // Check if G key is pressed to drop the object
+        if (Input.GetKeyDown(KeyCode.G) && heldObj != null) // Only drop if holding something
+        {
+            if (canDrop)
+            {
+                StopClipping(); // Prevents object from clipping through walls
+                DropObject();
+            }
+        }
+
+        if (heldObj != null) // If player is holding an object
         {
             MoveObject(); // Keep object position at holdPos
             RotateObject(); // Allow object rotation
