@@ -11,6 +11,7 @@ TagManager:
   - Ground
   - CoinSpawn
   - Door
+  - PlayerBody
   layers:
   - Default
   - TransparentFX

@@ -68,7 +68,7 @@ public class StunBaton : MonoBehaviour
 
     void OnDisable()
     {
-        stunBatonUI.SetActive(true);
+        stunBatonUI.SetActive(false);
         stunAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
     }
 
