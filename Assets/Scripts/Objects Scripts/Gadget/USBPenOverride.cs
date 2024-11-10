@@ -5,6 +5,24 @@ using UnityEngine;
 
 public class USBPenOverride : MonoBehaviour
 {
+<<<<<<< HEAD
+    public float interactionRange = 3f;  // Range within which the pen drive can interact with the terminal
+    private Transform playerTransform;
+
+    private void Start()
+    {
+        // Find and store the player's transform
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerTransform = player.transform;
+        }
+        else
+        {
+            Debug.LogError("Player object with tag 'Player' not found.");
+        }
+    }
+=======
     public float interactionRange = 3f; // Range within which the pen drive can interact with the terminal
     private bool playerInRange = false;  // Track if player is in range of a terminal
     private TerminalManagement targetTerminal; // Reference to the terminal within range
@@ -12,41 +30,39 @@ public class USBPenOverride : MonoBehaviour
 
     public GameObject overridePenDriveUI;
     public TMP_Text countUI;
+>>>>>>> main
 
     private void Update()
     {
-        // If player is in range and clicks Mouse1, try to bypass terminal
-        if (playerInRange && Input.GetMouseButtonDown(0)) // 0 = Mouse1
+        if (playerTransform == null) return;
+
+        // Check if player is close enough and clicks Mouse1 (left mouse button)
+        if (Input.GetMouseButtonDown(0))  // Left mouse button pressed
         {
             TryBypassTerminal();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // Check if we entered range of a terminal
-        if (other.CompareTag("Terminal"))
-        {
-            playerInRange = true;
-            targetTerminal = other.GetComponent<TerminalManagement>(); // Reference to the terminal
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // Reset when leaving terminal range
-        if (other.CompareTag("Terminal"))
-        {
-            playerInRange = false;
-            targetTerminal = null;
-        }
-    }
-
     private void TryBypassTerminal()
     {
-        // Only attempt to bypass if a terminal is in range
-        if (targetTerminal != null)
+        // Check if player is within range of a terminal
+        RaycastHit hit;
+        if (Physics.Raycast(playerTransform.position, playerTransform.forward, out hit, interactionRange))
         {
+<<<<<<< HEAD
+            // Check if we hit a terminal and get the TerminalManagement component
+            TerminalManagement terminal = hit.collider.GetComponent<TerminalManagement>();
+
+            if (terminal != null)
+            {
+                terminal.BypassPassword(); // Call the terminal's bypass method
+                Debug.Log("Terminal bypassed with USB Pen Drive.");
+            }
+            else
+            {
+                Debug.Log("No terminal detected within range.");
+            }
+=======
             --useCount;
             countUI.text = "x" + useCount;
             targetTerminal.BypassPassword(); // Bypass the terminal password
@@ -55,6 +71,7 @@ public class USBPenOverride : MonoBehaviour
         else
         {
             Debug.Log("No terminal detected within range.");
+>>>>>>> main
         }
     }
 

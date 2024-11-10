@@ -5,65 +5,43 @@ using UnityEngine;
 
 public class KeycardReader : MonoBehaviour
 {
-    public Door controlledDoor;           // Assign the Door in the Unity Editor
-    public string requiredKeycardID;       // Specific ID for normal keycard access
-    private bool playerInRange = false;    // To check if the player is in range of the keycard reader
+    public Door controlledDoor;  // The door this reader unlocks
+    public DivisionType requiredDivisionType;  // The required division type for this reader
 
     private void Update()
     {
-        // Check for mouse click only if player is in range
-        if (playerInRange && Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))  // Use mouse click for interaction
         {
-            TryUnlockDoor();
+            TryUnlock();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void TryUnlock()
     {
-        // Check if the player is in range of the keycard reader
-        if (other.CompareTag("Player"))
+        Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 3f);  // Detect nearby colliders
+
+        foreach (Collider collider in nearbyColliders)
         {
-            playerInRange = true;
-        }
-    }
+            // Check for KeycardOverride (this will unlock the door regardless of the division type)
+            KeycardOverride overrideKeycard = collider.GetComponent<KeycardOverride>();
+            if (overrideKeycard != null && overrideKeycard.CanUse())
+            {
+                overrideKeycard.Use();
+                controlledDoor?.Unlock();  // Unlock the controlled door
+                Debug.Log("Door unlocked with override keycard.");
+                return;
+            }
 
-    private void OnTriggerExit(Collider other)
-    {
-        // If the player leaves the range of the keycard reader
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-        }
-    }
-
-    private void TryUnlockDoor()
-    {
-        // Get the player object in range (you may need to adjust this if the player has a different structure)
-        Collider player = Physics.OverlapSphere(transform.position, 2f)
-            .FirstOrDefault(col => col.CompareTag("Player"));
-
-        if (player == null) return;
-
-        // Check if the player has a normal keycard
-        Keycard normalKeycard = player.GetComponent<Keycard>();
-        if (normalKeycard != null && normalKeycard.GetCardID() == requiredKeycardID)
-        {
-            controlledDoor?.Unlock();
-            Debug.Log("Door unlocked with keycard ID: " + requiredKeycardID);
-            return;
+            // Check for a regular Keycard
+            Keycard keycard = collider.GetComponent<Keycard>();
+            if (keycard != null && keycard.GetDivisionType() == requiredDivisionType)
+            {
+                controlledDoor?.Unlock();  // Unlock the controlled door
+                Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
+                return;
+            }
         }
 
-        // Check if the player has an override keycard with remaining uses
-        KeycardOverride overrideKeycard = player.GetComponent<KeycardOverride>();
-        if (overrideKeycard != null && overrideKeycard.CanUse())
-        {
-            overrideKeycard.Use();
-            controlledDoor?.Unlock();
-            Debug.Log("Door unlocked with override keycard.");
-        }
-        else
-        {
-            Debug.Log("Access denied. A valid keycard is required.");
-        }
+        Debug.Log("Access denied. A valid keycard or override keycard is required.");
     }
 }
