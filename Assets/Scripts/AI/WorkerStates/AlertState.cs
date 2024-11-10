@@ -6,10 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class WorkerAlertState : WorkerState
 {
-    private LayerMask enemyLayer;
-    private float shortestDistance;
-    private AiAgent enemy;
-    private Transform distraction;
+    private Transform agentPositionRef;
 
     WorkerStateId WorkerState.GetId()
     {
@@ -18,43 +15,21 @@ public class WorkerAlertState : WorkerState
 
     public void Enter(WorkerAgent agent)
     {
-        shortestDistance = 1000.0f;
-
-        enemyLayer = LayerMask.GetMask("Enemy");
-
-        Collider[] enemies = Physics.OverlapSphere(agent.transform.position, 300, enemyLayer);
-
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            Transform enemyTransform = enemies[i].transform;
-            float distanceToEnemy = Vector3.Distance(agent.transform.position, enemyTransform.position);
-            if (distanceToEnemy < shortestDistance)
-            {
-                enemy = enemyTransform.GetComponent<AiAgent>();
-                shortestDistance = distanceToEnemy;
-            }
-        }
-
-        if(enemy != null)
-        {
-            agent.navMeshAgent.destination = enemy.transform.position;
-        }
-        
+        agent.navMeshAgent.isStopped = false;
+        agent.navMeshAgent.destination = agent.enemyRef.transform.position;
     }
 
     public void Update(WorkerAgent agent)
     {
-        if (agent.navMeshAgent.hasPath)
+        if (agent.navMeshAgent.destination != null)
         {
-            if(agent.navMeshAgent.remainingDistance <= agent.navMeshAgent.stoppingDistance)
+            if(agent.navMeshAgent.remainingDistance <= 2.0f)
             {
-                enemy.distraction = agent.transform;
-                enemy.stateMachine.ChangeState(AiStateId.Investigate);
+                agent.navMeshAgent.ResetPath();
 
-                if(enemy.stateMachine.currentState != AiStateId.Investigate)
-                {
-                    agent.stateMachine.ChangeState(WorkerStateId.Wander);
-                }
+                agent.enemyRef.stateMachine.ChangeState(AiStateId.Investigate);
+
+                agent.stateMachine.ChangeState(WorkerStateId.Wander);
             }
         }
     }

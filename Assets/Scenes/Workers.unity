@@ -272,6 +272,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1460177820}
     - target: {fileID: 3876106388367611259, guid: 844f011b3f0431641a3341e2ddebc78a, type: 3}
+      propertyPath: cooldownManager
+      value: 
+      objectReference: {fileID: 1887460889}
+    - target: {fileID: 3876106388367611259, guid: 844f011b3f0431641a3341e2ddebc78a, type: 3}
       propertyPath: taserSoundObject
       value: 
       objectReference: {fileID: 447802985}
@@ -326,7 +330,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7040447695446063389, guid: 844f011b3f0431641a3341e2ddebc78a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1887460889}
   m_SourcePrefab: {fileID: 100100000, guid: 844f011b3f0431641a3341e2ddebc78a, type: 3}
 --- !u!1 &987620112
 GameObject:
@@ -482,6 +489,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 987620116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1259960502 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4671194673258674744, guid: 013e06a983ca72843ba6bc8ce4abb5ca, type: 3}
+  m_PrefabInstance: {fileID: 1648147728}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1285914577 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8921032466105570368, guid: 9b46f0deebf0b2b469dde6e93bcedffe, type: 3}
+  m_PrefabInstance: {fileID: 1618434779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6207baea5329441ad8f4bfbc5f5ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1319702715
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +659,7 @@ MonoBehaviour:
   initialState: 0
   navMeshAgent: {fileID: 0}
   config: {fileID: 11400000, guid: b188ed5f49c2fa34699e36765ffb0171, type: 2}
+  enemyRef: {fileID: 1285914577}
   startingPosition: {x: 0, y: 0, z: 0}
   detection: {fileID: 0}
 --- !u!114 &1319702722
@@ -854,7 +884,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 655483112117186334, guid: 9b46f0deebf0b2b469dde6e93bcedffe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.360987
+      value: 14.35
       objectReference: {fileID: 0}
     - target: {fileID: 655483112117186334, guid: 9b46f0deebf0b2b469dde6e93bcedffe, type: 3}
       propertyPath: m_LocalPosition.y
@@ -862,7 +892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 655483112117186334, guid: 9b46f0deebf0b2b469dde6e93bcedffe, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.945238
+      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 655483112117186334, guid: 9b46f0deebf0b2b469dde6e93bcedffe, type: 3}
       propertyPath: m_LocalRotation.w
@@ -895,6 +925,10 @@ PrefabInstance:
     - target: {fileID: 7225760431959975434, guid: 9b46f0deebf0b2b469dde6e93bcedffe, type: 3}
       propertyPath: m_Name
       value: Enemy (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7225760431959975434, guid: 9b46f0deebf0b2b469dde6e93bcedffe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1109,6 +1143,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 987620116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1887460887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7040447695446063389, guid: 844f011b3f0431641a3341e2ddebc78a, type: 3}
+  m_PrefabInstance: {fileID: 977489929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1887460889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887460887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5886b9600354161478e31d8df7727f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taserCooldown: 5
+  stunBatonCooldown: 5
+  taserTimer: 0
+  stunBatonTimer: 0
+  readyToUseTaser: 0
+  readyToUseStunBaton: 0
+  taserSlider: {fileID: 1460177820}
+  stunBatonSlider: {fileID: 1259960502}
 --- !u!1 &1914050463
 GameObject:
   m_ObjectHideFlags: 0
