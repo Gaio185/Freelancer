@@ -17,6 +17,7 @@ public class AIShootState : AiState
         Debug.Log("Shoot");
         agent.navMeshAgent.isStopped = true;
         timer = agent.config.shootInterval;
+        agent.detection.playerMovement.isHunted = true;
     }
 
     public void Update(AiAgent agent)

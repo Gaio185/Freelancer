@@ -30,6 +30,8 @@ public class AIHuntPlayerState : AiState
 
         agent.navMeshAgent.isStopped = false;
         huntTimer = agent.config.huntTime;
+
+        agent.detection.playerMovement.isHunted = true;
     }
 
     public void Update(AiAgent agent)
