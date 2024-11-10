@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DivisionType
+{
+    DivisionA,
+    DivisionB,
+    DivisionC
+}
+
 public class Keycard : MonoBehaviour
 {
-    public string cardID; // Unique ID for each keycard (e.g., "LabDoor" or "MainHallDoor")
+    public DivisionType divisionType; // Set this in the Unity Editor to DivisionA, DivisionB, or DivisionC
 
-    public string GetCardID()
+    public DivisionType GetDivisionType()
     {
-        return cardID;
+        return divisionType;
     }
 }

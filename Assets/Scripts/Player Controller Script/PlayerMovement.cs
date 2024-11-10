@@ -25,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool canMove = true;
 
+    // Variables for door interaction
+    public float interactionRange = 10f;  // Raycast range for door interaction
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -34,8 +37,9 @@ public class PlayerMovement : MonoBehaviour
         hasClearance = true;
     }
 
-    public void Update()
+    void Update()
     {
+        // Player movement logic
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -64,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
             characterController.height = crouchHeight;
             walkSpeed = crouchSpeed;
             runSpeed = crouchSpeed;
-
         }
         else
         {
@@ -75,12 +78,37 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
+        // Looking around with mouse
         if (canMove)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+        }
+
+        // Try interacting with door when the player presses "T"
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TryInteractWithDoor();
+        }
+    }
+
+    // Raycast to find doors and interact with them
+    void TryInteractWithDoor()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, interactionRange))
+        {
+            Door targetDoor = hit.transform.GetComponent<Door>();
+            if (targetDoor != null)
+            {
+                targetDoor.TryOpenDoor();  // Call the method to open the door if unlocked
+            }
+            else
+            {
+                Debug.Log("No door in front of you.");
+            }
         }
     }
 }

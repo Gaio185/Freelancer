@@ -81,6 +81,11 @@ public class Switchweapon : MonoBehaviour
         {
             SwitchGadget();
         }
+        // Switch to empty hands (press 4)
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            EmptyHands(); // Make the player empty-handed
+        }
         else if (Input.GetKeyDown(KeyCode.H))
         {
             DeactivateAllModels();
@@ -154,6 +159,13 @@ public class Switchweapon : MonoBehaviour
         }
     }
 
+    void EmptyHands()
+    {
+        // Deactivate all models to make the player empty-handed
+        DeactivateAllModels();
+        Debug.Log("Equipped: Empty Hands");
+    }
+
     void DeactivateAllModels()
     {
         hasWeaponEquipped = false;
@@ -164,5 +176,8 @@ public class Switchweapon : MonoBehaviour
         coinModel.SetActive(false);
         overrideKeyCardModel.SetActive(false);
         flashdriveModel.SetActive(false);
+
+        // Hide crosshair when not holding anything
+        crosshair.SetActive(false);
     }
 }
