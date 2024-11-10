@@ -8,8 +8,9 @@ public class WorkerAlertState : WorkerState
 {
     private LayerMask enemyLayer;
     private float shortestDistance;
-    private AiAgent enemy;
-    private Transform distraction;
+    private Transform agentPositionRef;
+    [HideInInspector] public Transform enemyToAlert;
+    [HideInInspector] public AiAgent enemyRef;
 
     WorkerStateId WorkerState.GetId()
     {
@@ -18,6 +19,10 @@ public class WorkerAlertState : WorkerState
 
     public void Enter(WorkerAgent agent)
     {
+        enemyRef = new AiAgent();
+        agent.navMeshAgent.isStopped = false;
+        //agentPositionRef.position = agent.transform.position;
+
         shortestDistance = 1000.0f;
 
         enemyLayer = LayerMask.GetMask("Enemy");
@@ -30,28 +35,35 @@ public class WorkerAlertState : WorkerState
             float distanceToEnemy = Vector3.Distance(agent.transform.position, enemyTransform.position);
             if (distanceToEnemy < shortestDistance)
             {
-                enemy = enemyTransform.GetComponent<AiAgent>();
+                enemyToAlert = enemyTransform;
                 shortestDistance = distanceToEnemy;
+                Debug.Log(shortestDistance);
             }
         }
 
-        if(enemy != null)
+        enemyRef = enemyToAlert.GetComponent<AiAgent>();
+
+        if(enemyToAlert != null)
         {
-            agent.navMeshAgent.destination = enemy.transform.position;
+            agent.navMeshAgent.destination = enemyToAlert.position;
         }
         
     }
 
     public void Update(WorkerAgent agent)
     {
-        if (agent.navMeshAgent.hasPath)
-        {
-            if(agent.navMeshAgent.remainingDistance <= agent.navMeshAgent.stoppingDistance)
-            {
-                enemy.distraction = agent.transform;
-                enemy.stateMachine.ChangeState(AiStateId.Investigate);
 
-                if(enemy.stateMachine.currentState != AiStateId.Investigate)
+        //enemy.distraction = agentPositionRef;
+
+        if (agent.navMeshAgent.destination != null && enemyRef.stateMachine.currentState != AiStateId.Investigate)
+        {
+            if(agent.navMeshAgent.remainingDistance <= 2.0f)
+            {
+                agent.navMeshAgent.ResetPath();
+
+                enemyRef.stateMachine.ChangeState(AiStateId.Investigate);
+
+                if (enemyRef.stateMachine.currentState != AiStateId.Investigate)
                 {
                     agent.stateMachine.ChangeState(WorkerStateId.Wander);
                 }

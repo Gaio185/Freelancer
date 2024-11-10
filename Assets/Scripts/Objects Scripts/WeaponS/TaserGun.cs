@@ -11,8 +11,6 @@ public class TaserGun : MonoBehaviour
 {
     public float range = 200f;
     public float impactForce = 30f;
-    public float cooldown = 5.0f;
-    private float timer;
 
     public Camera fpscamera;
     public GameObject crosshair;  // Reference to the crosshair object
@@ -21,29 +19,25 @@ public class TaserGun : MonoBehaviour
     private AudioSource taserAudioSource;  // Reference to the AudioSource component
 
     public GameObject stunGunUI;
-    public Slider taserSlider;
+
+    public CoolDownManager cooldownManager;
 
     void Start()
     {
         taserAudioSource = taserSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
         taserAudioSource.Stop();  // Ensure the sound is stopped when the game starts
         crosshair.SetActive(true);  // Show crosshair by default when the weapon is equipped
-        timer = 0f;
-        taserSlider.value = 1;
     }
 
     void Update()
     {
-        timer -= Time.deltaTime;
         // Check if Fire1 (left mouse button by default) is pressed and shoot if conditions are met
-        if (Input.GetButton("Fire1") && timer <= 0)
+        if (Input.GetButton("Fire1") && cooldownManager.readyToUseTaser)
         {
             Shoot();
-            timer = cooldown;
-            taserSlider.value = 0;
-        }else if(timer > 0)
-        {
-            taserSlider.value += (Time.deltaTime / timer) * 0.2f;
+            cooldownManager.readyToUseTaser = false;
+            cooldownManager.taserTimer = cooldownManager.taserCooldown;
+            cooldownManager.taserSlider.value = 0;
         }
 
     }

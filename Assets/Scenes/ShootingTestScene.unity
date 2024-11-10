@@ -1379,6 +1379,10 @@ PrefabInstance:
       propertyPath: coinPlaceholder
       value: 
       objectReference: {fileID: 562514567}
+    - target: {fileID: 8927915152783858327, guid: 844f011b3f0431641a3341e2ddebc78a, type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 69164937}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1489,7 +1493,7 @@ GameObject:
   - component: {fileID: 2109303585}
   m_Layer: 0
   m_Name: floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
