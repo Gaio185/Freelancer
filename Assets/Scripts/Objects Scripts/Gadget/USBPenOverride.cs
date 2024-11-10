@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class USBPenOverride : MonoBehaviour
 {
-<<<<<<< HEAD
+//<<<<<<< HEAD
     public float interactionRange = 3f;  // Range within which the pen drive can interact with the terminal
     private Transform playerTransform;
+    private bool playerInRange = false;  // Track if player is in range of a terminal
+    private TerminalManagement targetTerminal; // Reference to the terminal within range
+    private float useCount = 3;
+
+    public GameObject overridePenDriveUI;
+    public TMP_Text countUI;
 
     private void Start()
     {
@@ -22,15 +28,6 @@ public class USBPenOverride : MonoBehaviour
             Debug.LogError("Player object with tag 'Player' not found.");
         }
     }
-=======
-    public float interactionRange = 3f; // Range within which the pen drive can interact with the terminal
-    private bool playerInRange = false;  // Track if player is in range of a terminal
-    private TerminalManagement targetTerminal; // Reference to the terminal within range
-    private float useCount = 3;
-
-    public GameObject overridePenDriveUI;
-    public TMP_Text countUI;
->>>>>>> main
 
     private void Update()
     {
@@ -49,7 +46,7 @@ public class USBPenOverride : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(playerTransform.position, playerTransform.forward, out hit, interactionRange))
         {
-<<<<<<< HEAD
+
             // Check if we hit a terminal and get the TerminalManagement component
             TerminalManagement terminal = hit.collider.GetComponent<TerminalManagement>();
 
@@ -62,7 +59,7 @@ public class USBPenOverride : MonoBehaviour
             {
                 Debug.Log("No terminal detected within range.");
             }
-=======
+
             --useCount;
             countUI.text = "x" + useCount;
             targetTerminal.BypassPassword(); // Bypass the terminal password
@@ -71,7 +68,7 @@ public class USBPenOverride : MonoBehaviour
         else
         {
             Debug.Log("No terminal detected within range.");
->>>>>>> main
+
         }
     }
 
