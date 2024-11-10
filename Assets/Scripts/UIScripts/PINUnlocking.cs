@@ -10,6 +10,7 @@ public class PINUnlocking : MonoBehaviour
 {
     public TextMeshProUGUI ans; // Display for the entered PIN
     public TextMeshProUGUI placeHolder; // Placeholder for the PIN input
+    public SafeDoorController safeDoorController;
 
     private string correctPIN = "1234"; // Correct PIN
 
@@ -54,7 +55,7 @@ public class PINUnlocking : MonoBehaviour
             Debug.Log("Correct PIN entered");
             Clear();
 
-            SafeDoorController safeDoorController = FindObjectOfType<SafeDoorController>();
+            
             if (safeDoorController != null)
             {
                 safeDoorController.UnlockSafe(); // Unlock the safe door

@@ -87,8 +87,8 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
-        // Try interacting with door when the player presses "T"
-        if (Input.GetKeyDown(KeyCode.T))
+        // Try interacting with door when the player presses "F"
+        if (Input.GetKeyDown(KeyCode.F))
         {
             TryInteractWithDoor();
         }

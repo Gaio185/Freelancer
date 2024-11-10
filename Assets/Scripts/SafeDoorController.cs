@@ -9,6 +9,8 @@ public class SafeDoorController : MonoBehaviour
     public GameObject safeDoor; // Reference to the safe door object that should be destroyed
     public MonoBehaviour cameraController; // Reference to your camera control script
     public GameObject player; // Reference to the player GameObject for movement control
+    public GameObject numerario;
+
 
     private bool isPlayerNear = false;
     private bool isUIPinActive = false; // Track if the PIN UI is active
@@ -49,8 +51,9 @@ public class SafeDoorController : MonoBehaviour
     public void UnlockSafe()
     {
         Destroy(safeDoor); // Destroy the safe door
+        Destroy(numerario); // Destroy the numerario object
         ClosePINUI(); // Close the PIN UI and re-lock cursor after unlocking
-        Debug.Log("Safe unlocked and door destroyed");
+        Debug.Log("Safe unlocked, door and numerario destroyed");
     }
 
     private void OpenPINUI()

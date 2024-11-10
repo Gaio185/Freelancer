@@ -6,7 +6,9 @@ public enum DivisionType
 {
     DivisionA,
     DivisionB,
-    DivisionC
+    DivisionC,
+    DivisionD,
+    DivisionE
 }
 
 public class Keycard : MonoBehaviour
