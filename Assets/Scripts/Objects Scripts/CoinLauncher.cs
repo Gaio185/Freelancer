@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CoinLauncher : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class CoinLauncher : MonoBehaviour
 
     bool readyToThrow;
 
+    public GameObject coinsUI;
+    public TMP_Text countUI;
+
     void Start()
     {
         readyToThrow = true;
@@ -31,7 +36,9 @@ public class CoinLauncher : MonoBehaviour
             ThrowCoin();
         }
 
-        if(coinCount <= 0)
+        countUI.text = "x" + coinCount;
+
+        if (coinCount <= 0)
         {
             coinPlaceholder.SetActive(false);
         }
@@ -67,5 +74,15 @@ public class CoinLauncher : MonoBehaviour
     private void ResetThrow()
     {
        readyToThrow = true;
+    }
+
+    private void OnEnable()
+    {
+        coinsUI.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        coinsUI.SetActive(false);
     }
 }

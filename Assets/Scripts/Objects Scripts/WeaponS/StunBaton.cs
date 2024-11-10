@@ -13,6 +13,8 @@ public class StunBaton : MonoBehaviour
 
     private AudioSource stunAudioSource;  // Reference to the AudioSource component
 
+    public GameObject stunBattonUI;
+
     void Start()
     {
         stunAudioSource = stunSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
@@ -53,8 +55,15 @@ public class StunBaton : MonoBehaviour
         }
     }
 
+
+    private void OnEnable()
+    {
+        stunBattonUI.SetActive(true);
+    }
+
     void OnDisable()
     {
+        stunBattonUI.SetActive(true);
         stunAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
     }
 
