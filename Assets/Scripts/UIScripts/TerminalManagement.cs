@@ -20,7 +20,7 @@ public class TerminalManagement : MonoBehaviour
     private GameObject player; // Reference to player GameObject
     public GameObject usbPen; // Reference to the USB pen GameObject
 
-    private string correctPassword = "password"; // Correct password for terminal access
+    public string correctPassword; // Correct password for terminal access
 
     public void Start()
     {

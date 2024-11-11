@@ -9,6 +9,7 @@ public class SafeDoorController : MonoBehaviour
     public GameObject safeDoor; // Reference to the safe door object that should be destroyed
     public MonoBehaviour cameraController; // Reference to your camera control script
     public GameObject player; // Reference to the player GameObject for movement control
+    public GameObject missionObjective; // Reference to the mission objective
     public GameObject numerario;
 
 
@@ -53,6 +54,7 @@ public class SafeDoorController : MonoBehaviour
         Destroy(safeDoor); // Destroy the safe door
         Destroy(numerario); // Destroy the numerario object
         ClosePINUI(); // Close the PIN UI and re-lock cursor after unlocking
+        missionObjective.SetActive(true); // Activate the mission objective
         Debug.Log("Safe unlocked, door and numerario destroyed");
     }
 

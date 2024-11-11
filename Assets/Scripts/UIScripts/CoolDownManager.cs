@@ -42,7 +42,7 @@ public class CoolDownManager : MonoBehaviour
         {
             readyToUseStunBaton = true;
         }
-        else if (taserTimer > 0)
+        else if (stunBatonTimer > 0)
         {
             stunBatonSlider.value += (Time.deltaTime / stunBatonTimer) * 0.2f;
         }

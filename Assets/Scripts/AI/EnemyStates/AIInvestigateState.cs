@@ -50,17 +50,6 @@ public class AIInvestigateState : AiState
             
             if (!agent.navMeshAgent.hasPath && interval <= 0 && RandomPoint(agent.transform.position, agent.detection.awarenessRadius, out randomPosition))
             {
-                //normalizedPosition = agent.transform.position.normalized;
-
-                //Vector3 maxPosition = new Vector3(
-                //    (normalizedPosition.x + agent.detection.radius),
-                //    (normalizedPosition.y + agent.detection.radius),
-                //    (normalizedPosition.z + agent.detection.radius));
-
-                //Vector3 randomPosition = new Vector3(
-                //Random.Range(agent.transform.position.x, maxPosition.x),
-                //Random.Range(agent.transform.position.y, maxPosition.y),
-                //Random.Range(agent.transform.position.x, maxPosition.z));
                 agent.visorMaterial.color = Color.yellow;
                 randomPosition.y = agent.transform.position.y;
                 agent.navMeshAgent.destination = randomPosition;
