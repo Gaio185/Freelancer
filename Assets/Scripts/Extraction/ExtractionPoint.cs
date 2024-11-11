@@ -22,6 +22,8 @@ public class ExtractionPoint : MonoBehaviour
         {
             if (playerMovement.canExtract)
             {
+                Cursor.visible = true; // Show cursor when opening workspace
+                Cursor.lockState = CursorLockMode.None; // Unlock cursor
                 UnityEngine.SceneManagement.SceneManager.LoadScene(0);
             }
             else

@@ -53,7 +53,8 @@ public class TerminalManagement : MonoBehaviour
     public void BypassPassword()
     {
         Debug.Log("BypassPassword method called."); // Debugging line
-        OpenWorkspace();
+        passwordInterface.SetActive(false); // Hide the password interface
+        workspaceInterface.SetActive(true); // Show the workspace interface
         Debug.Log("Workspace unlocked with Override Pen Drive.");
     }
 

@@ -27,7 +27,9 @@ public class PlayerHealth : MonoBehaviour
         // Check if health is depleted
         if (health <= 0)
         {
-            SceneManager.LoadScene(0); // Reload scene on death
+            Cursor.visible = true; // Show cursor when opening workspace
+            Cursor.lockState = CursorLockMode.None; // Unlock cursor
+            SceneManager.LoadScene(0); // Reload scene on death   
         }
     }
 

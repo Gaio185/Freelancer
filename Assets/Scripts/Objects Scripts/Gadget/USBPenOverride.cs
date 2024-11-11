@@ -48,11 +48,14 @@ public class USBPenOverride : MonoBehaviour
         {
 
             // Check if we hit a terminal and get the TerminalManagement component
-            TerminalManagement terminal = hit.collider.GetComponent<TerminalManagement>();
+            TerminalInteract terminal = hit.collider.GetComponent<TerminalInteract>();
 
             if (terminal != null)
             {
-                terminal.BypassPassword(); // Call the terminal's bypass method
+                --useCount;
+                countUI.text = "x" + useCount;
+                TerminalManagement computerInterface = terminal.computerInterface.GetComponent<TerminalManagement>();
+                computerInterface.BypassPassword(); // Call the terminal's bypass method
                 Debug.Log("Terminal bypassed with USB Pen Drive.");
             }
             else
@@ -60,10 +63,8 @@ public class USBPenOverride : MonoBehaviour
                 Debug.Log("No terminal detected within range.");
             }
 
-            --useCount;
-            countUI.text = "x" + useCount;
-            targetTerminal.BypassPassword(); // Bypass the terminal password
-            Debug.Log("Terminal bypassed with Override Pen Drive.");
+            //targetTerminal.BypassPassword(); // Bypass the terminal password
+            //Debug.Log("Terminal bypassed with Override Pen Drive.");
         }
         else
         {
