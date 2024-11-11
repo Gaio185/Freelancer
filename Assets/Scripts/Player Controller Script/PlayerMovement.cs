@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector] public bool hasClearance;
     [HideInInspector] public bool isHunted;
+    [HideInInspector] public bool canExtract;
 
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
         isHunted = false;
         hasClearance = true;
+        canExtract = false;
     }
 
     void Update()

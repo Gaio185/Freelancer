@@ -13,7 +13,9 @@ public class StunBaton : MonoBehaviour
 
     private AudioSource stunAudioSource;  // Reference to the AudioSource component
 
-    public GameObject stunBattonUI;
+    public GameObject stunBatonUI;
+
+    public CoolDownManager cooldownManager;
 
     void Start()
     {
@@ -25,9 +27,12 @@ public class StunBaton : MonoBehaviour
     void Update()
     {
         // Check if Fire1 (left mouse button by default) is pressed and use stun baton if conditions are met
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && cooldownManager.readyToUseStunBaton)
         {
             UseStunBaton();
+            cooldownManager.readyToUseStunBaton = false;
+            cooldownManager.stunBatonTimer = cooldownManager.stunBatonCooldown;
+            cooldownManager.stunBatonSlider.value = 0;
         }
     }
 
@@ -58,12 +63,12 @@ public class StunBaton : MonoBehaviour
 
     private void OnEnable()
     {
-        stunBattonUI.SetActive(true);
+        stunBatonUI.SetActive(true);
     }
 
     void OnDisable()
     {
-        stunBattonUI.SetActive(true);
+        stunBatonUI.SetActive(false);
         stunAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
     }
 

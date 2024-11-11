@@ -14,6 +14,7 @@ public class OffState : TOState
         Debug.Log("Off");
         agent.detection.lightRef.enabled = true;
         agent.visorMaterial.color = Color.grey;
+        agent.detection.lightRef.enabled = false;
     }
 
     public void Update(TOAgent agent)

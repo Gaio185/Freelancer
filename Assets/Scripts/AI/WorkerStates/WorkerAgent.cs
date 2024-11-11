@@ -9,6 +9,7 @@ public class WorkerAgent : MonoBehaviour
     public WorkerStateId initialState;
     public NavMeshAgent navMeshAgent;
     public WorkerAgentConfig config;
+    public AiAgent enemyRef;
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
 
