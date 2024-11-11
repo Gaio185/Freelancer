@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class VentDoor : MonoBehaviour
 {
-    public Transform destination;
-    public float interactionDistance = 2f; // Distance to interact with the vent door
-    public LayerMask ventTransform; // LayerMask to specify the vent door layer
-    public GameObject playerRef;
-
+    public Transform destination;               // Target destination for the vent
+    public float interactionDistance = 2f;      // Distance to interact with the vent
+    public GameObject playerRef;                // Reference to the player GameObject
 
     private void Start()
     {
-        playerRef = GameObject.FindGameObjectWithTag("Player");
+        // Find the player object tagged "Player" if not already assigned
+        if (playerRef == null)
+        {
+            playerRef = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
     private void Update()
@@ -20,46 +22,46 @@ public class VentDoor : MonoBehaviour
         EnterVent();
     }
 
-    // Method to destroy the vent door
     public void DestroyVentDoor()
     {
         Debug.Log("You use the screwdriver to destroy the vent door.");
-        //Destroy(gameObject); // Destroy the vent door GameObject
-        gameObject.SetActive(false);
-        EnterVent(); // Allow the player to enter the vent (if needed)
+        gameObject.SetActive(false);  // Deactivate the vent door
+        EnterVent();
     }
 
     private void EnterVent()
-    { // Check if the player presses the F key
-        if (Input.GetKey(KeyCode.F))
+    {
+        if (Input.GetKey(KeyCode.F) && playerRef != null && destination != null)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(playerRef.transform.position, 10f);
-            if (hitColliders.Length > 0)
+            float distance = Vector3.Distance(playerRef.transform.position, transform.position);
+
+            // Check if player is close enough to the vent to interact
+            if (distance <= interactionDistance)
             {
-                foreach (var hitCollider in hitColliders)
+                // Check if player is already at the destination to prevent unnecessary teleport
+                if (Vector3.Distance(playerRef.transform.position, destination.position) < 0.1f)
                 {
-                    VentDoor ventDoor = hitCollider.GetComponent<VentDoor>();
-                    if (ventDoor != null && playerRef != null && destination != null)
-                    {
-                        Debug.Log("VentDoor detected, teleporting player.");
-
-                        // Temporarily disable CharacterController or Rigidbody if present
-                        CharacterController characterController = playerRef.GetComponent<CharacterController>();
-                        Rigidbody rb = playerRef.GetComponent<Rigidbody>();
-
-                        if (characterController != null) characterController.enabled = false;
-                        if (rb != null) rb.isKinematic = true;
-
-                        // Set player position to destination
-                        playerRef.transform.position = destination.position;
-
-                        // Reactivate CharacterController or Rigidbody
-                        if (characterController != null) characterController.enabled = true;
-                        if (rb != null) rb.isKinematic = false;
-
-                        Debug.Log("Player position updated to destination: " + destination.position);
-                    }
+                    Debug.Log("Player is already at the destination, no teleport needed.");
+                    return;
                 }
+
+                Debug.Log("Teleporting player to destination.");
+
+                // Temporarily disable CharacterController or Rigidbody if present
+                CharacterController characterController = playerRef.GetComponent<CharacterController>();
+                Rigidbody rb = playerRef.GetComponent<Rigidbody>();
+
+                if (characterController != null) characterController.enabled = false;
+                if (rb != null) rb.isKinematic = true;
+
+                // Teleport the player to the destination
+                playerRef.transform.position = destination.position;
+
+                // Reactivate CharacterController or Rigidbody
+                if (characterController != null) characterController.enabled = true;
+                if (rb != null) rb.isKinematic = false;
+
+                Debug.Log("Player teleported to destination: " + destination.position);
             }
         }
     }
