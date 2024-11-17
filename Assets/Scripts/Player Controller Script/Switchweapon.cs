@@ -17,6 +17,7 @@ public class Switchweapon : MonoBehaviour
     public GameObject flashdriveModel;
 
     public bool hasWeaponEquipped;
+    public bool disableTools;
 
     // Keep track of active objects
     private GameObject activeWeapon;
@@ -26,42 +27,12 @@ public class Switchweapon : MonoBehaviour
     // Crosshair reference
     public GameObject crosshair;
 
-    //void Start()
-    //{
-    //    LoadSelectedGear(); // Load and show the player's selected gear
-    //}
-
-    //void LoadSelectedGear()
-    //{
-    //    // Load previously selected gear or defaults
-    //    string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton"); // Default weapon
-
-    //    DeactivateAllModels(); // Ensure all models are turned off
-
-    //    // Activate the selected weapon
-    //    if (selectedWeapon == "StunBaton")
-    //    {
-    //        activeWeapon = stunBatonModel;
-    //        stunBatonModel.SetActive(true); // Show the stun baton model
-    //        crosshair.SetActive(true); // Show crosshair when weapon is equipped
-    //    }
-    //    else if (selectedWeapon == "TaserGun")
-    //    {
-    //        activeWeapon = taserGunModel;
-    //        taserGunModel.SetActive(true); // Show the taser gun model
-    //        crosshair.SetActive(true); // Show crosshair when weapon is equipped
-    //    }
-    //    else
-    //    {
-    //        crosshair.SetActive(false); // Hide crosshair if no weapon is equipped
-    //    }
-
-    //    Debug.Log($"Equipped: Weapon - {selectedWeapon}");
-    //}
-
     void Update()
     {
-        HandleSwitching(); // Check for input to switch items
+        if (!disableTools)
+        {
+            HandleSwitching(); // Check for input to switch items
+        }
     }
 
     void HandleSwitching()
@@ -161,7 +132,7 @@ public class Switchweapon : MonoBehaviour
         Debug.Log("Equipped: Empty Hands");
     }
 
-    void DeactivateAllModels()
+    public void DeactivateAllModels()
     {
         hasWeaponEquipped = false;
         // Deactivate all models

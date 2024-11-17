@@ -18,6 +18,7 @@ public class TerminalManagement : MonoBehaviour
     public Button sentryOffButton; // Button to turn off sentry
 
     private GameObject player; // Reference to player GameObject
+    private Player playerScript; // Reference to player script
     public GameObject usbPen; // Reference to the USB pen GameObject
 
     public string correctPassword; // Correct password for terminal access
@@ -25,6 +26,7 @@ public class TerminalManagement : MonoBehaviour
     public void Start()
     {
         player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<Player>();
     }
 
     public void CheckPassword()
@@ -74,7 +76,8 @@ public class TerminalManagement : MonoBehaviour
             this.gameObject.SetActive(false); // Close terminal interface
             Cursor.visible = false; // Hide cursor
             Cursor.lockState = CursorLockMode.Locked; // Lock cursor
-            player.GetComponent<PlayerMovement>().canMove = true; // Enable player movement
+            playerScript.movement.canMove = true; // Enable player movement
+            playerScript.switchWeapon.disableTools = false; // Enable player tools  
         }
 
         // Manage button interactivity based on TOAgent states

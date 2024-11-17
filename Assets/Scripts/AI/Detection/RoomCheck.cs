@@ -6,12 +6,12 @@ public class RoomCheck : MonoBehaviour
 {
     public bool isRestricted;
     private GameObject player;
-    private PlayerMovement playerMovement;
+    private Player playerScript;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerMovement = player.GetComponent<PlayerMovement>();
+        playerScript = player.GetComponent<Player>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,12 +20,12 @@ public class RoomCheck : MonoBehaviour
         {
            if(isRestricted)
             {
-                playerMovement.hasClearance = false;
+                playerScript.movement.hasClearance = false;
                 Debug.Log("Player does not have clearance");
             }
            else 
             {
-                playerMovement.hasClearance = true;
+                playerScript.movement.hasClearance = true;
                 Debug.Log("Player has clearance");
             }
         }

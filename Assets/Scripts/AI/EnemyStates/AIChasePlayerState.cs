@@ -25,13 +25,13 @@ public class AIHuntPlayerState : AiState
             playerTransform = GameObject.FindWithTag("Player").transform;
         }
 
-        agent.detection.playerMovement.isHunted = true;
+        agent.detection.player.movement.isHunted = true;
         agent.visorMaterial.color = Color.red;
 
         agent.navMeshAgent.isStopped = false;
         huntTimer = agent.config.huntTime;
 
-        agent.detection.playerMovement.isHunted = true;
+        agent.detection.player.movement.isHunted = true;
     }
 
     public void Update(AiAgent agent)
