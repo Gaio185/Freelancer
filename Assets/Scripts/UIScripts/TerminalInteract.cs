@@ -9,10 +9,12 @@ public class TerminalInteract : MonoBehaviour
     public LayerMask targetMask; // LayerMask for detecting terminals
 
     private GameObject player;
+    public Player playerScript;
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<Player>();
     }
 
     void Update()
@@ -25,7 +27,9 @@ public class TerminalInteract : MonoBehaviour
                 computerInterface.SetActive(true); // Show the terminal UI
                 Cursor.visible = true; // Show cursor
                 Cursor.lockState = CursorLockMode.None; // Unlock cursor
-                player.GetComponent<PlayerMovement>().canMove = false; // Disable player movement
+                playerScript.movement.canMove = false; // Disable player movement
+                playerScript.switchWeapon.disableTools = true; // Disable player tools
+                playerScript.switchWeapon.DeactivateAllModels();
             }
         }
     }

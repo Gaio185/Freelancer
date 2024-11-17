@@ -16,8 +16,7 @@ public class Detection : MonoBehaviour
     public float cutoffAngle;
 
     public GameObject playerRef;
-    public PlayerMovement playerMovement;
-    private Switchweapon switchWeapon;
+    public Player player;
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -35,8 +34,7 @@ public class Detection : MonoBehaviour
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
-        playerMovement = playerRef.GetComponent<PlayerMovement>();
-        switchWeapon = playerRef.GetComponent<Switchweapon>();
+        player = playerRef.GetComponent<Player>();
         rotationRef = transform.rotation;
         forwardRef = transform.forward;
         StartCoroutine(DetectionRoutine());
@@ -127,9 +125,9 @@ public class Detection : MonoBehaviour
 
     private bool ShouldBeDetected()
     {
-        if (!playerMovement.isHunted)
+        if (!player.movement.isHunted)
         {
-            if (!playerMovement.hasClearance || switchWeapon.hasWeaponEquipped)
+            if (!player.movement.hasClearance || player.switchWeapon.hasWeaponEquipped)
             {
                 return true;
             }
