@@ -2,54 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DialogueEditor;
+using UnityEngine.EventSystems; // Required for managing UI Event Systems
+
 
 public class ConversationStarter : MonoBehaviour
 {
     [SerializeField] private NPCConversation myConversation;
     [SerializeField] private GameObject pressFText; // UI Text for "Press F to Talk"
+    [SerializeField] private GameObject conversationUI; // Main conversation UI
     private bool isInConversation = false;
     private bool isPlayerInRange = false;
 
     private void Start()
     {
-        // Hide the "Press F to Talk" text by default
+        // Hide the "Press F to Talk" text and ensure conversation UI is inactive
         if (pressFText != null)
         {
             pressFText.SetActive(false);
+        }
+        if (conversationUI != null)
+        {
+            conversationUI.SetActive(false);
         }
     }
 
     private void Update()
     {
-        // Check if the conversation is active, and disable player movement if it is.
+        // Disable player movement during a conversation
         if (isInConversation)
         {
-            // Assuming the player has a PlayerController component that handles movement.
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                var playerController = player.GetComponent<PlayerMovement>();
-                if (playerController != null)
-                {
-                    playerController.enabled = false; // Disable movement
-                }
-            }
+            DisablePlayerMovement();
         }
         else
         {
-            // Re-enable player movement when conversation ends
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                var playerController = player.GetComponent<PlayerMovement>();
-                if (playerController != null)
-                {
-                    playerController.enabled = true; // Enable movement
-                }
-            }
+            EnablePlayerMovement();
         }
 
-        // If player is still in range and presses 'F' again, restart the conversation
+        // Check for interaction input when the player is in range
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.F) && !isInConversation)
         {
             StartConversation();
@@ -60,10 +49,7 @@ public class ConversationStarter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Player entered the trigger zone
             isPlayerInRange = true;
-
-            // Show the "Press F to Talk" text when player enters the trigger
             if (pressFText != null && !isInConversation)
             {
                 pressFText.SetActive(true);
@@ -75,10 +61,7 @@ public class ConversationStarter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Player exited the trigger zone
             isPlayerInRange = false;
-
-            // Hide the "Press F to Talk" text when player exits the trigger
             if (pressFText != null)
             {
                 pressFText.SetActive(false);
@@ -86,46 +69,82 @@ public class ConversationStarter : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player") && !isInConversation)
-        {
-            // If player is in range and presses 'F', start the conversation
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                StartConversation();
-            }
-        }
-    }
-
     private void StartConversation()
     {
-        // Start the conversation
-        ConversationManager.Instance.StartConversation(myConversation);
-        isInConversation = true; // Set the conversation state to true
+        if (ConversationManager.Instance == null)
+        {
+            Debug.LogError("ConversationManager.Instance is null!");
+            return;
+        }
+        if (myConversation == null)
+        {
+            Debug.LogError("myConversation is not assigned!");
+            return;
+        }
+        if (conversationUI == null)
+        {
+            Debug.LogError("ConversationUI is not assigned!");
+            return;
+        }
 
-        // Hide the "Press F to Talk" text during conversation
+        // If all checks pass, proceed
+        ConversationManager.Instance.StartConversation(myConversation);
+        isInConversation = true;
         if (pressFText != null)
         {
             pressFText.SetActive(false);
         }
-
-        // Subscribe to the end conversation event
-        ConversationManager.OnConversationEnded += EndConversation;
-
-        // Unlock and show the cursor for conversation
+        if (conversationUI != null)
+        {
+            conversationUI.SetActive(true);
+        }
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        ConversationManager.OnConversationEnded += EndConversation;
     }
-
     private void EndConversation()
     {
-        // End the conversation and re-enable interaction
         isInConversation = false;
-        ConversationManager.OnConversationEnded -= EndConversation;
 
-        // Lock and hide the cursor after conversation
+        // Re-hide the conversation UI
+        if (conversationUI != null)
+        {
+            conversationUI.SetActive(false);
+        }
+
+        // Lock cursor and reset UI input state
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // Disable EventSystem to prevent UI overlap
+        EventSystem.current.enabled = false;
+
+        ConversationManager.OnConversationEnded -= EndConversation;
+    }
+
+    private void DisablePlayerMovement()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            var playerController = player.GetComponent<PlayerMovement>();
+            if (playerController != null)
+            {
+                playerController.enabled = false;
+            }
+        }
+    }
+
+    private void EnablePlayerMovement()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            var playerController = player.GetComponent<PlayerMovement>();
+            if (playerController != null)
+            {
+                playerController.enabled = true;
+            }
+        }
     }
 }
