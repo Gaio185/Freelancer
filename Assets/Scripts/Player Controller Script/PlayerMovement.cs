@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -24,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private CharacterController characterController;
 
+    Quaternion initialRotation;
+    public float amt, slerpAmt;
+    private float targetZ;
+
     public bool canMove = true;
 
     // Variables for door interaction
@@ -37,6 +42,9 @@ public class PlayerMovement : MonoBehaviour
         isHunted = false;
         hasClearance = true;
         canExtract = false;
+
+        initialRotation = transform.localRotation;  // Save the initial rotation
+        targetZ = initialRotation.eulerAngles.z;    // Set initial target z-axis rotation
     }
 
     void Update()
@@ -89,8 +97,11 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
+        // Check for player leaning
+        if(canMove) LeanCheck();
+
         // Try interacting with door when the player presses "F"
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && canMove)
         {
             TryInteractWithDoor();
         }
@@ -112,5 +123,34 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("No door in front of you.");
             }
         }
+    }
+
+    void LeanCheck()
+    {
+        // Get the current Euler angles (yaw, pitch, and roll)
+        Vector3 currentEulerAngles = transform.localEulerAngles;
+
+        // Determine target z-axis based on input
+        if (Input.GetKey(KeyCode.Q))
+        {
+            // Lean left: increase the z-axis rotation gradually
+            targetZ = initialRotation.eulerAngles.z + amt;
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            // Lean right: decrease the z-axis rotation gradually
+            targetZ = initialRotation.eulerAngles.z - amt;
+        }
+        else
+        {
+            // No input: smoothly return to the initial z-axis rotation
+            targetZ = initialRotation.eulerAngles.z;
+        }
+
+        // Smoothly interpolate the z-axis rotation
+        currentEulerAngles.z = Mathf.LerpAngle(currentEulerAngles.z, targetZ, Time.deltaTime * slerpAmt);
+
+        // Apply the updated rotation back to the transform
+        transform.localRotation = Quaternion.Euler(currentEulerAngles);
     }
 }

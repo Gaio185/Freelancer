@@ -349,7 +349,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6853350239750747127}
   holdPos: {fileID: 193121532610488223}
-  throwForce: 500
   pickUpRange: 20
   pickUpRadius: 1
 --- !u!1 &6811098964605214883
@@ -455,11 +454,9 @@ GameObject:
   - component: {fileID: 2663269398240917901}
   - component: {fileID: 4010364181955235889}
   - component: {fileID: 5706205178149017114}
-  - component: {fileID: 8780819592887504439}
   - component: {fileID: 6177026703242774628}
   - component: {fileID: 755450017598237319}
   - component: {fileID: 4939373288198045000}
-  - component: {fileID: 2672916269503514713}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -534,21 +531,11 @@ MonoBehaviour:
   crouchSpeed: 3
   hasClearance: 0
   isHunted: 0
+  canExtract: 0
+  amt: 0
+  slerpAmt: 0
   canMove: 1
---- !u!114 &8780819592887504439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6853350239750747127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72e0019715fac7746837d3c349437c60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  amt: 40
-  slerpAmt: 20
+  interactionRange: 10
 --- !u!114 &6177026703242774628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,23 +582,7 @@ MonoBehaviour:
   overrideKeyCardModel: {fileID: 241390472032049285}
   flashdriveModel: {fileID: 9055532470189230434}
   hasWeaponEquipped: 0
---- !u!114 &2672916269503514713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6853350239750747127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e05266c656a1f843a5e3e1c462351c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  open: 100
-  range: 10
-  door: {fileID: 0}
-  isOpening: 0
-  fpsCam: {fileID: 2282727641768446215}
+  crosshair: {fileID: 0}
 --- !u!1 &7334621311207452666
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +711,7 @@ MonoBehaviour:
   ventLayer:
     serializedVersion: 2
     m_Bits: 4096
+  screwdriverUI: {fileID: 0}
 --- !u!1 &8810788604289532720
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +766,8 @@ MonoBehaviour:
   throwKey: 323
   throwForce: 4
   throwUpwardForce: 4
+  coinsUI: {fileID: 0}
+  countUI: {fileID: 0}
 --- !u!1001 &11263391713850764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -944,9 +918,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 20
-  cooldown: 5
   impactForce: 30
   fpscamera: {fileID: 2282727641768446215}
+  crosshair: {fileID: 0}
+  stunSoundObject: {fileID: 0}
+  stunBatonUI: {fileID: 0}
+  cooldownManager: {fileID: 0}
 --- !u!1001 &1123927980480882132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1070,6 +1047,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usesLeft: 3
+  overrideKeycardUI: {fileID: 0}
+  countUI: {fileID: 0}
 --- !u!54 &7437399751177862580
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1443,8 +1422,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 300
   impactForce: 30
-  cooldown: 5
   fpscamera: {fileID: 2282727641768446215}
+  crosshair: {fileID: 0}
+  taserSoundObject: {fileID: 0}
+  stunGunUI: {fileID: 0}
+  cooldownManager: {fileID: 0}
 --- !u!1 &8217667298742645001 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1681804520656817133, guid: 74a468bcb8f88ec46a0383b1ae12ea30, type: 3}
@@ -1551,6 +1533,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRange: 4
+  overridePenDriveUI: {fileID: 0}
+  countUI: {fileID: 0}
 --- !u!54 &3196356383960830153
 Rigidbody:
   m_ObjectHideFlags: 0
