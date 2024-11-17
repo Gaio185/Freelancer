@@ -32,7 +32,7 @@ public class TaserGun : MonoBehaviour
     void Update()
     {
         // Check if Fire1 (left mouse button by default) is pressed and shoot if conditions are met
-        if (Input.GetButton("Fire1") && cooldownManager.readyToUseTaser)
+        if (Input.GetMouseButton(0) && cooldownManager.readyToUseTaser)
         {
             Shoot();
             cooldownManager.readyToUseTaser = false;
