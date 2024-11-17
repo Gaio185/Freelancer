@@ -81,11 +81,6 @@ public class Switchweapon : MonoBehaviour
         {
             SwitchGadget();
         }
-        // Switch to empty hands (press 4)
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            EmptyHands(); // Make the player empty-handed
-        }
         else if (Input.GetKeyDown(KeyCode.H))
         {
             DeactivateAllModels();
