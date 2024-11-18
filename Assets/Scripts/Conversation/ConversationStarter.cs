@@ -9,6 +9,8 @@ public class ConversationStarter : MonoBehaviour
 {
     [SerializeField] private NPCConversation myConversation;
     [SerializeField] private GameObject pressFText; // UI Text for "Press F to Talk"
+    public GameObject conversationManager;
+    public GameObject HUD;
     private bool isInConversation = false;
     private bool isPlayerInRange = false;
 
@@ -54,6 +56,8 @@ public class ConversationStarter : MonoBehaviour
         // If player is still in range and presses 'F' again, restart the conversation
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.F) && !isInConversation)
         {
+            conversationManager.SetActive(true);
+            HUD.SetActive(false);
             StartConversation();
         }
     }
@@ -126,6 +130,8 @@ public class ConversationStarter : MonoBehaviour
         isInConversation = false;
         ConversationManager.OnConversationEnded -= EndConversation;
 
+        conversationManager.SetActive(false); // Hide the conversation UI
+        HUD.SetActive(true);
         // Lock and hide the cursor after conversation
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
