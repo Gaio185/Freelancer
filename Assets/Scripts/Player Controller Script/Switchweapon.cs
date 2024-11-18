@@ -7,6 +7,8 @@ public class Switchweapon : MonoBehaviour
     // Weapon models
     public GameObject stunBatonModel;
     public GameObject taserGunModel;
+    public GameObject stunBatonHolder;
+    public GameObject taserGunHolder;
 
     // Item models
     public GameObject screwdriverModel;
@@ -27,8 +29,37 @@ public class Switchweapon : MonoBehaviour
     // Crosshair reference
     public GameObject crosshair;
 
+    public float radius = 3f;
+    public LayerMask targetMask;
+    private GameObject player;
+
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player");
+        DeactivateAllModels();
+        hasWeaponEquipped = false;
+        string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
+        Debug.Log("A string selectedWeapon contem: " + selectedWeapon);
+
+        if (selectedWeapon == "StunBaton")
+        {
+            stunBatonModel.SetActive(true);
+            taserGunModel.SetActive(false);
+        }
+        else if (selectedWeapon == "TaserGun")
+        {
+            taserGunModel.SetActive(true);
+            stunBatonModel.SetActive(false);
+        }
+    }
+
     void Update()
     {
+        if ((stunBatonModel.gameObject.activeSelf || taserGunModel.gameObject.activeSelf) == false)
+        {
+            hasWeaponEquipped = true;
+        }
+
         if (!disableTools)
         {
             HandleSwitching(); // Check for input to switch items
@@ -61,24 +92,26 @@ public class Switchweapon : MonoBehaviour
     void SwitchWeapon()
     {
         DeactivateAllModels(); // Deactivate all models first
-        string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
-        hasWeaponEquipped = true;
-
-        // Activate the selected weapon
-        if (selectedWeapon == "StunBaton")
+        if (hasWeaponEquipped)
         {
-            activeWeapon = stunBatonModel;
-            stunBatonModel.SetActive(true); // Show the stun baton model
-            crosshair.SetActive(true); // Show crosshair when weapon is equipped
-        }
-        else if (selectedWeapon == "TaserGun")
-        {
-            activeWeapon = taserGunModel;
-            taserGunModel.SetActive(true); // Show the taser gun model
-            crosshair.SetActive(true); // Show crosshair when weapon is equipped
-        }
+            string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
 
-        Debug.Log($"Equipped: Weapon - {selectedWeapon}");
+            // Activate the selected weapon
+            if (selectedWeapon == "StunBaton")
+            {
+                activeWeapon = stunBatonHolder;
+                stunBatonHolder.SetActive(true); // Show the stun baton model
+                crosshair.SetActive(true); // Show crosshair when weapon is equipped
+            }
+            else if (selectedWeapon == "TaserGun")
+            {
+                activeWeapon = taserGunHolder;
+                taserGunHolder.SetActive(true); // Show the taser gun model
+                crosshair.SetActive(true); // Show crosshair when weapon is equipped
+            }
+
+            Debug.Log($"Equipped: Weapon - {selectedWeapon}");
+        }
     }
 
     void SwitchItem()
@@ -134,10 +167,9 @@ public class Switchweapon : MonoBehaviour
 
     public void DeactivateAllModels()
     {
-        hasWeaponEquipped = false;
         // Deactivate all models
-        stunBatonModel.SetActive(false);
-        taserGunModel.SetActive(false);
+        stunBatonHolder.SetActive(false);
+        taserGunHolder.SetActive(false);
         screwdriverModel.SetActive(false);
         coinModel.SetActive(false);
         overrideKeyCardModel.SetActive(false);
