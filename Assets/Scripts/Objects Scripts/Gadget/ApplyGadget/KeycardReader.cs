@@ -7,10 +7,16 @@ public class KeycardReader : MonoBehaviour
 {
     public Door controlledDoor;  // The door this reader unlocks
     public DivisionType requiredDivisionType;  // The required division type for this reader
+    private GameObject player;
+
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))  // Use mouse click for interaction
+        if (Input.GetKeyDown((KeyCode.F)) && !controlledDoor.isUnlocked)  // Use mouse click for interaction
         {
             TryUnlock();
         }
@@ -33,12 +39,15 @@ public class KeycardReader : MonoBehaviour
             }
 
             // Check for a regular Keycard
-            Keycard keycard = collider.GetComponent<Keycard>();
-            if (keycard != null && keycard.GetDivisionType() == requiredDivisionType)
+            for(int i = 0; i < player.GetComponent<Player>().keycards.Count; i++)
             {
-                controlledDoor?.Unlock();  // Unlock the controlled door
-                Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
-                return;
+                Keycard keycard = player.GetComponent<Player>().keycards[i];
+                if (keycard.GetDivisionType() == requiredDivisionType)
+                {
+                    controlledDoor?.Unlock();  // Unlock the controlled door
+                    Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
+                    return;
+                }
             }
         }
 
