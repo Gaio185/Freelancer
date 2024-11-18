@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 2831334645015168179}
   - component: {fileID: 860187782642895050}
   - component: {fileID: 7524296938350881489}
-  - component: {fileID: 4146836059514307407}
   - component: {fileID: 7538646362829170956}
   m_Layer: 0
   m_Name: DoorRender
@@ -226,19 +225,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4146836059514307407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7385321980486267129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5060c7284c1a45147b38f0afc0d08f13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 50
 --- !u!114 &7538646362829170956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +269,7 @@ Transform:
   m_GameObject: {fileID: 8184142074125224502}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0019366466, y: -0.69147855, z: -0.0020232243, w: 0.72239155}
-  m_LocalPosition: {x: 0.243, y: 0.372, z: -0.04}
+  m_LocalPosition: {x: 0.11, y: 0.372, z: -0.04}
   m_LocalScale: {x: 0.31440502, y: 0.31440502, z: 0.09029853}
   m_ConstrainProportionsScale: 0
   m_Children: []

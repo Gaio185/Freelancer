@@ -11,8 +11,9 @@ public class PINUnlocking : MonoBehaviour
     public TextMeshProUGUI ans; // Display for the entered PIN
     public TextMeshProUGUI placeHolder; // Placeholder for the PIN input
     public SafeDoorController safeDoorController;
+    public UnlockSecretPassage unlockSecretPassage;
 
-    private string correctPIN = "1234"; // Correct PIN
+    public string correctPIN; // Correct PIN
 
     public void Number(int number)
     {
@@ -60,6 +61,11 @@ public class PINUnlocking : MonoBehaviour
             {
                 safeDoorController.UnlockSafe(); // Unlock the safe door
             }
+            else if(unlockSecretPassage != null)
+            {
+                unlockSecretPassage.UnlockPassage(); // Unlock the secret passage
+            }
+     
         }
         else
         {
