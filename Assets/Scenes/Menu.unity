@@ -11807,10 +11807,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "A client wants some sensitive information from within a bank. The location
-    of said information is unknown. Your job is to find out its location and successfully
-    extract with it. The bank has three floors: the vault, the lobby and the executive
-    floor. \n\nObjective: steal vault codes."
+  m_text: "A client wants a sensitive package from within a bank. The location of
+    said package is unknown, though its likely that its kept in one of the bank vaults.
+    Your job is to find out its exact location and successfully extract with it.
+    \n\nObjective: steal package."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
