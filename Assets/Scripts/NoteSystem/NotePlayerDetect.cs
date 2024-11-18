@@ -6,7 +6,7 @@ public class NotePlayerDetect : MonoBehaviour
 {
     public GameObject noteInterface; // Reference to the note UI
     public float radius = 3f; // Interaction radius
-    public LayerMask targetMask; // LayerMask for detecting terminals
+    public LayerMask targetMask; // LayerMask for detecting notes
 
     private GameObject player;
 
