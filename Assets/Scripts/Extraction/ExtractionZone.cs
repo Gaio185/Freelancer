@@ -19,4 +19,12 @@ public class ExtractionZone : MonoBehaviour
             isInRange = true;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            isInRange = false;
+        }
+    }
 }
