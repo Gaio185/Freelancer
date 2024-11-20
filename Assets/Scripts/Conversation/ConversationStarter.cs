@@ -8,20 +8,11 @@ using UnityEngine.EventSystems; // Required for managing UI Event Systems
 public class ConversationStarter : MonoBehaviour
 {
     [SerializeField] private NPCConversation myConversation;
-    [SerializeField] private GameObject pressFText; // UI Text for "Press F to Talk"
+    [SerializeField] private GameObject interactText; // UI Text for "Press F to Talk"
     public GameObject conversationManager;
     public GameObject HUD;
     private bool isInConversation = false;
     private bool isPlayerInRange = false;
-
-    private void Start()
-    {
-        // Hide the "Press F to Talk" text by default
-        if (pressFText != null)
-        {
-            pressFText.SetActive(false);
-        }
-    }
 
     private void Update()
     {
@@ -52,14 +43,6 @@ public class ConversationStarter : MonoBehaviour
                 }
             }
         }
-
-        // If player is still in range and presses 'F' again, restart the conversation
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.F) && !isInConversation)
-        {
-            conversationManager.SetActive(true);
-            HUD.SetActive(false);
-            StartConversation();
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,9 +53,9 @@ public class ConversationStarter : MonoBehaviour
             isPlayerInRange = true;
 
             // Show the "Press F to Talk" text when player enters the trigger
-            if (pressFText != null && !isInConversation)
+            if (interactText != null && !isInConversation)
             {
-                pressFText.SetActive(true);
+                interactText.SetActive(true);
             }
         }
     }
@@ -85,9 +68,9 @@ public class ConversationStarter : MonoBehaviour
             isPlayerInRange = false;
 
             // Hide the "Press F to Talk" text when player exits the trigger
-            if (pressFText != null)
+            if (interactText != null)
             {
-                pressFText.SetActive(false);
+                interactText.SetActive(false);
             }
         }
     }
@@ -99,6 +82,8 @@ public class ConversationStarter : MonoBehaviour
             // If player is in range and presses 'F', start the conversation
             if (Input.GetKeyDown(KeyCode.F))
             {
+                conversationManager.SetActive(true);
+                HUD.SetActive(false);
                 StartConversation();
             }
         }
@@ -111,9 +96,9 @@ public class ConversationStarter : MonoBehaviour
         isInConversation = true; // Set the conversation state to true
 
         // Hide the "Press F to Talk" text during conversation
-        if (pressFText != null)
+        if (interactText != null)
         {
-            pressFText.SetActive(false);
+            interactText.SetActive(false);
         }
 
         // Subscribe to the end conversation event
@@ -127,7 +112,6 @@ public class ConversationStarter : MonoBehaviour
     private void EndConversation()
     {
         // End the conversation and re-enable interaction
-        isInConversation = false;
         ConversationManager.OnConversationEnded -= EndConversation;
 
         conversationManager.SetActive(false); // Hide the conversation UI
@@ -135,5 +119,7 @@ public class ConversationStarter : MonoBehaviour
         // Lock and hide the cursor after conversation
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        isInConversation = false;
     }
 }
