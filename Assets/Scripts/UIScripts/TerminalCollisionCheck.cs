@@ -5,6 +5,7 @@ using UnityEngine;
 public class TerminalCollisionCheck : MonoBehaviour
 {
     [HideInInspector] public bool isInRange;
+    public GameObject interactPanel; // Reference to the interact panel
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class TerminalCollisionCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            interactPanel.SetActive(false); // Hide the interact panel
             isInRange = false;
         }
     }

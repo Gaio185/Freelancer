@@ -15,6 +15,7 @@ public class Keycard : MonoBehaviour
 {
     public DivisionType divisionType; // Set this in the Unity Editor to DivisionA, DivisionB, or DivisionC
     private bool isInRange;
+    public GameObject interactPanel;
     private GameObject player;
 
     public DivisionType GetDivisionType()
@@ -29,10 +30,14 @@ public class Keycard : MonoBehaviour
     }
 
     private void Update() { 
-        if(isInRange && Input.GetKeyDown(KeyCode.F))
+        if(isInRange)
         {
-            player.GetComponent<Player>().keycards.Add(this);
-            Destroy(gameObject);
+            interactPanel.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.F)){
+                player.GetComponent<Player>().keycards.Add(this);
+                interactPanel.SetActive(false);
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -48,6 +53,7 @@ public class Keycard : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            interactPanel.SetActive(false);
             isInRange = false;
         }
     }
