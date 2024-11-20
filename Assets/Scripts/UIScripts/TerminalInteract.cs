@@ -20,14 +20,18 @@ public class TerminalInteract : MonoBehaviour
     void Update()
     {
 
-        if (terminalCollisionCheck.isInRange && Input.GetKey(KeyCode.F))
+        if (terminalCollisionCheck.isInRange)
         {
-            computerInterface.SetActive(true); // Show the terminal UI
-            Cursor.visible = true; // Show cursor
-            Cursor.lockState = CursorLockMode.None; // Unlock cursor
-            playerScript.movement.canMove = false; // Disable player movement
-            playerScript.switchWeapon.disableTools = true; // Disable player tools
-            playerScript.switchWeapon.DeactivateAllModels();
+            terminalCollisionCheck.interactPanel.SetActive(true); // Show the interact panel
+            if (Input.GetKey(KeyCode.F))
+            {
+                computerInterface.SetActive(true); // Show the terminal UI
+                Cursor.visible = true; // Show cursor
+                Cursor.lockState = CursorLockMode.None; // Unlock cursor
+                playerScript.movement.canMove = false; // Disable player movement
+                playerScript.switchWeapon.disableTools = true; // Disable player tools
+                playerScript.switchWeapon.DeactivateAllModels();
+            }
         }
     }
 }
