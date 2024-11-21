@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     public GameObject noteInterface;
     public GameObject HUD;
+    public GameObject interactPanel;
 
 
     // Start is called before the first frame update
@@ -52,7 +53,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J) && movement.canMove)
         {
             HUD.SetActive(false);
             Cursor.visible = true; // Show cursor

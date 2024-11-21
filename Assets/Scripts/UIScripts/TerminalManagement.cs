@@ -17,6 +17,10 @@ public class TerminalManagement : MonoBehaviour
     public Button sentryOnButton; // Button to turn on sentry
     public Button sentryOffButton; // Button to turn off sentry
 
+    private AudioSource audioSource; // Audio source for terminal sounds
+    public AudioClip accessGranted; // Sound for successful login
+    public AudioClip accessDenied; // Sound for incorrect login 
+
     private GameObject player; // Reference to player GameObject
     private Player playerScript; // Reference to player script
     public GameObject usbPen; // Reference to the USB pen GameObject
@@ -27,6 +31,7 @@ public class TerminalManagement : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<Player>();
+        audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
 
     public void CheckPassword()
@@ -41,12 +46,14 @@ public class TerminalManagement : MonoBehaviour
         }
         else if (input.text == correctPassword)
         {
+            audioSource.PlayOneShot(accessGranted); // Play sound for successful login
             OpenWorkspace();
             input.text = ""; // Clear the input field after successful login
             Debug.Log("Correct Password");
         }
         else
         {
+            audioSource.PlayOneShot(accessDenied); // Play sound for successful login
             input.text = "";
             input.placeholder.GetComponent<TextMeshProUGUI>().text = "Incorrect Password"; 
         }
@@ -78,6 +85,7 @@ public class TerminalManagement : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked; // Lock cursor
             playerScript.movement.canMove = true; // Enable player movement
             playerScript.switchWeapon.disableTools = false; // Enable player tools  
+            playerScript.HUD.SetActive(true); // Show HUD
         }
 
         // Manage button interactivity based on TOAgent states

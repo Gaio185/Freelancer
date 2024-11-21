@@ -25,6 +25,7 @@ public class TerminalInteract : MonoBehaviour
             terminalCollisionCheck.interactPanel.SetActive(true); // Show the interact panel
             if (Input.GetKey(KeyCode.F))
             {
+                playerScript.HUD.SetActive(false); // Hide the HUD
                 computerInterface.SetActive(true); // Show the terminal UI
                 Cursor.visible = true; // Show cursor
                 Cursor.lockState = CursorLockMode.None; // Unlock cursor

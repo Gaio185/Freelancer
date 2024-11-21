@@ -57,18 +57,28 @@ public class PINUnlocking : MonoBehaviour
             Clear();
 
             
-            if (safeDoorController != null)
+            if (safeDoorController)
             {
+                safeDoorController.audioSource.PlayOneShot(safeDoorController.accessGranted); // Play sound for incorrect PIN
                 safeDoorController.UnlockSafe(); // Unlock the safe door
             }
-            else if(unlockSecretPassage != null)
+            else if(unlockSecretPassage)
             {
+                unlockSecretPassage.audioSource.PlayOneShot(unlockSecretPassage.accessGranted); // Play sound for incorrect PIN
                 unlockSecretPassage.UnlockPassage(); // Unlock the secret passage
             }
      
         }
         else
         {
+            if (safeDoorController)
+            {
+                safeDoorController.audioSource.PlayOneShot(safeDoorController.accessDenied); // Play sound for incorrect PIN
+            }else if(unlockSecretPassage.pinUI.activeSelf && unlockSecretPassage)
+            {
+                unlockSecretPassage.audioSource.PlayOneShot(unlockSecretPassage.accessDenied); // Play sound for incorrect PIN
+            }
+
             Clear();
             placeHolder.text = "Incorrect PIN, try again"; 
         }

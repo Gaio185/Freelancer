@@ -7,11 +7,18 @@ public class KeycardReader : MonoBehaviour
 {
     public Door controlledDoor;  // The door this reader unlocks
     public DivisionType requiredDivisionType;  // The required division type for this reader
-    private GameObject player;
+    private Player player;
+    private AudioSource audioSource;
+
+    public LayerMask targetMask;
+
+    public AudioClip accessGranted;
+    public AudioClip accessDenied;
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -24,33 +31,39 @@ public class KeycardReader : MonoBehaviour
 
     private void TryUnlock()
     {
-        Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 3f);  // Detect nearby colliders
+        Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 3f, targetMask);  // Detect nearby colliders
 
-        foreach (Collider collider in nearbyColliders)
+        if(nearbyColliders.Length > 0)
         {
-            // Check for KeycardOverride (this will unlock the door regardless of the division type)
-            KeycardOverride overrideKeycard = collider.GetComponent<KeycardOverride>();
-            if (overrideKeycard != null && overrideKeycard.CanUse())
+            foreach (Collider collider in nearbyColliders)
             {
-                overrideKeycard.Use();
-                controlledDoor?.Unlock();  // Unlock the controlled door
-                Debug.Log("Door unlocked with override keycard.");
-                return;
-            }
-
-            // Check for a regular Keycard
-            for(int i = 0; i < player.GetComponent<Player>().keycards.Count; i++)
-            {
-                Keycard keycard = player.GetComponent<Player>().keycards[i];
-                if (keycard.GetDivisionType() == requiredDivisionType)
+                // Check for KeycardOverride (this will unlock the door regardless of the division type)
+                KeycardOverride overrideKeycard = player.GetComponent<Switchweapon>().overrideKeyCardModel.GetComponent<KeycardOverride>();
+                if (overrideKeycard != null && overrideKeycard.CanUse() && overrideKeycard.gameObject.activeSelf)
                 {
+                    overrideKeycard.Use();
                     controlledDoor?.Unlock();  // Unlock the controlled door
-                    Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
+                    audioSource.PlayOneShot(accessGranted);
+                    Debug.Log("Door unlocked with override keycard.");
                     return;
                 }
-            }
-        }
 
-        Debug.Log("Access denied. A valid keycard or override keycard is required.");
+                // Check for a regular Keycard
+                for (int i = 0; i < player.GetComponent<Player>().keycards.Count; i++)
+                {
+                    Keycard keycard = player.keycards[i];
+                    if (keycard.GetDivisionType() == requiredDivisionType)
+                    {
+                        controlledDoor?.Unlock();  // Unlock the controlled door
+                        audioSource.PlayOneShot(accessGranted);
+                        Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
+                        return;
+                    }
+                }
+            }
+
+            audioSource.PlayOneShot(accessDenied);
+            Debug.Log("Access denied. A valid keycard or override keycard is required.");
+        }
     }
 }

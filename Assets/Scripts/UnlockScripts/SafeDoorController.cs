@@ -7,9 +7,13 @@ public class SafeDoorController : MonoBehaviour
 {
     public GameObject pinUI; // Assign the PIN UI GameObject here
     public GameObject safeDoor; // Reference to the safe door object that should be destroyed
-    private GameObject player; // Reference to the player GameObject for movement control
+    private Player player; // Reference to the player GameObject for movement control
     public GameObject safeContent; // Reference to the mission objective
     public GameObject numerario;
+
+    public AudioSource audioSource;
+    public AudioClip accessGranted;
+    public AudioClip accessDenied;
 
 
     private bool isPlayerNear = false;
@@ -24,11 +28,20 @@ public class SafeDoorController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player.interactPanel.SetActive(true); // Show the interact panel
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isPlayerNear = false;
+            player.interactPanel.SetActive(false); // Show the interact panel
             ClosePINUI();
             Debug.Log("Player left the safe door");
         }
@@ -36,13 +49,15 @@ public class SafeDoorController : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
     private void Update()
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.F))
         {
             player.GetComponent<Switchweapon>().disableTools = true; // Enable player tools
+            player.HUD.SetActive(false); // Hide HUD
             OpenPINUI(); // Open the PIN UI and manage cursor/camera
         }
 
@@ -50,6 +65,8 @@ public class SafeDoorController : MonoBehaviour
         if (isUIPinActive && Input.GetKeyDown(KeyCode.Escape))
         {
             ClosePINUI();
+            player.GetComponent<Switchweapon>().disableTools = false; // Enable player tools
+            player.HUD.SetActive(true); // Show HUD
         }
     }
 
@@ -59,6 +76,7 @@ public class SafeDoorController : MonoBehaviour
         Destroy(safeDoor); // Destroy the safe door
         Destroy(numerario); // Destroy the numerario object
         ClosePINUI(); // Close the PIN UI and re-lock cursor after unlocking
+        player.HUD.SetActive(true); // Show HUD
         safeContent.SetActive(true); // Activate the mission objective
         Debug.Log("Safe unlocked, door and numerario destroyed");
     }
