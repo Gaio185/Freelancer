@@ -36,9 +36,9 @@ public class NotePlayerDetect : MonoBehaviour
             noteInterface.SetActive(false); // Close note interface
             HUD.SetActive(true); // Show the HUD
             player.GetComponent<PlayerMovement>().canMove = true; // Enable player movement
-            player.GetComponent<Player>().notes.Add(note); // Add the note to the player's notes list
             if(note != null)
             {
+                player.GetComponent<Player>().notes.Add(note); // Add the note to the player's notes list
                 interactPanel.SetActive(false); // Hide the interact panel
                 note.SetActive(false); // Hide the note
             }

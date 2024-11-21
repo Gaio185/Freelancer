@@ -18,7 +18,7 @@ public class KeycardReader : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -55,6 +55,7 @@ public class KeycardReader : MonoBehaviour
                     if (keycard.GetDivisionType() == requiredDivisionType)
                     {
                         controlledDoor?.Unlock();  // Unlock the controlled door
+                        audioSource.PlayOneShot(accessGranted);
                         Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
                         return;
                     }

@@ -11,6 +11,10 @@ public class SafeDoorController : MonoBehaviour
     public GameObject safeContent; // Reference to the mission objective
     public GameObject numerario;
 
+    public AudioSource audioSource;
+    public AudioClip accessGranted;
+    public AudioClip accessDenied;
+
 
     private bool isPlayerNear = false;
     private bool isUIPinActive = false; // Track if the PIN UI is active
@@ -24,11 +28,20 @@ public class SafeDoorController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player.interactPanel.SetActive(true); // Show the interact panel
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isPlayerNear = false;
+            player.interactPanel.SetActive(false); // Show the interact panel
             ClosePINUI();
             Debug.Log("Player left the safe door");
         }
@@ -37,6 +50,7 @@ public class SafeDoorController : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -62,6 +76,7 @@ public class SafeDoorController : MonoBehaviour
         Destroy(safeDoor); // Destroy the safe door
         Destroy(numerario); // Destroy the numerario object
         ClosePINUI(); // Close the PIN UI and re-lock cursor after unlocking
+        player.HUD.SetActive(true); // Show HUD
         safeContent.SetActive(true); // Activate the mission objective
         Debug.Log("Safe unlocked, door and numerario destroyed");
     }

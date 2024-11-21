@@ -8,9 +8,12 @@ public class UnlockSecretPassage : MonoBehaviour
     public GameObject pinUI; // Assign the PIN UI GameObject here
     public GameObject bookShelf; // Reference to the safe door object that should be destroyed
     public GameObject wall; // Reference to the wall object that should be destroyed
-    private GameObject player; // Reference to the player GameObject for movement control
+    private Player player; 
     public GameObject numPad; // Reference to the secret passage numpad
 
+    public AudioSource audioSource;
+    public AudioClip accessGranted;
+    public AudioClip accessDenied;
 
     private bool isPlayerNear = false;
     private bool isUIPinActive = false; // Track if the PIN UI is active
@@ -24,11 +27,20 @@ public class UnlockSecretPassage : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            player.interactPanel.SetActive(true); // Show the interact panel
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isPlayerNear = false;
+            player.interactPanel.SetActive(false); // Hide the interact panel
             ClosePINUI();
             Debug.Log("Player left the safe door");
         }
@@ -36,7 +48,8 @@ public class UnlockSecretPassage : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -58,6 +71,7 @@ public class UnlockSecretPassage : MonoBehaviour
     public void UnlockPassage()
     {
         player.GetComponent<Switchweapon>().disableTools = false; // Enable player tools
+        player.interactPanel.SetActive(false); // Hide the interact panel
         Destroy(bookShelf); // Destroy the safe door
         Destroy(wall); // Destroy the safe door
         Destroy(numPad); // Destroy the secret passage numpad
