@@ -5,40 +5,103 @@ using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
-    public List<Button> categoryButtons; // Assign all category buttons in the Inspector
-    private Button activeCategoryButton = null; // Tracks the currently active button
+    // References to the main buttons
+    public Button smuggledButton;
+    public Button regularButton;
+    public Button gadgetsButton;
 
-    public void OnCategoryButtonClicked(Button clickedButton)
+    // References to sub-option panels (make sure these are child objects of their main buttons)
+    public GameObject smuggledSubOptions;
+    public GameObject regularSubOptions;
+    public GameObject gadgetsSubOptions;
+
+    // Tracks the currently active main button and panel
+    private Button currentActiveButton = null;
+    private GameObject currentActivePanel = null;
+
+    // When a main button is clicked
+    public void OnMainButtonClick(Button clickedButton)
     {
-        // If another button is active, prevent this button from being clicked
-        if (activeCategoryButton != null && activeCategoryButton != clickedButton)
+        // Check if the clicked button is already the active one
+        if (clickedButton == currentActiveButton)
         {
-            Debug.Log("Finish the current selection before proceeding.");
-            return;
-        }
+            // Close the currently active panel
+            currentActivePanel.SetActive(false);
 
-        // Set this button as the active button and disable all other buttons
-        activeCategoryButton = clickedButton;
-        foreach (Button button in categoryButtons)
+            // Reset button animations
+            ResetButtonState(clickedButton);
+
+            currentActiveButton = null;
+            currentActivePanel = null;
+
+            // Re-enable all main buttons
+            SetMainButtonsInteractable(true);
+        }
+        else
         {
-            if (button != clickedButton)
+            // Close any currently active panel before opening a new one
+            if (currentActivePanel != null)
             {
-                button.interactable = false; // Disable other buttons
+                currentActivePanel.SetActive(false);
+                ResetButtonState(currentActiveButton);
             }
-        }
 
-        Debug.Log($"{clickedButton.name} category selected. Make your selection now.");
+            // Disable all other main buttons
+            SetMainButtonsInteractable(false);
+            clickedButton.interactable = true; // Keep the clicked button active
+
+            // Show the corresponding sub-options and track them
+            if (clickedButton == smuggledButton)
+            {
+                smuggledSubOptions.SetActive(true);
+                currentActivePanel = smuggledSubOptions;
+            }
+            else if (clickedButton == regularButton)
+            {
+                regularSubOptions.SetActive(true);
+                currentActivePanel = regularSubOptions;
+            }
+            else if (clickedButton == gadgetsButton)
+            {
+                gadgetsSubOptions.SetActive(true);
+                currentActivePanel = gadgetsSubOptions;
+            }
+
+            currentActiveButton = clickedButton; // Track the active button
+        }
     }
 
-    public void OnSelectionConfirmed()
+    // When a sub-option is clicked
+    public void OnSubOptionClick()
     {
-        // Reactivate all buttons
-        foreach (Button button in categoryButtons)
+        // Re-enable all main buttons
+        SetMainButtonsInteractable(true);
+
+        // Hide the current active panel
+        if (currentActivePanel != null)
         {
-            button.interactable = true;
+            currentActivePanel.SetActive(false);
+            ResetButtonState(currentActiveButton);
         }
 
-        Debug.Log($"{activeCategoryButton.name} selection confirmed.");
-        activeCategoryButton = null; // Reset the active category
+        // Reset the tracking variables
+        currentActiveButton = null;
+        currentActivePanel = null;
+    }
+
+    // Helper function to enable/disable all main buttons
+    private void SetMainButtonsInteractable(bool state)
+    {
+        smuggledButton.interactable = state;
+        regularButton.interactable = state;
+        gadgetsButton.interactable = state;
+    }
+
+    // Helper function to reset button animations
+    private void ResetButtonState(Button button)
+    {
+        // Temporarily disable and re-enable the button to trigger state change
+        button.interactable = false;
+        button.interactable = true;
     }
 }
