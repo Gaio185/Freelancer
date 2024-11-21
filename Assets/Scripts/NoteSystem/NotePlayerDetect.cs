@@ -9,6 +9,7 @@ public class NotePlayerDetect : MonoBehaviour
     public GameObject HUD; // Reference to the HUD
     public GameObject interactPanel; // Reference to the interact panel
     public GameObject notesPanel;
+    public GameObject note; // Reference to the note
 
     private GameObject player;
 
@@ -26,8 +27,6 @@ public class NotePlayerDetect : MonoBehaviour
             HUD.SetActive(false); // Hide the HUD
             notesPanel.SetActive(true); // Hide the notes UI
             noteInterface.SetActive(true); // Show the note UI
-            Cursor.visible = true; // Show cursor
-            Cursor.lockState = CursorLockMode.None; // Unlock cursor
             player.GetComponent<PlayerMovement>().canMove = false; // Disable player movement
         }
 
@@ -36,9 +35,13 @@ public class NotePlayerDetect : MonoBehaviour
             notesPanel.SetActive(false); // Close note interface
             noteInterface.SetActive(false); // Close note interface
             HUD.SetActive(true); // Show the HUD
-            Cursor.visible = false; // Hide cursor
-            Cursor.lockState = CursorLockMode.Locked; // Lock cursor
             player.GetComponent<PlayerMovement>().canMove = true; // Enable player movement
+            player.GetComponent<Player>().notes.Add(note); // Add the note to the player's notes list
+            if(note != null)
+            {
+                interactPanel.SetActive(false); // Hide the interact panel
+                note.SetActive(false); // Hide the note
+            }
         }
     }
 

@@ -7,8 +7,15 @@ public class Player : MonoBehaviour
     public PlayerHealth health;
     public PlayerMovement movement;
     public Switchweapon switchWeapon;
+
     public List<Keycard> keycards;
     public List<GameObject> keycardUI;
+
+    public List<GameObject> notes;
+    public List<GameObject> noteUI;
+
+    public GameObject noteInterface;
+    public GameObject HUD;
 
 
     // Start is called before the first frame update
@@ -27,11 +34,33 @@ public class Player : MonoBehaviour
         {
             for(int j = 0; j < keycardUI.Count; j++)
             {
-                if(keycards[i].GetDivisionType().ToString() == keycardUI[j].name)
+                if(keycards[i].GetDivisionType().ToString() == keycardUI[j].name && !keycardUI[j].activeSelf)
                 {
                     keycardUI[j].SetActive(true);
                 }
             }
+        }
+
+        for (int i = 0; i < notes.Count; i++)
+        {
+            for (int j = 0; j < noteUI.Count; j++)
+            {
+                if (notes[i].name == noteUI[j].name && !noteUI[j].activeSelf)
+                {
+                    noteUI[j].SetActive(true);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            HUD.SetActive(false);
+            Cursor.visible = true; // Show cursor
+            Cursor.lockState = CursorLockMode.None; // Unlock cursor
+            movement.canMove = false; // Disable player movement
+            switchWeapon.disableTools = true; // Disable player tools
+            switchWeapon.DeactivateAllModels();
+            noteInterface.SetActive(true);
         }
     }
 }
