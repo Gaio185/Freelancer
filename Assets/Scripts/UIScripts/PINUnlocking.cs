@@ -12,14 +12,8 @@ public class PINUnlocking : MonoBehaviour
     public TextMeshProUGUI placeHolder; // Placeholder for the PIN input
     public SafeDoorController safeDoorController;
     public UnlockSecretPassage unlockSecretPassage;
-    private Player player;
 
     public string correctPIN; // Correct PIN
-
-    private void Start()
-    {
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
-    }
 
     public void Number(int number)
     {
