@@ -7,7 +7,7 @@ public class SafeDoorController : MonoBehaviour
 {
     public GameObject pinUI; // Assign the PIN UI GameObject here
     public GameObject safeDoor; // Reference to the safe door object that should be destroyed
-    private GameObject player; // Reference to the player GameObject for movement control
+    private Player player; // Reference to the player GameObject for movement control
     public GameObject safeContent; // Reference to the mission objective
     public GameObject numerario;
 
@@ -36,13 +36,14 @@ public class SafeDoorController : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
     private void Update()
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.F))
         {
             player.GetComponent<Switchweapon>().disableTools = true; // Enable player tools
+            player.HUD.SetActive(false); // Hide HUD
             OpenPINUI(); // Open the PIN UI and manage cursor/camera
         }
 
@@ -50,6 +51,8 @@ public class SafeDoorController : MonoBehaviour
         if (isUIPinActive && Input.GetKeyDown(KeyCode.Escape))
         {
             ClosePINUI();
+            player.GetComponent<Switchweapon>().disableTools = false; // Enable player tools
+            player.HUD.SetActive(true); // Show HUD
         }
     }
 

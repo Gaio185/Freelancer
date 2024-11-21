@@ -50,6 +50,7 @@ public class UnlockSecretPassage : MonoBehaviour
         // Optional: Press Escape to close the UI
         if (isUIPinActive && Input.GetKeyDown(KeyCode.Escape))
         {
+            player.GetComponent<Switchweapon>().disableTools = false; // Disable player tools
             ClosePINUI();
         }
     }

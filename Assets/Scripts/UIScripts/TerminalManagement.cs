@@ -78,6 +78,7 @@ public class TerminalManagement : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked; // Lock cursor
             playerScript.movement.canMove = true; // Enable player movement
             playerScript.switchWeapon.disableTools = false; // Enable player tools  
+            playerScript.HUD.SetActive(true); // Show HUD
         }
 
         // Manage button interactivity based on TOAgent states
