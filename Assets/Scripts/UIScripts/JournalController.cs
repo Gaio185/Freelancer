@@ -30,8 +30,11 @@ public class JournalController : MonoBehaviour
 
         if(player.notes.Count > 0)
         {
-            noteSelectorMenu.SetActive(true);
-            noNotesMenu.SetActive(false);
+            if (noNotesMenu)
+            {
+                noteSelectorMenu.SetActive(true);
+                noNotesMenu.SetActive(false);
+            }
         }
     }
 }

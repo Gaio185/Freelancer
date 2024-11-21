@@ -40,7 +40,7 @@ public class NotePlayerDetect : MonoBehaviour
             if(note != null)
             {
                 interactPanel.SetActive(false); // Hide the interact panel
-                Destroy(note); // Hide the note
+                note.SetActive(false); // Hide the note
             }
         }
     }
