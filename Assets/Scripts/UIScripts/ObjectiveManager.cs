@@ -11,7 +11,7 @@ public class ObjectiveManager : MonoBehaviour
 
     private readonly string[] objectives = // Predefined list of objectives
     {
-        "Objective: Get the safe codes.",
+        "Objective: Acquire the Package.",
         "Objective: Escape the facility."
     };
 
