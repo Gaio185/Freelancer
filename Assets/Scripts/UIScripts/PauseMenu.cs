@@ -4,15 +4,18 @@ using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI; // Pause menu UI
-    public GameObject optionsMenuUI; // Options menu UI
     public GameObject HUD; // HUD UI
 
     private GameObject player; // Player object
     private MonoBehaviour cameraController; // Camera controller (replace with your script)
+
+    // Serialized fields to store button animators for the pause menu
+    [SerializeField] private Animator[] pauseMenuButtonAnimators; // Button animators in the Pause Menu
 
     void Start()
     {
@@ -29,9 +32,9 @@ public class PauseMenu : MonoBehaviour
             Debug.LogWarning("CameraController not found on Player or its children.");
         }
 
-        if (pauseMenuUI == null || optionsMenuUI == null)
+        if (pauseMenuUI == null)
         {
-            Debug.LogError("Pause Menu or Options Menu UI is not assigned in the Inspector.");
+            Debug.LogError("Pause Menu UI is not assigned in the Inspector.");
         }
 
         if (HUD == null)
@@ -40,7 +43,6 @@ public class PauseMenu : MonoBehaviour
         }
 
         pauseMenuUI.SetActive(false); // Ensure pause menu starts hidden
-        optionsMenuUI.SetActive(false); // Ensure options menu starts hidden
     }
 
     void Update()
@@ -51,7 +53,7 @@ public class PauseMenu : MonoBehaviour
             {
                 ResumeGame();
             }
-            else if (!optionsMenuUI.activeSelf) // Prevent toggling while in Options
+            else
             {
                 PauseGame();
             }
@@ -83,11 +85,11 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // Pause game time but allow unscaled UI animations
+        // Pause game time but allow animations
         Time.timeScale = 0f;
 
-        // Play button animations
-        PlayButtonAnimations(pauseMenuUI);
+        // Play button animations for the pause menu
+        PlayPauseButtonAnimations();
     }
 
     public void ResumeGame()
@@ -119,51 +121,56 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void OpenOptionsMenu()
+    // Function to play animations for the buttons in the pause menu
+    private void PlayPauseButtonAnimations()
     {
-        if (optionsMenuUI == null || pauseMenuUI == null) return;
+        if (pauseMenuButtonAnimators == null || pauseMenuButtonAnimators.Length == 0)
+        {
+            Debug.LogError("No Pause Menu button animators assigned!");
+            return;
+        }
 
-        // Hide pause menu and show options menu
-        pauseMenuUI.SetActive(false);
-        optionsMenuUI.SetActive(true);
-
-        // Play button animations for the options menu
-        PlayButtonAnimations(optionsMenuUI);
-    }
-
-    public void CloseOptionsMenu()
-    {
-        if (optionsMenuUI == null || pauseMenuUI == null) return;
-
-        // Hide options menu and show pause menu
-        optionsMenuUI.SetActive(false);
-        pauseMenuUI.SetActive(true);
-
-        // Play button animations for the pause menu
-        PlayButtonAnimations(pauseMenuUI);
-    }
-
-    private void PlayButtonAnimations(GameObject menuUI)
-    {
-        Animator[] buttonAnimators = menuUI.GetComponentsInChildren<Animator>();
-        foreach (var animator in buttonAnimators)
+        foreach (var animator in pauseMenuButtonAnimators)
         {
             if (animator != null)
             {
                 // Ensure the animator uses unscaled time
                 animator.updateMode = AnimatorUpdateMode.UnscaledTime;
 
-                // Optionally, trigger a specific animation (e.g., "Idle")
-                animator.Play("Idle", -1, 0f);
+                // Play the 'Idle' animation immediately for all buttons
+                animator.Play("Idle", 0, 0f); // Play the 'Idle' animation from the beginning
             }
         }
     }
 
-    public void OnButtonClick()
+    // Called when a button is clicked
+    public void OnButtonClick(Animator buttonAnimator)
     {
-        Debug.Log("Button clicked!");
+        if (buttonAnimator != null)
+        {
+            buttonAnimator.Play("Pressed", 0, 0f); // Play the 'Pressed' animation when clicked
+        }
     }
 
+    // Method to handle button hover
+    public void OnButtonHover(Animator buttonAnimator)
+    {
+        if (buttonAnimator != null)
+        {
+            buttonAnimator.Play("Highlight", 0, 0f); // Play the 'Highlight' animation on hover
+        }
+    }
+
+    // Method to handle button exit hover
+    public void OnButtonExit(Animator buttonAnimator)
+    {
+        if (buttonAnimator != null)
+        {
+            buttonAnimator.Play("Idle", 0, 0f); // Revert to 'Idle' animation when hover ends
+        }
+    }
+
+    // Scene Management
     public void LoadMenu()
     {
         Time.timeScale = 1f;
