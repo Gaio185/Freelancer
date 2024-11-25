@@ -21,8 +21,8 @@ public class Detection : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    public Quaternion rotationRef;
-    private Vector3 forwardRef;
+    [HideInInspector] public Quaternion rotationRef;
+    [HideInInspector] public Vector3 forwardRef;
     private float timer;
 
     [HideInInspector] public bool canSeePlayer;
@@ -43,11 +43,11 @@ public class Detection : MonoBehaviour
 
     void Update()
     {
-        if(canSeePlayer && (tag == "Camera" || tag == "Sentry"))
+        if (canSeePlayer && tag == "Sentry")
         {
-            transform.rotation = Quaternion.Slerp((transform.rotation),Quaternion.LookRotation(playerRef.transform.position - transform.position), 5 * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp((transform.rotation), Quaternion.LookRotation(playerRef.transform.position - transform.position), 5 * Time.deltaTime);
         }
-        else if((tag == "Camera" || tag == "Sentry"))
+        else if (tag == "Sentry")
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(forwardRef), 5 * Time.deltaTime);
         }
