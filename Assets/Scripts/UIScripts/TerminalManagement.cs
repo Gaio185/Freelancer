@@ -21,7 +21,6 @@ public class TerminalManagement : MonoBehaviour
     public AudioClip accessGranted; // Sound for successful login
     public AudioClip accessDenied; // Sound for incorrect login 
 
-    private GameObject player; // Reference to player GameObject
     private Player playerScript; // Reference to player script
     public GameObject usbPen; // Reference to the USB pen GameObject
 
@@ -29,8 +28,7 @@ public class TerminalManagement : MonoBehaviour
 
     public void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<Player>();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<Player>();
         audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
 
@@ -73,13 +71,14 @@ public class TerminalManagement : MonoBehaviour
         workspaceInterface.SetActive(true); // Show the workspace interface
         Cursor.visible = true; // Show cursor when opening workspace
         Cursor.lockState = CursorLockMode.None; // Unlock cursor
-        player.GetComponent<PlayerMovement>().canMove = false; // Allow player movement
+        playerScript.GetComponent<PlayerMovement>().canMove = false; // Allow player movement
     }
 
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
+            playerScript.canPause = true; // Enable pause
             this.gameObject.SetActive(false); // Close terminal interface
             Cursor.visible = false; // Hide cursor
             Cursor.lockState = CursorLockMode.Locked; // Lock cursor

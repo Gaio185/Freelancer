@@ -11,11 +11,11 @@ public class NotePlayerDetect : MonoBehaviour
     public GameObject notesPanel;
     public GameObject note; // Reference to the note
 
-    private GameObject player;
+    private Player player;
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         noteInterface.SetActive(false);
     }
 
@@ -24,6 +24,7 @@ public class NotePlayerDetect : MonoBehaviour
         interactPanel.SetActive(true); // Show the interact panel
         if (Input.GetKey(KeyCode.F))
         {
+            player.canPause = false; // Disable pause
             HUD.SetActive(false); // Hide the HUD
             notesPanel.SetActive(true); // Hide the notes UI
             noteInterface.SetActive(true); // Show the note UI
@@ -32,6 +33,7 @@ public class NotePlayerDetect : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
         {
+            player.canPause = true; // Enable pause
             notesPanel.SetActive(false); // Close note interface
             noteInterface.SetActive(false); // Close note interface
             HUD.SetActive(true); // Show the HUD

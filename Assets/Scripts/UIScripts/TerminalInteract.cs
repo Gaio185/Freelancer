@@ -6,15 +6,13 @@ public class TerminalInteract : MonoBehaviour
 {
     public GameObject computerInterface; // Reference to the terminal UI
 
-    private GameObject player;
     public Player playerScript;
 
     public TerminalCollisionCheck terminalCollisionCheck;
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<Player>();
+        playerScript = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     void Update()
@@ -25,6 +23,7 @@ public class TerminalInteract : MonoBehaviour
             terminalCollisionCheck.interactPanel.SetActive(true); // Show the interact panel
             if (Input.GetKey(KeyCode.F))
             {
+                playerScript.canPause = false; // Disable pause
                 playerScript.HUD.SetActive(false); // Hide the HUD
                 computerInterface.SetActive(true); // Show the terminal UI
                 Cursor.visible = true; // Show cursor
