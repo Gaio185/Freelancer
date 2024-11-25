@@ -35,8 +35,14 @@ public class WanderState : WorkerState
 
                 agent.navMeshAgent.SetDestination(randomPosition);
                 timer = agent.config.wanderInterval;
+                agent.animator.SetBool("isWalking", true);
             }
-        }else if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
+        }else if (agent.navMeshAgent.remainingDistance <= 0.5f)
+        {
+            agent.animator.SetBool("isWalking", false);
+            agent.navMeshAgent.ResetPath();
+        }
+        else if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
             agent.navMeshAgent.isStopped = true;
         }
