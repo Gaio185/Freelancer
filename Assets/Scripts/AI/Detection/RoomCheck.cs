@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class RoomCheck : MonoBehaviour
 {
@@ -8,26 +9,57 @@ public class RoomCheck : MonoBehaviour
     private GameObject player;
     private Player playerScript;
 
+    // Reference to a TextMeshProUGUI element
+    public TextMeshProUGUI clearanceStatusText;
+
     private void Start()
     {
+        // Find player and player script
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<Player>();
+
+        // If clearanceStatusText is not set in inspector, try to find it in the scene
+        if (clearanceStatusText == null)
+        {
+            clearanceStatusText = GameObject.Find("ClearanceStatusText").GetComponent<TextMeshProUGUI>();
+        }
+
+        // Initialize UI text
+        UpdateClearanceUI();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-           if(isRestricted)
+            if (isRestricted)
             {
                 playerScript.movement.hasClearance = false;
                 Debug.Log("Player does not have clearance");
             }
-           else 
+            else
             {
                 playerScript.movement.hasClearance = true;
                 Debug.Log("Player has clearance");
             }
+
+            // Update UI after checking clearance
+            UpdateClearanceUI();
+        }
+    }
+
+    private void UpdateClearanceUI()
+    {
+        // Change the UI text based on clearance status
+        if (playerScript.movement.hasClearance)
+        {
+            clearanceStatusText.text = "You have clearance!";
+            clearanceStatusText.color = Color.green;  // Set text color to green
+        }
+        else
+        {
+            clearanceStatusText.text = "No clearance!";
+            clearanceStatusText.color = Color.red;    // Set text color to red
         }
     }
 }
