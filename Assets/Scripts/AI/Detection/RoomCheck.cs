@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class RoomCheck : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class RoomCheck : MonoBehaviour
     private Player playerScript;
 
     // Reference to a TextMeshProUGUI element
-    public TextMeshProUGUI clearanceStatusText;
+    private TextMeshProUGUI clearanceStatusText;
 
     private void Start()
     {
@@ -24,7 +25,6 @@ public class RoomCheck : MonoBehaviour
             clearanceStatusText = GameObject.Find("ClearanceStatusText").GetComponent<TextMeshProUGUI>();
         }
 
-        // Initialize UI text
         UpdateClearanceUI();
     }
 
@@ -43,9 +43,9 @@ public class RoomCheck : MonoBehaviour
                 Debug.Log("Player has clearance");
             }
 
-            // Update UI after checking clearance
-            UpdateClearanceUI();
         }
+
+        UpdateClearanceUI();
     }
 
     private void UpdateClearanceUI()

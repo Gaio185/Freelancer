@@ -28,7 +28,7 @@ public class OnState : TOState
             agent.stateMachine.ChangeState(TOStateId.Shoot);
         }
 
-        if(agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect)
+        if (agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect)
         {
             agent.detection.lightRef.color = Color.yellow;
             agent.visorMaterial.color = Color.yellow;

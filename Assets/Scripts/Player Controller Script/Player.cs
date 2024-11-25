@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public PlayerHealth health;
     public PlayerMovement movement;
     public Switchweapon switchWeapon;
+    public PauseMenu pauseMenu;
 
     public List<Keycard> keycards;
     public List<GameObject> keycardUI;
@@ -18,6 +19,8 @@ public class Player : MonoBehaviour
     public GameObject HUD;
     public GameObject interactPanel;
 
+    [HideInInspector] public bool canPause;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,8 @@ public class Player : MonoBehaviour
         health = GetComponent<PlayerHealth>();
         movement = GetComponent<PlayerMovement>();
         switchWeapon = GetComponent<Switchweapon>();
+        pauseMenu = GetComponent<PauseMenu>();
+        canPause = true;
     }
 
     // Update is called once per frame
@@ -55,6 +60,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J) && movement.canMove)
         {
+            canPause = false; // Disable pause
             HUD.SetActive(false);
             Cursor.visible = true; // Show cursor
             Cursor.lockState = CursorLockMode.None; // Unlock cursor

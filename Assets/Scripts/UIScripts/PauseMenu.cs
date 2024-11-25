@@ -9,9 +9,8 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI; // Pause menu UI
-    public GameObject HUD; // HUD UI
 
-    private GameObject player; // Player object
+    private Player player; // Player object
     private MonoBehaviour cameraController; // Camera controller (replace with your script)
 
     // Serialized fields to store button animators for the pause menu
@@ -19,7 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         if (player == null)
         {
             Debug.LogError("Player object not found! Ensure the Player has the 'Player' tag.");
@@ -37,7 +36,7 @@ public class PauseMenu : MonoBehaviour
             Debug.LogError("Pause Menu UI is not assigned in the Inspector.");
         }
 
-        if (HUD == null)
+        if (player.HUD == null)
         {
             Debug.LogError("HUD UI is not assigned in the Inspector.");
         }
@@ -53,7 +52,7 @@ public class PauseMenu : MonoBehaviour
             {
                 ResumeGame();
             }
-            else
+            else if(player.canPause)
             {
                 PauseGame();
             }
@@ -62,11 +61,11 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
-        if (pauseMenuUI == null || HUD == null || player == null) return;
+        if (pauseMenuUI == null || player.HUD == null || player == null) return;
 
         // Show pause menu and hide HUD
         pauseMenuUI.SetActive(true);
-        HUD.SetActive(false);
+        player.HUD.SetActive(false);
 
         // Disable player movement
         var playerMovement = player.GetComponent<PlayerMovement>();
@@ -94,11 +93,11 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        if (pauseMenuUI == null || HUD == null || player == null) return;
+        if (pauseMenuUI == null || player.HUD == null || player == null) return;
 
         // Hide pause menu and show HUD
         pauseMenuUI.SetActive(false);
-        HUD.SetActive(true);
+        player.HUD.SetActive(true);
 
         // Enable player movement
         var playerMovement = player.GetComponent<PlayerMovement>();
