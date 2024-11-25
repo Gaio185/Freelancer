@@ -3,7 +3,12 @@ guid: 4c16f6ebc448c994a945ea799d8946b4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ScrewdriverMat
+    second: {fileID: 2100000, guid: c529ab6226ac89642992c88207808586, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
