@@ -126,6 +126,8 @@ MonoBehaviour:
   cameraOffButton: {fileID: 7088674607341575703}
   sentryOnButton: {fileID: 8780490564716722678}
   sentryOffButton: {fileID: 7893749296620488082}
+  accessGranted: {fileID: 0}
+  accessDenied: {fileID: 0}
   usbPen: {fileID: 0}
   correctPassword: 
 --- !u!1 &265246507474875641
@@ -3130,8 +3132,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 990}
+  m_AnchoredPosition: {x: 0, y: -0.010834}
+  m_SizeDelta: {x: 1920, y: 1079.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3240084107886609734
 CanvasRenderer:

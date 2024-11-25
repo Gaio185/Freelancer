@@ -22,18 +22,17 @@ public class NotePlayerDetect : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         interactPanel.SetActive(true); // Show the interact panel
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            player.canPause = false; // Disable pause
             HUD.SetActive(false); // Hide the HUD
             notesPanel.SetActive(true); // Hide the notes UI
             noteInterface.SetActive(true); // Show the note UI
             player.GetComponent<PlayerMovement>().canMove = false; // Disable player movement
+            player.canPause = false; // Disable pause
         }
 
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            player.canPause = true; // Enable pause
             notesPanel.SetActive(false); // Close note interface
             noteInterface.SetActive(false); // Close note interface
             HUD.SetActive(true); // Show the HUD
@@ -44,6 +43,7 @@ public class NotePlayerDetect : MonoBehaviour
                 interactPanel.SetActive(false); // Hide the interact panel
                 note.SetActive(false); // Hide the note
             }
+            player.canPause = true; // Enable pause
         }
     }
 

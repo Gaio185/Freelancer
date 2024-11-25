@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.J) && movement.canMove)
         {
+            canPause = false; // Disable pause
             HUD.SetActive(false);
             Cursor.visible = true; // Show cursor
             Cursor.lockState = CursorLockMode.None; // Unlock cursor

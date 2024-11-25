@@ -20,6 +20,7 @@ public class JournalController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
+            player.canPause = true;
             this.gameObject.SetActive(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
