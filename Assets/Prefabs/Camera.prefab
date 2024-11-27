@@ -136,6 +136,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   rotationRef: {x: 0, y: 0, z: 0, w: 0}
+  forwardRef: {x: 0, y: 0, z: 0}
   canSeePlayer: 0
   shouldDetect: 0
   playerDetected: 0
