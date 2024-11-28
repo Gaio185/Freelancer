@@ -239,8 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionTimer: 3
-  radius: 4.54
+  detectionTimer: 2
+  radius: 16.34
   awarenessRadius: 10.42
   cutoffRadius: 0
   angle: 67
@@ -318,7 +318,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 254658654777884905, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
   bulletSpawn: {fileID: 6538919333480820415}
   bullet: {fileID: 0}
-  bulletSpeed: 0
+  bulletSpeed: 20
 --- !u!65 &7135427049944363373
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -350,7 +350,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7315021647168638361, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
       propertyPath: speed
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 254658654777884905, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
       propertyPath: m_Name

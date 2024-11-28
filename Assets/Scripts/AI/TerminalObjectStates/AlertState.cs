@@ -16,7 +16,8 @@ public class AlertState : TOState
         Debug.Log("Alert");
         for (int i = 0; i < agent.agents.Length; i++)
         {
-            agent.agents[i].stateMachine.ChangeState(AiStateId.Investigate);
+            if (agent.agents[i].stateMachine.currentState != AiStateId.Hunt ||
+                agent.agents[i].stateMachine.currentState != AiStateId.Shoot) agent.agents[i].stateMachine.ChangeState(AiStateId.Investigate);
         }
         timer = agent.config.searchTime;
 
