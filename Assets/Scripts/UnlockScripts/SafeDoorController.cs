@@ -79,6 +79,7 @@ public class SafeDoorController : MonoBehaviour
         Destroy(numerario); // Destroy the numerario object
         ClosePINUI(); // Close the PIN UI and re-lock cursor after unlocking
         player.HUD.SetActive(true); // Show HUD
+        player.interactPanel.SetActive(false); // Hide the interact panel
         safeContent.SetActive(true); // Activate the mission objective
         Debug.Log("Safe unlocked, door and numerario destroyed");
     }

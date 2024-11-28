@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class MissionObjective : MonoBehaviour
 {
-    private GameObject playerRef;
-    private PlayerMovement playerMovement;
+    private Player player;
     private bool isInRange;
 
     void Start()
     {
-        playerRef = GameObject.Find("Player");
-        playerMovement = playerRef.GetComponent<PlayerMovement>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,14 +18,30 @@ public class MissionObjective : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             isInRange = true;
+            player.interactPanel.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            isInRange = false;
+            player.interactPanel.SetActive(false);
         }
     }
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.F) && isInRange)
+        if(Input.GetKeyDown(KeyCode.F) && isInRange)
         {
-            playerMovement.canExtract = true;
+            player.movement.canExtract = true;
+            ObjectiveManager manager = FindObjectOfType<ObjectiveManager>();
+            if (manager != null)
+            {
+                manager.CompleteObjective();
+            }
+            player.interactPanel.SetActive(false);
             gameObject.SetActive(false);
         }
     }

@@ -18,7 +18,7 @@ public class ExtractionPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.F) && extractionZone.isInRange)
+        if (Input.GetKeyDown(KeyCode.F) && extractionZone.isInRange)
         {
             if (playerMovement.canExtract)
             {
