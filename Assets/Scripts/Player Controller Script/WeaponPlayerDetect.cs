@@ -22,7 +22,7 @@ public class WeaponPlayerDetect : MonoBehaviour
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
         if (rangeChecks.Length > 0)
         {
-            if (Input.GetKey(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 gameObject.SetActive(false);
                 weaponHolder.SetActive(true);

@@ -18,6 +18,7 @@ public class Switchweapon : MonoBehaviour
     public GameObject overrideKeyCardModel;
     public GameObject flashdriveModel;
 
+    public bool hasWeapon;
     public bool hasWeaponEquipped;
     public bool disableTools;
 
@@ -37,6 +38,7 @@ public class Switchweapon : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         DeactivateAllModels();
+        hasWeapon = false;
         hasWeaponEquipped = false;
         string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
         Debug.Log("A string selectedWeapon contem: " + selectedWeapon);
@@ -57,7 +59,7 @@ public class Switchweapon : MonoBehaviour
     {
         if ((stunBatonModel.gameObject.activeSelf || taserGunModel.gameObject.activeSelf) == false)
         {
-            hasWeaponEquipped = true;
+            hasWeapon = true;
         }
 
         if (!disableTools)
@@ -92,8 +94,11 @@ public class Switchweapon : MonoBehaviour
     void SwitchWeapon()
     {
         DeactivateAllModels(); // Deactivate all models first
-        if (hasWeaponEquipped)
+
+        if (hasWeapon)
         {
+            hasWeaponEquipped = true;
+
             string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
 
             // Activate the selected weapon
@@ -112,12 +117,15 @@ public class Switchweapon : MonoBehaviour
 
             Debug.Log($"Equipped: Weapon - {selectedWeapon}");
         }
+        
     }
 
     void SwitchItem()
     {
         DeactivateAllModels(); // Deactivate all models first
         string selectedItem = PlayerPrefs.GetString("SelectedItem", "Screwdriver");
+
+        hasWeaponEquipped = false;
 
         // Activate the selected item
         if (selectedItem == "Screwdriver")
@@ -141,6 +149,7 @@ public class Switchweapon : MonoBehaviour
         DeactivateAllModels(); // Deactivate all models first
         string selectedGadget = PlayerPrefs.GetString("SelectedGadget", "OverrideKeyCard");
 
+        hasWeaponEquipped = false;
         // Activate the selected gadget
         if (selectedGadget == "OverrideKeyCard")
         {
@@ -162,6 +171,7 @@ public class Switchweapon : MonoBehaviour
     {
         // Deactivate all models to make the player empty-handed
         DeactivateAllModels();
+        hasWeaponEquipped = false;
         Debug.Log("Equipped: Empty Hands");
     }
 
@@ -175,6 +185,7 @@ public class Switchweapon : MonoBehaviour
         overrideKeyCardModel.SetActive(false);
         flashdriveModel.SetActive(false);
 
+        hasWeaponEquipped = false;
         // Hide crosshair when not holding anything
         crosshair.SetActive(false);
     }
