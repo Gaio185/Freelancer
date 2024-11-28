@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionTimer: 2
+  detectionTimer: 1.5
   radius: 16.34
   awarenessRadius: 10.42
   cutoffRadius: 0
