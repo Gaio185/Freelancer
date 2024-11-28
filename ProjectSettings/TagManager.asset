@@ -13,6 +13,7 @@ TagManager:
   - Door
   - PlayerBody
   - VerifyAccess
+  - DenyAccess
   layers:
   - Default
   - TransparentFX
