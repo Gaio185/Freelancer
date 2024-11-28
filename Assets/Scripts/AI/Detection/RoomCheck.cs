@@ -20,12 +20,12 @@ public class RoomCheck : MonoBehaviour
         playerScript = player.GetComponent<Player>();
 
         // If clearanceStatusText is not set in inspector, try to find it in the scene
-        if (clearanceStatusText == null)
-        {
-            clearanceStatusText = GameObject.Find("ClearanceStatusText").GetComponent<TextMeshProUGUI>();
-        }
+        //if (clearanceStatusText == null)
+        //{
+        //    clearanceStatusText = GameObject.Find("ClearanceStatusText").GetComponent<TextMeshProUGUI>();
+        //}
 
-        UpdateClearanceUI();
+        //UpdateClearanceUI();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,18 +45,18 @@ public class RoomCheck : MonoBehaviour
 
         }
 
-        UpdateClearanceUI();
+        //UpdateClearanceUI();
     }
 
     private void UpdateClearanceUI()
     {
         // Change the UI text based on clearance status
-        if (playerScript.movement.hasClearance)
+        if (playerScript.movement.hasClearance && clearanceStatusText != null)
         {
             clearanceStatusText.text = "You have clearance!";
             clearanceStatusText.color = Color.green;  // Set text color to green
         }
-        else
+        else if(clearanceStatusText != null)
         {
             clearanceStatusText.text = "No clearance!";
             clearanceStatusText.color = Color.red;    // Set text color to red
