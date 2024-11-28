@@ -12,9 +12,14 @@ public class TerminalInteract : MonoBehaviour
 
     public TerminalCollisionCheck terminalCollisionCheck;
 
+    private AudioSource audioSourceVerify;
+    private AudioSource audioSourceDeny;
+
     private void Start()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioSourceVerify = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
+        audioSourceDeny = GameObject.FindWithTag("DenyAccess").GetComponent<AudioSource>();
     }
 
     void Update()
@@ -37,7 +42,7 @@ public class TerminalInteract : MonoBehaviour
                 playerScript.switchWeapon.DeactivateAllModels();
                 computerInterface.GetComponent<TerminalManagement>().isUnlocked = true;
             }
-            overridePenDrive = GameObject.FindWithTag("USBPen");
+            
 
             if (Input.GetMouseButtonDown(0) && overridePenDrive.activeSelf)
             {
@@ -57,9 +62,18 @@ public class TerminalInteract : MonoBehaviour
                     playerScript.movement.canMove = false; // Disable player movement
                     playerScript.switchWeapon.disableTools = true; // Disable player tools
                     playerScript.switchWeapon.DeactivateAllModels();
+                    audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
                     terminal.isUnlocked = true;
                     Debug.Log("Terminal bypassed with USB Pen Drive.");
                 }
+                else if(!terminal.isUnlocked)
+                {
+                    audioSourceDeny.PlayOneShot(audioSourceDeny.clip); 
+                }
+            }
+            else if(overridePenDrive == null)
+            {
+                overridePenDrive = GameObject.FindWithTag("USBPen");
             }
         }
     }
