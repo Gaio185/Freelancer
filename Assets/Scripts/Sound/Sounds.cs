@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public static class Sounds 
 {
@@ -8,15 +9,23 @@ public static class Sounds
     {
         Collider[] listeners = Physics.OverlapSphere(sound.pos, sound.range, enemyLayer);
 
+        LayerMask obstacleMask = LayerMask.GetMask("Wall");
+
         for (int i = 0; i < listeners.Length; i++)
         {
             Transform listener = listeners[i].transform;
-
             AiAgent enemy = listener.GetComponent<AiAgent>();
+
             if (enemy != null)
             {
-                enemy.distraction = distraction;
-                enemy.stateMachine.ChangeState(AiStateId.Investigate);
+                Vector3 directionToTarget = (distraction.position - enemy.transform.position).normalized;
+                float distanceToTarget = Vector3.Distance(enemy.transform.position, distraction.position);
+
+                if (!Physics.Raycast(enemy.transform.position, directionToTarget, distanceToTarget, obstacleMask))
+                {
+                    enemy.distraction = distraction;
+                    enemy.stateMachine.ChangeState(AiStateId.Investigate);
+                }
             }
         }
     }
