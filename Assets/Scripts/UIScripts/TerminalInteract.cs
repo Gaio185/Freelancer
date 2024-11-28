@@ -37,7 +37,7 @@ public class TerminalInteract : MonoBehaviour
                 playerScript.switchWeapon.DeactivateAllModels();
                 computerInterface.GetComponent<TerminalManagement>().isUnlocked = true;
             }
-            overridePenDrive = GameObject.FindWithTag("USBPen");
+            
 
             if (Input.GetMouseButtonDown(0) && overridePenDrive.activeSelf)
             {
@@ -60,6 +60,10 @@ public class TerminalInteract : MonoBehaviour
                     terminal.isUnlocked = true;
                     Debug.Log("Terminal bypassed with USB Pen Drive.");
                 }
+            }
+            else if(overridePenDrive == null)
+            {
+                overridePenDrive = GameObject.FindWithTag("USBPen");
             }
         }
     }

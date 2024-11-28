@@ -41,14 +41,14 @@ public class TerminalManagement : MonoBehaviour
         bool isUsingUsbPen = usbPen != null && usbPen.activeInHierarchy;
 
         // If the USB pen is being used, directly open the workspace
-        if (isUsingUsbPen && canBeHacked)
-        {
-            BypassPassword(); // Bypass password if USB pen is in use
-        }
-        else if(isUsingUsbPen && !canBeHacked)
-        {
-            audioSourceDeny.PlayOneShot(audioSourceDeny.clip); // Play sound for successful login 
-        }
+        //if (isUsingUsbPen && canBeHacked)
+        //{
+        //    BypassPassword(); // Bypass password if USB pen is in use
+        //}
+        //else if(isUsingUsbPen && !canBeHacked)
+        //{
+        //    audioSourceDeny.PlayOneShot(audioSourceDeny.clip); // Play sound for successful login 
+        //}
         
         if (input.text == correctPassword)
         {
@@ -65,14 +65,14 @@ public class TerminalManagement : MonoBehaviour
         }
     }
 
-    public void BypassPassword()
-    {
-        Debug.Log("BypassPassword method called."); // Debugging line
-        audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
-        passwordInterface.SetActive(false); // Hide the password interface
-        workspaceInterface.SetActive(true); // Show the workspace interface
-        Debug.Log("Workspace unlocked with Override Pen Drive.");
-    }
+    //public void BypassPassword()
+    //{
+    //    Debug.Log("BypassPassword method called."); // Debugging line
+    //    audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
+    //    passwordInterface.SetActive(false); // Hide the password interface
+    //    workspaceInterface.SetActive(true); // Show the workspace interface
+    //    Debug.Log("Workspace unlocked with Override Pen Drive.");
+    //}
 
     private void OpenWorkspace()
     {
