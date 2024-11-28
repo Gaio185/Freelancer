@@ -17,19 +17,21 @@ public class TerminalManagement : MonoBehaviour
     public Button sentryOnButton; // Button to turn on sentry
     public Button sentryOffButton; // Button to turn off sentry
 
-    private AudioSource audioSource; // Audio source for terminal sounds
-    public AudioClip accessGranted; // Sound for successful login
-    public AudioClip accessDenied; // Sound for incorrect login 
+    private AudioSource audioSourceVerify; // Audio source for terminal sounds
+    private AudioSource audioSourceDeny;
 
     private Player playerScript; // Reference to player script
     public GameObject usbPen; // Reference to the USB pen GameObject
+
+    public bool canBeHacked;
 
     public string correctPassword; // Correct password for terminal access
 
     public void Start()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<Player>();
-        audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
+        audioSourceVerify = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
+        audioSourceDeny = GameObject.FindWithTag("DenyAccess").GetComponent<AudioSource>();
     }
 
     public void CheckPassword()
@@ -38,20 +40,25 @@ public class TerminalManagement : MonoBehaviour
         bool isUsingUsbPen = usbPen != null && usbPen.activeInHierarchy;
 
         // If the USB pen is being used, directly open the workspace
-        if (isUsingUsbPen)
+        if (isUsingUsbPen && canBeHacked)
         {
             BypassPassword(); // Bypass password if USB pen is in use
         }
-        else if (input.text == correctPassword)
+        else if(isUsingUsbPen && !canBeHacked)
         {
-            audioSource.PlayOneShot(accessGranted); // Play sound for successful login
+            audioSourceDeny.PlayOneShot(audioSourceDeny.clip); // Play sound for successful login 
+        }
+        
+        if (input.text == correctPassword)
+        {
+            audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
             OpenWorkspace();
             input.text = ""; // Clear the input field after successful login
             Debug.Log("Correct Password");
         }
         else
         {
-            audioSource.PlayOneShot(accessDenied); // Play sound for successful login
+            audioSourceDeny.PlayOneShot(audioSourceDeny.clip); // Play sound for successful login
             input.text = "";
             input.placeholder.GetComponent<TextMeshProUGUI>().text = "Incorrect Password"; 
         }
@@ -60,6 +67,7 @@ public class TerminalManagement : MonoBehaviour
     public void BypassPassword()
     {
         Debug.Log("BypassPassword method called."); // Debugging line
+        audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
         passwordInterface.SetActive(false); // Hide the password interface
         workspaceInterface.SetActive(true); // Show the workspace interface
         Debug.Log("Workspace unlocked with Override Pen Drive.");

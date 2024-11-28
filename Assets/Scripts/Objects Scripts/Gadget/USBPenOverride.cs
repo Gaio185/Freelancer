@@ -10,6 +10,7 @@ public class USBPenOverride : MonoBehaviour
     private Transform playerTransform;
     private bool playerInRange = false;  // Track if player is in range of a terminal
     private TerminalManagement targetTerminal; // Reference to the terminal within range
+    private TerminalCollisionCheck terminalCheck;
     private float useCount = 3;
 
     public GameObject overridePenDriveUI;

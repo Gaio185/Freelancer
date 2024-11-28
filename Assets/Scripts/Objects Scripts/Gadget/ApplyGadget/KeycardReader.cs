@@ -39,7 +39,8 @@ public class KeycardReader : MonoBehaviour
             {
                 // Check for KeycardOverride (this will unlock the door regardless of the division type)
                 KeycardOverride overrideKeycard = player.GetComponent<Switchweapon>().overrideKeyCardModel.GetComponent<KeycardOverride>();
-                if (overrideKeycard != null && overrideKeycard.CanUse() && overrideKeycard.gameObject.activeSelf)
+                if (overrideKeycard != null && overrideKeycard.CanUse() && overrideKeycard.gameObject.activeSelf && requiredDivisionType != DivisionType.CEO
+                    && requiredDivisionType != DivisionType.Security)
                 {
                     overrideKeycard.Use();
                     controlledDoor?.Unlock();  // Unlock the controlled door

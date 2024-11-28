@@ -426,6 +426,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5677045052837415035, guid: d660f99f75348e8418ea67510f8d0fb6, type: 3}
+      propertyPath: canBeHacked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677045052837415035, guid: d660f99f75348e8418ea67510f8d0fb6, type: 3}
       propertyPath: accessDenied
       value: 
       objectReference: {fileID: 8300000, guid: 338905ecde80be44392c4856f518932a, type: 3}
