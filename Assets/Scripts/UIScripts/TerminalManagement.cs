@@ -17,8 +17,8 @@ public class TerminalManagement : MonoBehaviour
     public Button sentryOnButton; // Button to turn on sentry
     public Button sentryOffButton; // Button to turn off sentry
 
-    private AudioSource audioSourceVerify; // Audio source for terminal sounds
-    private AudioSource audioSourceDeny;
+    [HideInInspector] public AudioSource audioSourceVerify; // Audio source for terminal sounds
+    [HideInInspector] public AudioSource audioSourceDeny;
 
     private Player playerScript; // Reference to player script
     public GameObject usbPen; // Reference to the USB pen GameObject
