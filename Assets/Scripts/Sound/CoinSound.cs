@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinSound : MonoBehaviour
 {
     public AudioSource source;
-    public float range = 100f;
+    public float range = 10f;
 
     private void OnCollisionEnter(Collision collision)
     {

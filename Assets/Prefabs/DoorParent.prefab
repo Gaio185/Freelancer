@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isUnlocked: 0
   doorObject: {fileID: 7385321980486267129}
+  isOpening: 0
   doorAnimator: {fileID: 1225817132152972288}
   doorType: 0
 --- !u!1 &8184142074125224502
@@ -435,6 +436,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8875449794350654438, guid: b581fdbd127292d44ab21c4b16d91d05, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 165117244325736585}
+    - targetCorrespondingSourceObject: {fileID: 8875449794350654438, guid: b581fdbd127292d44ab21c4b16d91d05, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8270576130374994171}
     - targetCorrespondingSourceObject: {fileID: 8875449794350654444, guid: b581fdbd127292d44ab21c4b16d91d05, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3533300288180627630}
@@ -458,8 +465,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isUnlocked: 0
   doorObject: {fileID: 6722231971525721781}
+  isOpening: 0
   doorAnimator: {fileID: 1225817132152972288}
   doorType: 0
+--- !u!1 &6722231971525721791 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8875449794350654438, guid: b581fdbd127292d44ab21c4b16d91d05, type: 3}
+  m_PrefabInstance: {fileID: 2765708030636318041}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &165117244325736585
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722231971525721791}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.2451682, y: 2.1738982, z: 1.925664}
+  m_Center: {x: 0.03877278, y: 0.06976416, z: -0.0680146}
+--- !u!114 &8270576130374994171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6722231971525721791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e109087ad3d10c4cb4a84ae55924995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 3533300288180627630}
 --- !u!4 &6722231971526206111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8875449794350432198, guid: b581fdbd127292d44ab21c4b16d91d05, type: 3}

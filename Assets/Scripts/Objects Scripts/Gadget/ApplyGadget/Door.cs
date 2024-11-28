@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
 {
     public bool isUnlocked = false;  // Track if the door is unlocked
     public GameObject doorObject;    // The actual door GameObject to animate
-    private bool isOpening = false;  // Is the door currently opening?
+    public bool isOpening = false;  // Is the door currently opening?
 
     public Animator doorAnimator;  // To play animations
 
