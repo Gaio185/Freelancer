@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: terminal_object_config
   m_EditorClassIdentifier: 
   searchTime: 3
+  shootInterval: 0.5

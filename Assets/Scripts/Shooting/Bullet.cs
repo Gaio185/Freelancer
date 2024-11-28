@@ -14,13 +14,13 @@ public class Bullet : MonoBehaviour
 
     private void Awake()
     {
-        //rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
     
     private void OnEnable()
     {
-        //CancelInvoke(DISABLE_METHOD_NAME);
-        //Invoke(DISABLE_METHOD_NAME, autoDestroyTime);
+        CancelInvoke(DISABLE_METHOD_NAME);
+        Invoke(DISABLE_METHOD_NAME, autoDestroyTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,8 +36,8 @@ public class Bullet : MonoBehaviour
 
     private void Disable()
     {
-        //CancelInvoke(DISABLE_METHOD_NAME);
-        //rb.velocity = Vector3.zero;
-        //gameObject.SetActive(false);    
+        CancelInvoke(DISABLE_METHOD_NAME);
+        rb.velocity = Vector3.zero;
+        gameObject.SetActive(false);
     }
 }

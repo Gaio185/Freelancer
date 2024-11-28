@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionTimer: 2.98
+  detectionTimer: 0.6
   radius: 32.75
   awarenessRadius: 0
   cutoffRadius: 6.21
@@ -138,6 +138,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   rotationRef: {x: 0, y: 0, z: 0, w: 0}
+  forwardRef: {x: 0, y: 0, z: 0}
   canSeePlayer: 0
   shouldDetect: 0
   playerDetected: 0
@@ -176,6 +177,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 254658654777884905, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
   bulletSpawn: {fileID: 5882156169559925899}
   bullet: {fileID: 0}
+  bulletSpeed: 100
 --- !u!1 &1678257774806873999
 GameObject:
   m_ObjectHideFlags: 0

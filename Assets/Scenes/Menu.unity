@@ -10016,6 +10016,58 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 53
       objectReference: {fileID: 0}
+    - target: {fileID: 7887780940210800565, guid: c9dc5f6e1af1e4044b9e6d5911a49418, type: 3}
+      propertyPath: m_text
+      value: 'A -> move left
+
+        S -> move backwards
+
+        W -> move forward
+
+        D
+        -> move right
+
+
+        Q,E -> lean left, right respectively
+
+
+        F
+        -> interact button
+
+
+        G -> drop objects
+
+
+        Control-> crouch
+
+
+        Space
+        -> jump
+
+
+        Left Mouse Click -> action button
+
+
+        1,2,3 -> Tool
+        Selection (Smuggled Item, Regular Item, Gadget)
+
+
+        Escape-> Pause
+        Button/Close Button
+
+
+        J -> Note Inventory
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887780940210800565, guid: c9dc5f6e1af1e4044b9e6d5911a49418, type: 3}
+      propertyPath: m_fontSize
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887780940210800565, guid: c9dc5f6e1af1e4044b9e6d5911a49418, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 9064447706484106546, guid: c9dc5f6e1af1e4044b9e6d5911a49418, type: 3}
       propertyPath: m_Name
       value: OptionsMenu
