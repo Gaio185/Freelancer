@@ -33,7 +33,7 @@ public class AIInvestigateState : AiState
 
         agent.visorMaterial.color = Color.yellow;
 
-        timer = agent.config.investigateTime * 0.25f;
+        timer = agent.config.investigateTime;
         interval = 0;
     }
 
@@ -58,7 +58,7 @@ public class AIInvestigateState : AiState
                     agent.visorMaterial.color = Color.yellow;
                     randomPosition.y = agent.transform.position.y;
                     agent.navMeshAgent.destination = randomPosition;
-                    interval = agent.config.investigateInterval * 0.25f;
+                    interval = agent.config.investigateInterval;
                 }
                 
             }

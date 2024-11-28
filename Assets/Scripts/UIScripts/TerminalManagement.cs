@@ -24,6 +24,7 @@ public class TerminalManagement : MonoBehaviour
     public GameObject usbPen; // Reference to the USB pen GameObject
 
     public bool canBeHacked;
+    public bool isUnlocked;
 
     public string correctPassword; // Correct password for terminal access
 
