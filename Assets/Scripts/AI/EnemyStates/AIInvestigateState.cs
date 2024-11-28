@@ -47,13 +47,20 @@ public class AIInvestigateState : AiState
             agent.navMeshAgent.isStopped = false;
 
             Vector3 randomPosition;
-            
+           
             if (!agent.navMeshAgent.hasPath && interval <= 0 && RandomPoint(agent.transform.position, agent.detection.awarenessRadius, out randomPosition))
             {
-                agent.visorMaterial.color = Color.yellow;
-                randomPosition.y = agent.transform.position.y;
-                agent.navMeshAgent.destination = randomPosition;
-                interval = agent.config.investigateInterval;
+                Vector3 directionToTarget = (randomPosition - agent.transform.position).normalized;
+                float distanceToTarget = Vector3.Distance(agent.transform.position, randomPosition);
+
+                if (!Physics.Raycast(agent.transform.position, directionToTarget, distanceToTarget, agent.detection.obstacleMask))
+                {
+                    agent.visorMaterial.color = Color.yellow;
+                    randomPosition.y = agent.transform.position.y;
+                    agent.navMeshAgent.destination = randomPosition;
+                    interval = agent.config.investigateInterval;
+                }
+                
             }
 
             if(timer <= 0)
