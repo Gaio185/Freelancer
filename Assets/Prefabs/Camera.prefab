@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionTimer: 3.79
+  detectionTimer: 2
   radius: 9.5
   awarenessRadius: 0
   cutoffRadius: 5
@@ -136,6 +136,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   rotationRef: {x: 0, y: 0, z: 0, w: 0}
+  forwardRef: {x: 0, y: 0, z: 0}
   canSeePlayer: 0
   shouldDetect: 0
   playerDetected: 0
@@ -343,7 +344,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0, g: 1, b: 0.062502384, a: 1}
-  m_Intensity: 2000
+  m_Intensity: 300
   m_Range: 11.9
   m_SpotAngle: 67
   m_InnerSpotAngle: 21.80208

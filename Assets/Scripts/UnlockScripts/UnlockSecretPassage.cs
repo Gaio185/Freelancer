@@ -56,6 +56,7 @@ public class UnlockSecretPassage : MonoBehaviour
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.F))
         {
+            player.canPause = false; // Disable pause
             player.GetComponent<Switchweapon>().disableTools = true; // Disable player tools
             OpenPINUI(); // Open the PIN UI and manage cursor/camera
         }
@@ -65,6 +66,7 @@ public class UnlockSecretPassage : MonoBehaviour
         {
             player.GetComponent<Switchweapon>().disableTools = false; // Disable player tools
             ClosePINUI();
+            player.canPause = true; // Enable pause
         }
     }
 

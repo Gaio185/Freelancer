@@ -147,11 +147,11 @@ GameObject:
   - component: {fileID: 655483112117186334}
   - component: {fileID: 4210492524570145173}
   - component: {fileID: 6113609140235622724}
-  - component: {fileID: 7248502948311097944}
   - component: {fileID: 1220630762652991253}
   - component: {fileID: 8921032466105570368}
   - component: {fileID: 3998831662463730968}
   - component: {fileID: 6833877105803782357}
+  - component: {fileID: 7135427049944363373}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -227,29 +227,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7248502948311097944
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7225760431959975434}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1220630762652991253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,14 +239,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionTimer: 3
-  radius: 4.54
+  detectionTimer: 2
+  radius: 16.34
   awarenessRadius: 10.42
   cutoffRadius: 0
   angle: 67
   cutoffAngle: 360
   playerRef: {fileID: 0}
-  playerMovement: {fileID: 0}
+  player: {fileID: 0}
   targetMask:
     serializedVersion: 2
     m_Bits: 128
@@ -277,6 +254,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   rotationRef: {x: 0, y: 0, z: 0, w: 0}
+  forwardRef: {x: 0, y: 0, z: 0}
   canSeePlayer: 0
   shouldDetect: 0
   playerDetected: 0
@@ -340,6 +318,28 @@ MonoBehaviour:
   bulletPrefab: {fileID: 254658654777884905, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
   bulletSpawn: {fileID: 6538919333480820415}
   bullet: {fileID: 0}
+  bulletSpeed: 20
+--- !u!65 &7135427049944363373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7225760431959975434}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &9198681544411401072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -350,7 +350,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7315021647168638361, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
       propertyPath: speed
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 254658654777884905, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
       propertyPath: m_Name

@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public GameObject HUD;
     public GameObject interactPanel;
 
-    [HideInInspector] public bool canPause;
+    public bool canPause;
 
 
     // Start is called before the first frame update

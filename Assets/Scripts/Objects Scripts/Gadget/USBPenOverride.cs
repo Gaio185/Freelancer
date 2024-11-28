@@ -55,8 +55,14 @@ public class USBPenOverride : MonoBehaviour
                 --useCount;
                 countUI.text = "x" + useCount;
                 TerminalManagement computerInterface = terminal.computerInterface.GetComponent<TerminalManagement>();
-                computerInterface.BypassPassword(); // Call the terminal's bypass method
-                Debug.Log("Terminal bypassed with USB Pen Drive.");
+                if (!computerInterface.isUnlocked)
+                {
+                    --useCount;
+                    countUI.text = "x" + useCount;
+                    computerInterface.BypassPassword(); // Call the terminal's bypass method
+                    Debug.Log("Terminal bypassed with USB Pen Drive.");
+                }
+                
             }
             else
             {

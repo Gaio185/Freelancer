@@ -7,11 +7,13 @@ public class ShootBullet : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public Bullet bullet;
+    public float bulletSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
         bullet = bulletPrefab.GetComponent<Bullet>();
+        if(bulletSpeed > 0) bullet.speed = bulletSpeed;
     }
 
     public void Shoot()
