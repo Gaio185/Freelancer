@@ -58,6 +58,7 @@ public class UnlockSecretPassage : MonoBehaviour
         {
             player.canPause = false; // Disable pause
             player.GetComponent<Switchweapon>().disableTools = true; // Disable player tools
+            player.GetComponent<Switchweapon>().DeactivateAllModels(); // Deactivate all player tools
             OpenPINUI(); // Open the PIN UI and manage cursor/camera
         }
 
