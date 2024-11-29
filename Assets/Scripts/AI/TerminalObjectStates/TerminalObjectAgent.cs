@@ -14,9 +14,13 @@ public class TOAgent : MonoBehaviour
     [HideInInspector] public Detection detection;
     public GameObject visor;
     [HideInInspector] public Material visorMaterial;
+    [HideInInspector] public Renderer renderer;
+    [HideInInspector] public Material material;
 
     void Start()
     {
+        renderer = GetComponent<Renderer>();
+        material = renderer.material;
         visorMaterial = visor.GetComponent<Renderer>().material;
         detection = GetComponent<Detection>();
         shootBullet = GetComponent<ShootBullet>();

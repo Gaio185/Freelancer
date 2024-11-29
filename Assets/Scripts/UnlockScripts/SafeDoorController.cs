@@ -58,6 +58,7 @@ public class SafeDoorController : MonoBehaviour
         {
             player.canPause = false; // Disable pause
             player.GetComponent<Switchweapon>().disableTools = true; // Enable player tools
+            player.GetComponent<Switchweapon>().DeactivateAllModels();
             player.HUD.SetActive(false); // Hide HUD
             OpenPINUI(); // Open the PIN UI and manage cursor/camera
         }

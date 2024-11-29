@@ -21,16 +21,16 @@ public class AlertState : TOState
         }
         timer = agent.config.searchTime;
 
+        agent.material.SetColor("_EmissionColor", Color.red);
         agent.detection.lightRef.color = Color.red;
-        agent.visorMaterial.color = Color.red;
     }
 
     public void Update(TOAgent agent)
     {
         if(!agent.detection.canSeePlayer)
         {
+            agent.material.SetColor("_EmissionColor", Color.yellow);
             agent.detection.lightRef.color = Color.yellow;
-            agent.visorMaterial.color = Color.yellow;
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
@@ -40,8 +40,8 @@ public class AlertState : TOState
         }
         else
         {
+            agent.material.SetColor("_EmissionColor", Color.red);
             agent.detection.lightRef.color = Color.red;
-            agent.visorMaterial.color = Color.red;
             timer = agent.config.searchTime;
         }
         
