@@ -12,6 +12,7 @@ public class OnState : TOState
     public void Enter(TOAgent agent)
     {
         Debug.Log("On");
+        agent.material.SetColor("_EmissionColor", Color.green);
         agent.detection.lightRef.color = Color.green;
         agent.detection.lightRef.enabled = true;
         agent.visorMaterial.color = Color.green;
@@ -28,15 +29,24 @@ public class OnState : TOState
             agent.stateMachine.ChangeState(TOStateId.Shoot);
         }
 
-        if (agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect)
+        if (agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect && agent.tag == "Camera")
+        {
+            agent.material.SetColor("_EmissionColor", Color.yellow);
+            agent.detection.lightRef.color = Color.yellow;
+        }
+        else if(agent.tag == "Camera")
+        {
+            agent.material.SetColor("_EmissionColor", Color.green);
+            agent.detection.lightRef.color = Color.green;
+        }
+
+        if (agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect && agent.tag == "Sentry")
         {
             agent.detection.lightRef.color = Color.yellow;
-            agent.visorMaterial.color = Color.yellow;
         }
-        else
+        else if(agent.tag == "Sentry")
         {
             agent.detection.lightRef.color = Color.green;
-            agent.visorMaterial.color = Color.green;
         }
     }
 
