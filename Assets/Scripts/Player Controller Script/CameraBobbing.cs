@@ -9,24 +9,41 @@ public class CameraBobbing : MonoBehaviour
     [SerializeField, Range(0, 0.1f)] private float _Amplitude = 0.015f;  // Amplitude of bobbing (height)
     [SerializeField, Range(0, 30)] private float _frequency = 10.0f;  // Frequency of bobbing (speed)
     [SerializeField] private Transform _camera = null;  // The camera that should bob
+    [SerializeField] private float _mouseSensitivity = 100f; // Sensitivity for mouse movement
 
     private float _toggleSpeed = 3.0f;  // Speed threshold to trigger bobbing
     private Vector3 _startPos;  // Initial position of the camera
     private CharacterController _controller;  // Reference to the CharacterController
 
+    private float _xRotation = 0f;  // For storing vertical rotation
+
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();  // Get the CharacterController from the player
         _startPos = _camera.localPosition;  // Store the initial camera position
+        Cursor.lockState = CursorLockMode.Locked;  // Lock cursor for gameplay
     }
 
     void Update()
     {
         if (!_enable) return;  // If bobbing is disabled, do nothing
 
+        HandleMouseInput(); // Handle camera rotation
         CheckMotion();  // Check if the player is moving and grounded
         ResetPosition();  // Reset camera to its starting position when not moving
-        _camera.LookAt(FocusTarget());  // Make camera focus ahead of the player
+    }
+
+    // Handles vertical and horizontal rotation from mouse input
+    private void HandleMouseInput()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity * Time.deltaTime;
+
+        _xRotation -= mouseY;
+        _xRotation = Mathf.Clamp(_xRotation, -90f, 90f); // Clamp vertical rotation
+
+        _camera.localRotation = Quaternion.Euler(_xRotation, 0f, 0f); // Apply vertical rotation
+        transform.Rotate(Vector3.up * mouseX); // Rotate player horizontally
     }
 
     // Generates footstep motion for up/down and side-to-side bobbing
@@ -56,14 +73,6 @@ public class CameraBobbing : MonoBehaviour
     private void PlayMotion(Vector3 motion)
     {
         _camera.localPosition += motion;  // Modify the camera's local position
-    }
-
-    // Focus the camera ahead of the player (15 units in front)
-    private Vector3 FocusTarget()
-    {
-        Vector3 pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        pos += transform.forward * 15.0f;  // Position the focus point 15 units ahead
-        return pos;
     }
 
     // Smoothly reset the camera position when the player is not moving
