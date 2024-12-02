@@ -9,7 +9,9 @@ public class CameraBobbing : MonoBehaviour
     [SerializeField, Range(0, 0.1f)] private float _Amplitude = 0.015f;  // Amplitude of bobbing (height)
     [SerializeField, Range(0, 30)] private float _frequency = 10.0f;  // Frequency of bobbing (speed)
     [SerializeField] private Transform _camera = null;  // The camera that should bob
-    [SerializeField] private float _mouseSensitivity = 100f; // Sensitivity for mouse movement
+    [SerializeField] private float _mouseSensitivityHorizontal = 100f; // Sensitivity for horizontal mouse movement
+    [SerializeField] private float _mouseSensitivityVertical = 150f;   // Sensitivity for vertical mouse movement (adjusted for speed)
+    [SerializeField] private GameObject _hud = null;  // HUD reference, assignable in the Inspector
 
     private float _toggleSpeed = 3.0f;  // Speed threshold to trigger bobbing
     private Vector3 _startPos;  // Initial position of the camera
@@ -22,6 +24,12 @@ public class CameraBobbing : MonoBehaviour
         _controller = GetComponent<CharacterController>();  // Get the CharacterController from the player
         _startPos = _camera.localPosition;  // Store the initial camera position
         Cursor.lockState = CursorLockMode.Locked;  // Lock cursor for gameplay
+
+        // Log a warning if HUD is not assigned
+        if (_hud == null)
+        {
+            Debug.LogWarning("HUD is not assigned. Please assign it in the Inspector.");
+        }
     }
 
     void Update()
@@ -36,8 +44,8 @@ public class CameraBobbing : MonoBehaviour
     // Handles vertical and horizontal rotation from mouse input
     private void HandleMouseInput()
     {
-        float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivityHorizontal * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivityVertical * Time.deltaTime;
 
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -90f, 90f); // Clamp vertical rotation
