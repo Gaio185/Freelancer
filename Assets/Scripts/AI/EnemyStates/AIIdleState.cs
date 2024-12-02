@@ -27,13 +27,15 @@ public class AIIdleState : AiState
 
         if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
-            agent.material.SetColor("_EmissionColor", Color.yellow);
+            agent.material.SetTexture("_BaseMap", agent.yellowTexture);
+            agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
             //agent.visorMaterial.color = Color.yellow;
             agent.navMeshAgent.isStopped = true; 
         }
         else
         {
-            agent.material.SetColor("_EmissionColor", Color.green);
+            agent.material.SetTexture("_BaseMap", agent.greenTexture);
+            agent.material.SetTexture("_EmissionMap", agent.greenEmission);
             //agent.visorMaterial.color = Color.green;
             agent.navMeshAgent.isStopped = false;
         }
