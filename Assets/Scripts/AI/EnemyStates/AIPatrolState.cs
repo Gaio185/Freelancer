@@ -38,13 +38,15 @@ public class AIPatrolState : AiState
         {
             agent.navMeshAgent.isStopped = true;
             //agent.visorMaterial.color = Color.yellow;
-            agent.material.SetColor("_EmissionColor", Color.yellow);
+            agent.material.SetTexture("_BaseMap", agent.yellowTexture);
+            agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
         }
         else
         {
            agent.navMeshAgent.isStopped = false;
             //agent.visorMaterial.color = Color.green;
-            agent.material.SetColor("_EmissionColor", Color.yellow);
+            agent.material.SetTexture("_BaseMap", agent.greenTexture);
+            agent.material.SetTexture("_EmissionMap", agent.greenEmission);
         }
 
         if (agent.detection.playerDetected)
