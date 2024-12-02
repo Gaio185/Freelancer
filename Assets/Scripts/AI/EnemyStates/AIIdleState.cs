@@ -14,6 +14,9 @@ public class AIIdleState : AiState
     {
         Debug.Log("Idle");
         agent.navMeshAgent.destination = agent.startingPosition;
+        agent.material.SetTexture("_BaseMap", agent.greenTexture);
+        agent.material.SetTexture("_EmissionMap", agent.greenEmission);
+        agent.material.SetColor("_EmissionColor", Color.white);
         //agent.visorMaterial.color = Color.green;
         agent.navMeshAgent.isStopped = false;
     }

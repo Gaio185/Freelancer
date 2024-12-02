@@ -27,12 +27,15 @@ public class AiAgent : MonoBehaviour
     [HideInInspector] public Texture2D redTexture;
     [HideInInspector] public Texture2D redEmission;
 
+    [HideInInspector] public Texture2D stunnedTexture;
+
     private string greenTexturePath = "Textures/SecurityBotTextures/BotColorGreen";
     private string yellowTexturePath = "Textures/SecurityBotTextures/BotColorYellow";
     private string redTexturePath = "Textures/SecurityBotTextures/BotColorRed";
     private string greenEmissionPath = "Textures/SecurityBotTextures/BotEmissiveGreen";
     private string yellowEmissionPath = "Textures/SecurityBotTextures/BotEmissiveYellow";
     private string redEmissionPath = "Textures/SecurityBotTextures/BotEmissiveRed";
+    private string stunnedTexturePath = "Textures/SecurityBotTextures/BotColorStunned";
 
 
     //public GameObject visor;
@@ -48,6 +51,7 @@ public class AiAgent : MonoBehaviour
         greenEmission = Resources.Load<Texture2D>(greenEmissionPath);
         yellowEmission = Resources.Load<Texture2D>(yellowEmissionPath);
         redEmission = Resources.Load<Texture2D>(redEmissionPath);
+        stunnedTexture = Resources.Load<Texture2D>(stunnedTexturePath);
 
         //visorMaterial = visor.GetComponent<Renderer>().material;
         renderer = GetComponent<Renderer>();

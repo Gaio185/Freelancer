@@ -16,6 +16,8 @@ public class AIStunnedState : AiState
         agent.detection.player.movement.isHunted = false;
         agent.navMeshAgent.isStopped = true;
         timer = agent.config.stunTime;
+        agent.material.SetTexture("_BaseMap", agent.stunnedTexture);
+        agent.material.SetColor("_EmissionColor", Color.black);
         //agent.visorMaterial.color = Color.grey;
     }
 

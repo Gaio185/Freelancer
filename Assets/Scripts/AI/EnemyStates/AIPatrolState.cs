@@ -16,6 +16,9 @@ public class AIPatrolState : AiState
     {
         Debug.Log("Patrol");
         agent.navMeshAgent.isStopped = false;
+        agent.material.SetTexture("_BaseMap", agent.greenTexture);
+        agent.material.SetTexture("_EmissionMap", agent.greenEmission);
+        agent.material.SetColor("_EmissionColor", Color.white);
         ////agent.visorMaterial.color = Color.green;
         targetPoint = 0;
     }
