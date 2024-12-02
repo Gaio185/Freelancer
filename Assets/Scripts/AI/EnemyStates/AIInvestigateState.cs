@@ -31,7 +31,9 @@ public class AIInvestigateState : AiState
             agent.navMeshAgent.destination = agent.distraction.position;
         }
 
-        agent.visorMaterial.color = Color.yellow;
+        agent.material.SetTexture("_BaseMap", agent.yellowTexture);
+        agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
+        //agent.visorMaterial.color = Color.yellow;
 
         timer = agent.config.investigateTime;
         interval = 0;
@@ -55,7 +57,9 @@ public class AIInvestigateState : AiState
 
                 if (!Physics.Raycast(agent.transform.position, directionToTarget, distanceToTarget, agent.detection.obstacleMask))
                 {
-                    agent.visorMaterial.color = Color.yellow;
+                    //agent.visorMaterial.color = Color.yellow;
+                    agent.material.SetTexture("_BaseMap", agent.yellowTexture);
+                    agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
                     randomPosition.y = agent.transform.position.y;
                     agent.navMeshAgent.destination = randomPosition;
                     interval = agent.config.investigateInterval;

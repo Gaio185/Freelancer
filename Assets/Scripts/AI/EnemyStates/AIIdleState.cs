@@ -14,7 +14,7 @@ public class AIIdleState : AiState
     {
         Debug.Log("Idle");
         agent.navMeshAgent.destination = agent.startingPosition;
-        agent.visorMaterial.color = Color.green;
+        //agent.visorMaterial.color = Color.green;
         agent.navMeshAgent.isStopped = false;
     }
 
@@ -27,12 +27,16 @@ public class AIIdleState : AiState
 
         if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
-            agent.visorMaterial.color = Color.yellow;
+            agent.material.SetTexture("_BaseMap", agent.yellowTexture);
+            agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
+            //agent.visorMaterial.color = Color.yellow;
             agent.navMeshAgent.isStopped = true; 
         }
         else
         {
-            agent.visorMaterial.color = Color.green;
+            agent.material.SetTexture("_BaseMap", agent.greenTexture);
+            agent.material.SetTexture("_EmissionMap", agent.greenEmission);
+            //agent.visorMaterial.color = Color.green;
             agent.navMeshAgent.isStopped = false;
         }
 
