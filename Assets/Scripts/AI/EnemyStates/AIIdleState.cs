@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.XR;
 
 public class AIIdleState : AiState
@@ -47,7 +48,7 @@ public class AIIdleState : AiState
         {
             agent.stateMachine.ChangeState(AiStateId.Hunt);
         }
-        
+
     }
 
     public void Exit(AiAgent agent)

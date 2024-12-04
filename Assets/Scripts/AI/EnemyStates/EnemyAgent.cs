@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class AiAgent : MonoBehaviour
 {
+    public List<GameObject> wheels;
     public AIStateMachine stateMachine;
     public AiStateId initialState;
     public NavMeshAgent navMeshAgent;
@@ -74,5 +75,17 @@ public class AiAgent : MonoBehaviour
     void Update()
     {
         stateMachine.Update();
+
+        for (int i = 0; i < wheels.Count; i++)
+        {
+            if (navMeshAgent.isStopped || !navMeshAgent.hasPath)
+            {
+                wheels[i].GetComponent<Animator>().SetBool("isMoving", false);
+            }
+            else
+            {
+                wheels[i].GetComponent<Animator>().SetBool("isMoving", true);
+            }
+        }
     }
 }
