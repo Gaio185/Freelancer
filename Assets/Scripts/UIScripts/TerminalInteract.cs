@@ -29,7 +29,7 @@ public class TerminalInteract : MonoBehaviour
         {
             TerminalManagement terminalManagement = computerInterface.GetComponent<TerminalManagement>();
 
-            terminalCollisionCheck.interactPanel.SetActive(true); // Show the interact panel
+            terminalCollisionCheck.player.interactPanel.SetActive(true); // Show the interact panel
             if (Input.GetKeyDown(KeyCode.F))
             {
                 playerScript.canPause = false; // Disable pause

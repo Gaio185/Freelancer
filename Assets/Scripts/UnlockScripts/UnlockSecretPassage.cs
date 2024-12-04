@@ -22,6 +22,7 @@ public class UnlockSecretPassage : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            player.interactionText.text = "Press F to Interact";
             isPlayerNear = true;
             Debug.Log("Player near the safe door");
         }

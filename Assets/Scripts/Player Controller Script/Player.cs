@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     public GameObject noteInterface;
     public GameObject HUD;
     public GameObject interactPanel;
+    public TextMeshProUGUI interactionText;
 
     public bool canPause;
 

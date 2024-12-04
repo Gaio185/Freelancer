@@ -21,7 +21,15 @@ public class KeycardReader : MonoBehaviour
         audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
 
-    private void Update()
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown((KeyCode.F)) && !controlledDoor.isUnlocked)  // Use mouse click for interaction
+    //    {
+    //        TryUnlock();
+    //    }
+    //}
+
+    private void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown((KeyCode.F)) && !controlledDoor.isUnlocked)  // Use mouse click for interaction
         {
@@ -29,42 +37,46 @@ public class KeycardReader : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        player.interactionText.text = "Press F to Interact";
+        player.interactPanel.SetActive(true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        player.interactPanel.SetActive(false);
+    }
+
     private void TryUnlock()
     {
-        Collider[] nearbyColliders = Physics.OverlapSphere(transform.position, 3f, targetMask);  // Detect nearby colliders
-
-        if(nearbyColliders.Length > 0)
+        // Check for KeycardOverride (this will unlock the door regardless of the division type)
+        KeycardOverride overrideKeycard = player.GetComponent<Switchweapon>().overrideKeyCardModel.GetComponent<KeycardOverride>();
+        if (overrideKeycard != null && overrideKeycard.CanUse() && overrideKeycard.gameObject.activeSelf && requiredDivisionType != DivisionType.CEO
+            && requiredDivisionType != DivisionType.Security)
         {
-            foreach (Collider collider in nearbyColliders)
-            {
-                // Check for KeycardOverride (this will unlock the door regardless of the division type)
-                KeycardOverride overrideKeycard = player.GetComponent<Switchweapon>().overrideKeyCardModel.GetComponent<KeycardOverride>();
-                if (overrideKeycard != null && overrideKeycard.CanUse() && overrideKeycard.gameObject.activeSelf && requiredDivisionType != DivisionType.CEO
-                    && requiredDivisionType != DivisionType.Security)
-                {
-                    overrideKeycard.Use();
-                    controlledDoor?.Unlock();  // Unlock the controlled door
-                    audioSource.PlayOneShot(accessGranted);
-                    Debug.Log("Door unlocked with override keycard.");
-                    return;
-                }
-
-                // Check for a regular Keycard
-                for (int i = 0; i < player.GetComponent<Player>().keycards.Count; i++)
-                {
-                    Keycard keycard = player.keycards[i];
-                    if (keycard.GetDivisionType() == requiredDivisionType)
-                    {
-                        controlledDoor?.Unlock();  // Unlock the controlled door
-                        audioSource.PlayOneShot(accessGranted);
-                        Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
-                        return;
-                    }
-                }
-            }
-
-            audioSource.PlayOneShot(accessDenied);
-            Debug.Log("Access denied. A valid keycard or override keycard is required.");
+            overrideKeycard.Use();
+            controlledDoor?.Unlock();  // Unlock the controlled door
+            audioSource.PlayOneShot(accessGranted);
+            Debug.Log("Door unlocked with override keycard.");
+            return;
         }
+
+        // Check for a regular Keycard
+        for (int i = 0; i < player.GetComponent<Player>().keycards.Count; i++)
+        {
+            Keycard keycard = player.keycards[i];
+            if (keycard.GetDivisionType() == requiredDivisionType)
+            {
+                controlledDoor?.Unlock();  // Unlock the controlled door
+                audioSource.PlayOneShot(accessGranted);
+                Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
+                return;
+            }
+        }
+
+        audioSource.PlayOneShot(accessDenied);
+        Debug.Log("Access denied. A valid keycard or override keycard is required.");
+        
     }
 }
