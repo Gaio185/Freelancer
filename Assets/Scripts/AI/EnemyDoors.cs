@@ -12,7 +12,6 @@ public class EnemyDoors : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.GetMask("Enemy"))
         {
-            Debug.Log("what the sigma");
             door.StartCoroutine(OpenDoor());
         }
     }
