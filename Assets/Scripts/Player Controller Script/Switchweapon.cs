@@ -57,11 +57,6 @@ public class Switchweapon : MonoBehaviour
 
     void Update()
     {
-        if ((stunBatonModel.gameObject.activeSelf || taserGunModel.gameObject.activeSelf) == false)
-        {
-            hasWeapon = true;
-        }
-
         if (!disableTools)
         {
             HandleSwitching(); // Check for input to switch items

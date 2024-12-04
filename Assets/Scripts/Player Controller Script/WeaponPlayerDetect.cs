@@ -24,6 +24,7 @@ public class WeaponPlayerDetect : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
+                player.GetComponent<Switchweapon>().hasWeapon = true;
                 gameObject.SetActive(false);
                 weaponHolder.SetActive(true);
             }
