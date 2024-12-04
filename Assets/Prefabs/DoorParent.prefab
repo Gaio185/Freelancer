@@ -32,7 +32,6 @@ Transform:
   m_Children:
   - {fileID: 6722231971526206111}
   - {fileID: 5193187534112798058}
-  - {fileID: 9087634927008773207}
   m_Father: {fileID: 1040174676732302543}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1225817132152972288
@@ -81,12 +80,12 @@ Transform:
   m_GameObject: {fileID: 3657897558164484254}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.8280029, y: -0.174, z: 0}
-  m_LocalScale: {x: 5.6497183, y: 0.25, z: 0.5}
+  m_LocalPosition: {x: 2.0627406, y: -0.73600006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1.2697666}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5693492615335441445}
-  m_Father: {fileID: 775100142549717698}
+  m_Father: {fileID: 1040174676732302543}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &7039413023752427483
 GameObject:
@@ -118,6 +117,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8282350873829632409}
+  - {fileID: 9087634927008773207}
   - {fileID: 775100142549717698}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -240,7 +240,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUnlocked: 0
-  doorObject: {fileID: 7385321980486267129}
   isOpening: 0
   doorAnimator: {fileID: 1225817132152972288}
   doorType: 0
@@ -543,7 +542,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUnlocked: 0
-  doorObject: {fileID: 6722231971525721781}
   isOpening: 0
   doorAnimator: {fileID: 1225817132152972288}
   doorType: 0

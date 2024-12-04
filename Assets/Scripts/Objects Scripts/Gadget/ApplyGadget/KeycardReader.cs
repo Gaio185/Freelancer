@@ -10,6 +10,8 @@ public class KeycardReader : MonoBehaviour
     private Player player;
     private AudioSource audioSource;
 
+    private bool isInRange;
+
     public LayerMask targetMask;
 
     public AudioClip accessGranted;
@@ -21,17 +23,9 @@ public class KeycardReader : MonoBehaviour
         audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown((KeyCode.F)) && !controlledDoor.isUnlocked)  // Use mouse click for interaction
-    //    {
-    //        TryUnlock();
-    //    }
-    //}
-
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
-        if (Input.GetKeyDown((KeyCode.F)) && !controlledDoor.isUnlocked)  // Use mouse click for interaction
+        if (Input.GetKeyDown((KeyCode.F)) && !controlledDoor.isUnlocked && isInRange)  // Use mouse click for interaction
         {
             TryUnlock();
         }
@@ -39,13 +33,22 @@ public class KeycardReader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        player.interactionText.text = "Press F to Interact";
-        player.interactPanel.SetActive(true);
+        if(other.gameObject.tag == "Player")
+        {
+            isInRange = true;
+            player.interactionText.text = "Press F to Interact";
+            player.interactPanel.SetActive(true);
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        player.interactPanel.SetActive(false);
+        if(other.gameObject.tag == "Player")
+        {
+            isInRange = false;
+            player.interactPanel.SetActive(false);
+        }
     }
 
     private void TryUnlock()
