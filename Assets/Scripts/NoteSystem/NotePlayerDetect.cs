@@ -6,8 +6,6 @@ using UnityEngine;
 public class NotePlayerDetect : MonoBehaviour
 {
     public GameObject noteInterface; // Reference to the note UI
-    public GameObject HUD; // Reference to the HUD
-    public GameObject interactPanel; // Reference to the interact panel
     public GameObject notesPanel;
     public GameObject note; // Reference to the note
 
@@ -20,16 +18,11 @@ public class NotePlayerDetect : MonoBehaviour
         noteInterface.SetActive(false);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        interactPanel.SetActive(true); // Show the interact panel
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F) && isInRange)
         {
-            HUD.SetActive(false); // Hide the HUD
+            player.HUD.SetActive(false); // Hide the HUD
             notesPanel.SetActive(true); // Hide the notes UI
             noteInterface.SetActive(true); // Show the note UI
             player.GetComponent<PlayerMovement>().canMove = false; // Disable player movement
@@ -44,14 +37,15 @@ public class NotePlayerDetect : MonoBehaviour
             if (note != null)
             {
                 player.GetComponent<Player>().notes.Add(note); // Add the note to the player's notes list
-                interactPanel.SetActive(false); // Hide the interact panel
+                player.interactPanel.SetActive(false); // Hide the interact panel
                 note.SetActive(false); // Hide the note
-                HUD.SetActive(true); // Show the HUD
+                player.HUD.SetActive(true); // Show the HUD
                 player.canPause = true; // Enable pause
+                player.notePopUp.SetActive(true);
             }
             else
             {
-                HUD.SetActive(true); // Show the HUD
+                player.HUD.SetActive(true); // Show the HUD
                 player.canPause = true; // Enable pause
             }
         }
@@ -61,7 +55,16 @@ public class NotePlayerDetect : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            interactPanel.SetActive(true); // Show the interact panel
+            if (note != null)
+            {
+                player.interactionText.text = "Press F to Pick Up";
+            }
+            else
+            {
+                player.interactionText.text = "Press F to Inspect";
+            }
+            
+            player.interactPanel.SetActive(true); // Show the interact panel
             isInRange = true;
         }
     }
@@ -70,7 +73,7 @@ public class NotePlayerDetect : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            interactPanel.SetActive(false); // Show the interact panel
+            player.interactPanel.SetActive(false); // Show the interact panel
             isInRange = false;
         }
     }

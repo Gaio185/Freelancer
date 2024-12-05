@@ -83,13 +83,14 @@ public class SafeDoorController : MonoBehaviour
         player.HUD.SetActive(true); // Show HUD
         player.interactPanel.SetActive(false); // Hide the interact panel
         safeContent.SetActive(true); // Activate the mission objective
+        UnlockCursor();
         Debug.Log("Safe unlocked, door and numerario destroyed");
     }
 
     private void OpenPINUI()
     {
         pinUI.SetActive(true); // Show the PIN input UI
-        UnlockCursor(); // Unlock cursor for PIN entry
+        LockCursor(); // Unlock cursor for PIN entry
 
         // Disable player movement
         if (player != null)

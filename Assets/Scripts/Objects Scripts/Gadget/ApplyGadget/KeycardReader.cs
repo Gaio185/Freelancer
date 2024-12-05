@@ -9,6 +9,7 @@ public class KeycardReader : MonoBehaviour
     public DivisionType requiredDivisionType;  // The required division type for this reader
     private Player player;
     private AudioSource audioSource;
+    public GameObject doorFrame;
 
     private bool isInRange;
 
@@ -61,6 +62,9 @@ public class KeycardReader : MonoBehaviour
             overrideKeycard.Use();
             controlledDoor?.Unlock();  // Unlock the controlled door
             audioSource.PlayOneShot(accessGranted);
+            doorFrame.GetComponent<BoxCollider>().enabled = true;
+            player.interactPanel.SetActive(false);
+            gameObject.GetComponent<BoxCollider>().enabled = false;
             Debug.Log("Door unlocked with override keycard.");
             return;
         }
@@ -73,6 +77,9 @@ public class KeycardReader : MonoBehaviour
             {
                 controlledDoor?.Unlock();  // Unlock the controlled door
                 audioSource.PlayOneShot(accessGranted);
+                doorFrame.GetComponent<BoxCollider>().enabled = true;
+                player.interactPanel.SetActive(false);
+                gameObject.GetComponent<BoxCollider>().enabled = false;
                 Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
                 return;
             }

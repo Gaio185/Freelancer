@@ -95,6 +95,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a77ad939e9293ee41b9ccbc0575b9151, type: 2}
+    - target: {fileID: -6487994197024019727, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -6469127065821193458, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -103,6 +107,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a77ad939e9293ee41b9ccbc0575b9151, type: 2}
+    - target: {fileID: -2267285617211387555, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -384550889770512457, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -115,6 +123,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2299049899952293981, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4551072423170232923, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5748759045953294882, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -123,6 +139,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a77ad939e9293ee41b9ccbc0575b9151, type: 2}
+    - target: {fileID: 8634781068007812087, guid: 01ce65edf63b5464daaf1a15c87928d9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -259,8 +279,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02677264, y: 0.056501146, z: 0.034391057}
-  m_Center: {x: -0.0001110221, y: 0.00071549165, z: 0.000049137412}
+  m_Size: {x: 0.030861676, y: 0.056501146, z: 0.034391057}
+  m_Center: {x: -0.00042233922, y: 0.00071549165, z: 0.000049137412}
 --- !u!195 &6887172992156076756
 NavMeshAgent:
   m_ObjectHideFlags: 0
