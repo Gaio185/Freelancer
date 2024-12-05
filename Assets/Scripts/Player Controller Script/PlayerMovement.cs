@@ -100,30 +100,30 @@ public class PlayerMovement : MonoBehaviour
         // Check for player leaning
         if(canMove) LeanCheck();
 
-        // Try interacting with door when the player presses "F"
-        if (Input.GetKeyDown(KeyCode.F) && canMove)
-        {
-            TryInteractWithDoor();
-        }
+        //// Try interacting with door when the player presses "F"
+        //if (Input.GetKeyDown(KeyCode.F) && canMove)
+        //{
+        //    TryInteractWithDoor();
+        //}
     }
 
     // Raycast to find doors and interact with them
-    void TryInteractWithDoor()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, interactionRange))
-        {
-            Door targetDoor = hit.transform.GetComponent<Door>();
-            if (targetDoor != null)
-            {
-                targetDoor.TryOpenDoor();  // Call the method to open the door if unlocked
-            }
-            else
-            {
-                Debug.Log("No door in front of you.");
-            }
-        }
-    }
+    //void TryInteractWithDoor()
+    //{
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, interactionRange))
+    //    {
+    //        Door targetDoor = hit.transform.GetComponent<Door>();
+    //        if (targetDoor != null)
+    //        {
+    //            targetDoor.TryOpenDoor();  // Call the method to open the door if unlocked
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("No door in front of you.");
+    //        }
+    //    }
+    //}
 
     void LeanCheck()
     {

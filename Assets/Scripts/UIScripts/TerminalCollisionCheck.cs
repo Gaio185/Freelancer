@@ -5,18 +5,20 @@ using UnityEngine;
 public class TerminalCollisionCheck : MonoBehaviour
 {
     [HideInInspector] public bool isInRange;
-    public GameObject interactPanel; // Reference to the interact panel
+    [HideInInspector] public Player player;
 
     // Start is called before the first frame update
     void Start()
     {
         isInRange = false;
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            player.interactionText.text = "Press F to Interact";
             isInRange = true;
         }
     }
@@ -25,7 +27,7 @@ public class TerminalCollisionCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            interactPanel.SetActive(false); // Hide the interact panel
+            player.interactPanel.SetActive(false); // Hide the interact panel
             isInRange = false;
         }
     }

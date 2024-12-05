@@ -8,11 +8,15 @@ using UnityEngine.EventSystems; // Required for managing UI Event Systems
 public class ConversationStarter : MonoBehaviour
 {
     [SerializeField] private NPCConversation myConversation;
-    [SerializeField] private GameObject interactText; // UI Text for "Press F to Talk"
     public GameObject conversationManager;
-    public GameObject HUD;
     private bool isInConversation = false;
     private bool isPlayerInRange = false;
+    private Player player;
+
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+    }
 
     private void Update()
     {
@@ -53,9 +57,10 @@ public class ConversationStarter : MonoBehaviour
             isPlayerInRange = true;
 
             // Show the "Press F to Talk" text when player enters the trigger
-            if (interactText != null && !isInConversation)
+            if (player.interactPanel != null && !isInConversation)
             {
-                interactText.SetActive(true);
+                player.interactionText.text = "Press F to Speak";
+                player.interactPanel.SetActive(true);
             }
         }
     }
@@ -68,9 +73,9 @@ public class ConversationStarter : MonoBehaviour
             isPlayerInRange = false;
 
             // Hide the "Press F to Talk" text when player exits the trigger
-            if (interactText != null)
+            if (player.interactPanel != null)
             {
-                interactText.SetActive(false);
+                player.interactPanel.SetActive(false);
             }
         }
     }
@@ -83,7 +88,7 @@ public class ConversationStarter : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 conversationManager.SetActive(true);
-                HUD.SetActive(false);
+                player.HUD.SetActive(false);
                 StartConversation();
             }
         }
@@ -96,9 +101,9 @@ public class ConversationStarter : MonoBehaviour
         isInConversation = true; // Set the conversation state to true
 
         // Hide the "Press F to Talk" text during conversation
-        if (interactText != null)
+        if (player.interactPanel != null)
         {
-            interactText.SetActive(false);
+            player.interactPanel.SetActive(false);
         }
 
         // Subscribe to the end conversation event
@@ -115,7 +120,7 @@ public class ConversationStarter : MonoBehaviour
         ConversationManager.OnConversationEnded -= EndConversation;
 
         conversationManager.SetActive(false); // Hide the conversation UI
-        HUD.SetActive(true);
+        player.HUD.SetActive(true);
         // Lock and hide the cursor after conversation
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -16,7 +16,7 @@ public class Keycard : MonoBehaviour
     public DivisionType divisionType; // Set this in the Unity Editor to DivisionA, DivisionB, or DivisionC
     private bool isInRange;
     public GameObject interactPanel;
-    private GameObject player;
+    private Player player;
 
     public DivisionType GetDivisionType()
     {
@@ -25,7 +25,7 @@ public class Keycard : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         isInRange = false;
     }
 
@@ -45,6 +45,7 @@ public class Keycard : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            player.interactionText.text = "Press F to Pick Up";
             isInRange = true;
         }
     }

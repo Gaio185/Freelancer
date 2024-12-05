@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -18,7 +20,11 @@ public class Player : MonoBehaviour
     public GameObject noteInterface;
     public GameObject HUD;
     public GameObject interactPanel;
+    public GameObject notePopUp;
+    public TextMeshProUGUI interactionText;
 
+    private float timer = 2.0f;
+    private float popUpTimer;
     public bool canPause;
 
 
@@ -31,12 +37,13 @@ public class Player : MonoBehaviour
         switchWeapon = GetComponent<Switchweapon>();
         pauseMenu = GetComponent<PauseMenu>();
         canPause = true;
+        popUpTimer = timer;
     }
 
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i < keycards.Count; i++)
+        for (int i = 0; i < keycards.Count; i++)
         {
             for(int j = 0; j < keycardUI.Count; j++)
             {
@@ -68,6 +75,19 @@ public class Player : MonoBehaviour
             switchWeapon.disableTools = true; // Disable player tools
             switchWeapon.DeactivateAllModels();
             noteInterface.SetActive(true);
+        }
+
+        if (notePopUp.activeSelf)
+        {
+            popUpTimer -= Time.deltaTime;
+            if(popUpTimer < 0)
+            {
+                notePopUp.SetActive(false);
+            }
+        }
+        else
+        {
+            popUpTimer = timer;
         }
     }
 }

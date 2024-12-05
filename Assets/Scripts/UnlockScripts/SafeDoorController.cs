@@ -23,6 +23,7 @@ public class SafeDoorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            player.interactionText.text = "Press F to Interact";
             isPlayerNear = true;
             Debug.Log("Player near the safe door");
         }
