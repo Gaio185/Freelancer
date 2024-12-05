@@ -31,7 +31,7 @@ public class WeaponPlayerDetect : MonoBehaviour
         {
             player.switchWeapon.hasWeapon = true;
             gameObject.SetActive(false);
-            weaponHolder.SetActive(true);
+            //weaponHolder.SetActive(true);
             player.interactPanel.SetActive(false);
         }
     }
