@@ -7,7 +7,7 @@ public class OpenDoor : MonoBehaviour
 {
     private Player player;
     private bool isInRange;
-    public Door door;
+    public Door door;  // Reference to the Door script
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +18,9 @@ public class OpenDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown((KeyCode.F)) && door.isUnlocked && isInRange)  // Use mouse click for interaction
+        if (Input.GetKeyDown(KeyCode.F) && door.isUnlocked && isInRange)  // Use F key for interaction
         {
-            door.TryOpenDoor();
+            door.TryToggleDoor();
         }
     }
 
@@ -29,10 +29,9 @@ public class OpenDoor : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             isInRange = true;
-            player.interactionText.text = "Press F to Open Door";
+            player.interactionText.text = "Press F to Open/Close Door";
             player.interactPanel.SetActive(true);
         }
-
     }
 
     private void OnTriggerExit(Collider other)
