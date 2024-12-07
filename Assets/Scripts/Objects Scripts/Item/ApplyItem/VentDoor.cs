@@ -4,42 +4,57 @@ using UnityEngine;
 
 public class VentDoor : MonoBehaviour
 {
-    public Transform destination;               // Target destination for the vent
-    public float interactionDistance = 2f;      // Distance to interact with the vent
-    public GameObject playerRef;                // Reference to the player GameObject
+    public GameObject ventObject;  // Reference to the vent GameObject (the one to be deactivated)
+    public Transform destination;  // Destination for teleportation (can be an empty GameObject)
+    public float interactionDistance = 5f; // Distance to interact with the vent
 
-    private void Start()
+    public GameObject player; // Manually assign the player here
+
+    private MeshRenderer ventRenderer; // MeshRenderer to deactivate
+    private bool ventIsOpen = false; // Track whether the vent is opened or not
+
+    // Initialize the MeshRenderer reference
+    private void Awake()
     {
-        // Find the player object tagged "Player" if not already assigned
-        if (playerRef == null)
+        ventRenderer = ventObject.GetComponent<MeshRenderer>();
+    }
+
+    // Method to open the vent (called when screwdriver is used)
+    public void OpenVent()
+    {
+        if (!ventIsOpen)
         {
-            playerRef = GameObject.FindGameObjectWithTag("Player");
+            ventIsOpen = true;
+            DeactivateVentMesh(); // Deactivate the MeshRenderer
         }
     }
 
-    private void Update()
+    // Method to deactivate the vent mesh (making it disappear visually)
+    private void DeactivateVentMesh()
     {
-        EnterVent();
-    }
-
-    public void DestroyVentDoor()
-    {
-        Debug.Log("You use the screwdriver to destroy the vent door.");
-        gameObject.SetActive(false);  // Deactivate the vent door
-        EnterVent();
-    }
-
-    private void EnterVent()
-    {
-        if (Input.GetKey(KeyCode.F) && playerRef != null && destination != null)
+        if (ventRenderer != null)
         {
-            float distance = Vector3.Distance(playerRef.transform.position, transform.position);
+            ventRenderer.enabled = false; // Hide the vent object
+            Debug.Log("Vent mesh has been deactivated.");
+        }
+        else
+        {
+            Debug.LogError("MeshRenderer is missing on ventObject.");
+        }
+    }
+
+    // Method to handle teleportation when 'F' is pressed
+    public void EnterVent()
+    {
+        if (player != null && destination != null)
+        {
+            float distance = Vector3.Distance(player.transform.position, transform.position);
 
             // Check if player is close enough to the vent to interact
             if (distance <= interactionDistance)
             {
                 // Check if player is already at the destination to prevent unnecessary teleport
-                if (Vector3.Distance(playerRef.transform.position, destination.position) < 0.1f)
+                if (Vector3.Distance(player.transform.position, destination.position) < 0.1f)
                 {
                     Debug.Log("Player is already at the destination, no teleport needed.");
                     return;
@@ -48,14 +63,14 @@ public class VentDoor : MonoBehaviour
                 Debug.Log("Teleporting player to destination.");
 
                 // Temporarily disable CharacterController or Rigidbody if present
-                CharacterController characterController = playerRef.GetComponent<CharacterController>();
-                Rigidbody rb = playerRef.GetComponent<Rigidbody>();
+                CharacterController characterController = player.GetComponent<CharacterController>();
+                Rigidbody rb = player.GetComponent<Rigidbody>();
 
                 if (characterController != null) characterController.enabled = false;
                 if (rb != null) rb.isKinematic = true;
 
                 // Teleport the player to the destination
-                playerRef.transform.position = destination.position;
+                player.transform.position = destination.position;
 
                 // Reactivate CharacterController or Rigidbody
                 if (characterController != null) characterController.enabled = true;
@@ -64,5 +79,15 @@ public class VentDoor : MonoBehaviour
                 Debug.Log("Player teleported to destination: " + destination.position);
             }
         }
+        else
+        {
+            Debug.LogError("Player or destination is not assigned in VentDoor script.");
+        }
+    }
+
+    // Method to check if vent is open
+    public bool IsVentOpen()
+    {
+        return ventIsOpen;
     }
 }
