@@ -32,6 +32,10 @@ public class Bullet : MonoBehaviour
             player.GetComponent<PlayerHealth>().TakeDamage();
             Destroy(this.gameObject);
         }
+        else if(other.gameObject.layer == LayerMask.GetMask("Wall"))
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void Disable()
