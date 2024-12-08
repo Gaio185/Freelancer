@@ -6,9 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-   public float autoDestroyTime = 1f;
-   public float speed = 10f;
-   public Rigidbody rb;
+    public float autoDestroyTime = 1f;
+    public float speed = 10f;
+    public Rigidbody rb;
+    public ParticleSystem topExplosion;
+    public ParticleSystem bottomExplosion;
+    public GameObject innerBullet;
 
     private const string DISABLE_METHOD_NAME = "Disable";
 
@@ -30,11 +33,11 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("TookDamage");
             player.GetComponent<PlayerHealth>().TakeDamage();
-            Destroy(this.gameObject);
+            DestroyBullet();
         }
-        else if(other.gameObject.layer == LayerMask.GetMask("Wall"))
+        else if(((1 << other.gameObject.layer) & LayerMask.GetMask("Wall")) != 0)
         {
-            Destroy(this.gameObject);
+            DestroyBullet();
         }
     }
 
@@ -43,5 +46,24 @@ public class Bullet : MonoBehaviour
         CancelInvoke(DISABLE_METHOD_NAME);
         rb.velocity = Vector3.zero;
         gameObject.SetActive(false);
+    }
+
+    private void DestroyBullet()
+    {
+        gameObject.GetComponent<Collider>().enabled = false;
+        MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
+        mr.enabled = false;
+        if (innerBullet != null)
+        {
+            MeshRenderer innerMr = innerBullet.GetComponent<MeshRenderer>();
+            innerMr.enabled = false;
+        }
+        rb.AddForce(this.gameObject.transform.forward * -speed, ForceMode.VelocityChange);
+        topExplosion.Play();
+        bottomExplosion.Play();
+        if (topExplosion != null && bottomExplosion != null && !topExplosion.isPlaying && !bottomExplosion)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
