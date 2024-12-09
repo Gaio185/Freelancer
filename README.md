@@ -2,7 +2,7 @@
 
 
 ## Introduction
-In Freelancer, you play as an independent contractor that is paid to conduct certain jobs discretely. One such job will be to steal something of interest to your client from a bank. You must use your weapons/tools arsenal and the environment to your advantage if you are to complete this job successfully and quietly. 
+In Freelancer, you play as an independent contractor that is paid to conduct certain jobs discretely. One such job will be to steal something of interest to your client from a bank. You must use your weapons/tools arsenal and the environment to your advantage if you are to complete this job successfully and quietly. You will be able to chose which tools, if any, to bring into the mission during the preperation phase, as well as get yourself briefed on the map layout and mission objective.
 
 The objective of each level is to extract with the required item and do so without arising as much suspicion as possible.
 
@@ -37,6 +37,46 @@ Left Mouse Click -> action button
 Escape-> Pause Button/Close Button
 
 J -> Note Inventory
+
+
+
+## Player Arsenal
+### Weapons
+Weapons are combat tools that will help the player to work around detection in a more hostile manner, facilitating stealth by eliminating detection threats.
+#### Taser
+![Captura de Ecrã (70)](https://github.com/user-attachments/assets/5856c2f6-c8e9-4f50-a8d4-263fb2836582)
+
+The taser is a ranged weapon that will allow the player to stun enemies from a distance. Due to its ease of use, given its range capabilities, it will have a moderately long cooldown. Enemies will only be stunned for a moment and will not be suspicious upon exiting stun.
+
+#### Stun Prod
+![Captura de Ecrã (71)](https://github.com/user-attachments/assets/9957c185-275c-4552-9718-12c9685c6efa)
+
+The stun prod is a melee weapon that will allow the player to stun enemies up close. Due to its risk of use, given its range capabilities, it will have a shorter cooldown than the taser. Enemies will be stunned for a longer duration than the taser stun duration and they won’t be suspicious upon exiting stun.
+
+
+### Gadgets
+Gadgets are tools that will help the player to ease the constraints of certain systems, facilitating stealth by streamlining level progression.
+#### Override Pen Drive
+![Captura de Ecrã (76)](https://github.com/user-attachments/assets/52a7ede0-266b-4ac2-aa51-78d8580a9401)
+
+The Override Pen Drive is a pen drive that can override terminals and other computer systems to bypass login requirements. This will enable the player to access terminals and computers without figuring out the PIN keycodes. The pen drive will have a finite amount of uses.
+
+#### Override Keycard
+![Captura de Ecrã (75)](https://github.com/user-attachments/assets/0ca101d8-b14a-41a2-98e8-ed4f8732d35f)
+
+The Override Keycard is a keycard that can override keycard readers to bypass them. This will enable the player to access rooms without having to find a matching keycard. The keycard will have a finite amount of uses.
+
+### Items
+Items are tools that will help to unlock or disrupt the environment around the player, facilitating stealth through distraction and staying hidden.
+#### Screwdriver
+![Captura de Ecrã (72)](https://github.com/user-attachments/assets/8f76261b-edbf-4858-89a4-69b885c976d0)
+
+The screwdriver is an item that can be used to unlock certain parts of the environment, such as vents. They will afford the player more freedom to move around the level and avoid its security forces by travelling through hidden paths.
+
+#### Coins
+![Captura de Ecrã (74)](https://github.com/user-attachments/assets/7e8ddcd6-63b8-4e67-8b08-4de178849470)
+
+Coins are items that can be thrown near enemies to distract them through sound. They will afford the player more freedom to move around the level and avoid its security forces by being an easy and accessible means to distracting them. The amount given to the player is finite but, once thrown, they can be picked back up.
 
 
 
@@ -86,22 +126,22 @@ In order to give enemies behaviors that matched those we outlined in their descr
 To show to what end the statemachines were used, we will do a rundown of the statemachine for each enemy type.
 
 #### Security Bots
- - Idle State: informs the bot to stay still in one spot and watch for the player, if the player is detected, it enters the Hunt state;
- - Patrol State: similar to the idle state, but the enemy is tasked with looping a patrol path. It also enters the Hunt state if it detects the player;
- - Hunt State: the bot chases the player down. if it loses track of the player, it enters the investigate state. If it sees the player, it enters the Shoot state;
- - Shoot State: the bot shoots at the player for as long as it the player remains in its range. If the player leaves the range, the bot enters the Hunt state;
- - Investigate State: the bot goes to the position of whatever may have distracted him (either the players last known position, if it just left the Hunt state or by the camera/worker Alert state, or the source of a coin distraction). Once the position is reached, it will move to positions within a certain range for a short interval. If within that interval it sees the player again, the interval resets and it keeps investigating. If it detects the player, the bot enters the Hunt state. If the interval runs out, the bot enters its initial state;
- - Stunned State: if the bot gets hit by the taser or the stun prod, it will be stunned for a short period of time, with the bot not being able see or move. After said short period of time, the bot will enter its initial state.
+ - **Idle State**: informs the bot to stay still in one spot and watch for the player, if the player is detected, it enters the Hunt state;
+ - **Patrol State**: similar to the idle state, but the enemy is tasked with looping a patrol path. It also enters the Hunt state if it detects the player;
+ - **Hunt State**: the bot chases the player down. if it loses track of the player, it enters the investigate state. If it sees the player, it enters the Shoot state;
+ - **Shoot State**: the bot shoots at the player for as long as it the player remains in its range. If the player leaves the range, the bot enters the Hunt state;
+ - **Investigate State**: the bot goes to the position of whatever may have distracted him (either the players last known position, if it just left the Hunt state or by the camera/worker Alert state, or the source of a coin distraction). Once the position is reached, it will move to positions within a certain range for a short interval. If within that interval it sees the player again, the interval resets and it keeps investigating. If it detects the player, the bot enters the Hunt state. If the interval runs out, the bot enters its initial state;
+ - **Stunned State**: if the bot gets hit by the taser or the stun prod, it will be stunned for a short period of time, with the bot not being able see or move. After said short period of time, the bot will enter its initial state.
 
 #### Terminal Objects
- - On State: informs the agent to look for the player. If the player is detected, the agent switches to the alert state if its a camera or it switches to the shoot state if it is the sentry;
- - Alert State: the camera warns certain bots in its floor of the players position and, for as long as the player remains in its field of view, the camera will keep giving the players location away. If the player leaves the cameras field of view for a short duration, the camera enters the On state;
- - Shoot State: just like the enemy shoot state, if the sentry sees the player, it will shoot in their direction. If the player leaves their shot range, the sentry will enter the On state;
- - Off State: for when the player deactivates the agent through the terminal. It can no longer see, which renders it useless. Can only enter or exit this state through the player interacting with the terminal.
+ - **On State**: informs the agent to look for the player. If the player is detected, the agent switches to the alert state if its a camera or it switches to the shoot state if it is the sentry;
+ - **Alert State**: the camera warns certain bots in its floor of the players position and, for as long as the player remains in its field of view, the camera will keep giving the players location away. If the player leaves the cameras field of view for a short duration, the camera enters the On state;
+ - **Shoot State**: just like the enemy shoot state, if the sentry sees the player, it will shoot in their direction. If the player leaves their shot range, the sentry will enter the On state;
+ - **Off State**: for when the player deactivates the agent through the terminal. It can no longer see, which renders it useless. Can only enter or exit this state through the player interacting with the terminal.
 
 #### Bank Staff
- - Wander State: informs the worker to wander aimlessly within the max bounds set for the room, pausing every time it reaches its destination, then calculating a new one. If the worker spots the player, it enters the Alert State.
- - Alert State: the worker gives a specific enemy enter the investigate state, giving them the players position. After a certain amount of time, the worker enters the Wander state.
+ - **Wander State**: informs the worker to wander aimlessly within the max bounds set for the room, pausing every time it reaches its destination, then calculating a new one. If the worker spots the player, it enters the Alert State.
+ - **Alert State**: the worker gives a specific enemy enter the investigate state, giving them the players position. After a certain amount of time, the worker enters the Wander state.
 
 
 
