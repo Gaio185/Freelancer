@@ -22,6 +22,11 @@ public class OpenDoor : MonoBehaviour
         {
             door.TryToggleDoor();
         }
+
+        if (!isInRange)
+        {
+            player.interactPanel.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
