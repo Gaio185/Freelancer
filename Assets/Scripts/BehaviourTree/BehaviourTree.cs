@@ -11,6 +11,7 @@ public class BehaviourTree : ScriptableObject
     public Node rootNode;
     public Node.State treeState = Node.State.Running;
     public List<Node> nodes = new List<Node>();
+    public Blackboard blackboard = new Blackboard();
 
     public Node.State Update()
     {
@@ -107,10 +108,29 @@ public class BehaviourTree : ScriptableObject
         return children;
     }
 
+    public void Traverse(Node node, System.Action<Node> visiter)
+    {
+        if (node)
+        {
+            visiter.Invoke(node);
+            var children = GetChildren(node);
+            children.ForEach((n) => Traverse(n, visiter));
+        }
+    }
+
     public BehaviourTree Clone()
     {
         BehaviourTree tree = Instantiate(this);
         tree.rootNode = tree.rootNode.Clone();
         return tree;
+    }
+
+    public void Bind(AiAgent agent)
+    {
+        Traverse(rootNode, node =>
+        {
+            node.aiAgent = agent;
+            node.blackboard = blackboard;
+        });
     }
 }
