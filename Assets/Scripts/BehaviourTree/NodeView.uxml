@@ -1,0 +1,30 @@
+<UXML xmlns:ui="UnityEngine.UIElements">
+  <NodeView class="graphElement node expanded">
+    <ui:VisualElement name="node-border">
+      <ui:VisualElement name="title">
+        <ui:Label name="title-label" text="DebugLogNode" class="unity-text-element unity-label" />
+        <ui:VisualElement name="title-button-container">
+          <ui:VisualElement name="collapse-button">
+            <ui:VisualElement name="icon" />
+          </ui:VisualElement>
+        </ui:VisualElement>
+      </ui:VisualElement>
+      <ui:VisualElement name="contents">
+        <ui:VisualElement name="divider" class="horizontal" />
+        <ui:VisualElement name="top">
+          <ui:VisualElement name="input">
+            <Port class="typeBoolean port input">
+              <ui:VisualElement name="connector" class="connectorBox">
+                <ui:VisualElement name="cap" class="connectorCap" />
+              </ui:VisualElement>
+              <ui:Label name="type" class="unity-text-element unity-label connectorText" />
+            </Port>
+          </ui:VisualElement>
+          <ui:VisualElement name="divider" class="vertical" />
+          <ui:VisualElement name="output" />
+        </ui:VisualElement>
+      </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="selection-border" />
+  </NodeView>
+</UXML>
