@@ -147,6 +147,14 @@ To show to what end the statemachines were used, we will do a rundown of the sta
 
 ### Behavior Trees
 We used behavior trees to diversify the ways we could attribute behaviors to agents. We chose to implement them on the bank staff, overriding what we had with their state machine.
+On our Behaviour Tree implementation we used two basic behaviours of example:
+- One Patrol Behaviour, similar to the enemy behaviour using the state machine. However, in the BT we are using waypoints instead of navmesh. It should be noted however, that the navmesh can be implemented in this behaviour aswell.
+- One behaviour that consists in following the player, should they be inside the workers range and field of view. If the player then gets out of this range and FOV the worker returns to it's patrol path.
 
+On our implementation we utilized a base Node, from which the other nodes inherit their states (RUNNING, FAILURE and SUCCESS) and attributes.
+
+On the tree itself, we simply used a Selector Node as a root, which contains a Sequencer Node and a Action Node (Patroling) as children.
+The Sequencer is on the far left of the tree, so it is executed first. In the Sequencer children, firstly we verify if the player is inside the range and FOV and if that node succeeds, we advance to the next Sequencer child, walking towards the Player.
+In the case that the first Sequencer child fails, the whole sequence fails as well, and the  Selector Node advances to the Patrol Node, which will be the action carried out by default, considering it is the node furthest on the right of the tree.
 
 
