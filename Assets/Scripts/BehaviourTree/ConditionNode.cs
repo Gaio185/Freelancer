@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ConditionNode : DecoratorNode
 {
-    public Func<bool> condition;
+    public bool condition;
 
     protected override void OnStart()
     {
@@ -19,7 +19,7 @@ public class ConditionNode : DecoratorNode
 
     protected override State OnUpdate()
     {
-        if (condition != null && condition() && child != null)
+        if (condition && child != null)
         {
             return child.Update();
         }
