@@ -146,7 +146,7 @@ To show to what end the statemachines were used, we will do a rundown of the sta
 
 
 ### Behavior Trees
-
+We used behavior trees to diversify the ways we could attribute behaviors to agents. We chose to implement them on the bank staff, overriding what we had with their state machine.
 
 
 
