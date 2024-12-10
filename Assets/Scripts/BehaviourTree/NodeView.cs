@@ -24,6 +24,8 @@ public class NodeView : UnityEditor.Experimental.GraphView.Node
 
         CreateInputPorts();
         CreateOutputPorts();
+
+        Label descriptionLabel = this.Q<Label>("description");
     }
 
     private void CreateInputPorts()
