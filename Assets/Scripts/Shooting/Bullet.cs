@@ -7,7 +7,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float autoDestroyTime = 1f;
-    public float speed;
+    public float speed = 10f;
     public Rigidbody rb;
     public ParticleSystem topExplosion;
     public ParticleSystem bottomExplosion;

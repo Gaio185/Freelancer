@@ -20,7 +20,7 @@ public class Door : MonoBehaviour
     // The type of the door
     public DoorType doorType = DoorType.Regular;
 
-    public bool isOpen = false;  // Track if the door is open or closed
+    private bool isOpen = false;  // Track if the door is open or closed
 
     // Method to unlock the door
     public void Unlock()
@@ -43,7 +43,7 @@ public class Door : MonoBehaviour
     }
 
     // Coroutine to toggle the door
-    public IEnumerator ToggleDoor()
+    IEnumerator ToggleDoor()
     {
         isOpening = true;
 

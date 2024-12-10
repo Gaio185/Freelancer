@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using static Door;
 
@@ -11,35 +10,31 @@ public class EnemyDoors : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Worker"))
+        if(other.gameObject.layer == LayerMask.GetMask("Enemy"))
         {
-            StartCoroutine(ToggleDoor());
+            door.StartCoroutine(OpenDoor());
         }
     }
-    
-    IEnumerator ToggleDoor()
+
+    IEnumerator OpenDoor()
     {
         door.isOpening = true;
 
-        // If the door is closed, open it
-        if (!door.isOpen)
+        // Play the correct animation based on the door type
+        if (door.doorType == DoorType.Regular)
         {
-            // Open the door
-            if (door.doorType == DoorType.Regular)
-            {
-                door.doorAnimator.Play("DoorOpen", -1, 0f); // Start opening from 0s to 1s
-                door.doorAnimator.speed = 1; // Ensure animation plays at normal speed
-            }
-            else if (door.doorType == DoorType.Bathroom)
-            {
-                door.doorAnimator.Play("BathroomDoor", -1, 0f); // Bathroom door opening part
-                door.doorAnimator.speed = 1; // Ensure animation plays at normal speed
-            }
-
-            // Wait for the opening animation to finish (1s mark)
-            yield return new WaitForSeconds(1f);
+            door.doorAnimator.Play("DoorOpen");  // Assuming "DoorOpen" is for the regular door
+        }
+        else if (door.doorType == DoorType.Bathroom)
+        {
+            door.doorAnimator.Play("BathroomDoor");  // Assuming "BathroomDoor" is for the bathroom door
         }
 
-        door.isOpening = false;  // Allow the player to interact again
+        yield return new WaitForSeconds(5.0f);  // Time for door to open
+
+        // Assuming "New State" is the idle/closed animation for both types
+        door.doorAnimator.Play("New State");
+
+        door.isOpening = false;
     }
 }

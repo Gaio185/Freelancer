@@ -13,14 +13,14 @@ public class ShootBullet : MonoBehaviour
     void Start()
     {
         bullet = bulletPrefab.GetComponent<Bullet>();
+        if(bulletSpeed > 0) bullet.speed = bulletSpeed;
     }
 
     public void Shoot()
     {
         GameObject bulletObj = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
         Rigidbody bulletRig = bulletObj.GetComponent<Rigidbody>();
-        if (bulletSpeed > 0) bulletRig.AddForce(this.gameObject.transform.forward * bullet.speed, 
-                                                ForceMode.VelocityChange);
+        bulletRig.AddForce(this.gameObject.transform.forward * bullet.speed, ForceMode.VelocityChange);
         Destroy(bulletObj, bullet.autoDestroyTime);
     }
 }
