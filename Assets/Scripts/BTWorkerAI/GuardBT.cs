@@ -18,9 +18,9 @@ public class GuardBT : TreeBT
             new SequenceBT(new List<NodeBT>
             {
                 new CheckEnemyInFOVRange(transform),
-                new TaskGoToTarget(transform),
+                new TaskGoToTarget(transform)
             }),
-            new TaskPatrolBT(transform, waypoints),
+            new TaskPatrolBT(transform, waypoints)
         });
 
         return root;
