@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     public Rigidbody rb;
     public ParticleSystem topExplosion;
     public ParticleSystem bottomExplosion;
+    public GameObject trail;
     public GameObject innerBullet;
 
     private const string DISABLE_METHOD_NAME = "Disable";
@@ -50,6 +51,7 @@ public class Bullet : MonoBehaviour
 
     private void DestroyBullet()
     {
+        Destroy(trail);
         gameObject.GetComponent<Collider>().enabled = false;
         MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
         mr.enabled = false;
