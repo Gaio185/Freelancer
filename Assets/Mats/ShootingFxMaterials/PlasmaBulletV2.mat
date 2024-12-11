@@ -102,8 +102,8 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BorderPower: 0.01
-    - _BorderSize: 0.01
+    - _BorderPower: 2
+    - _BorderSize: 0.5
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -137,10 +137,10 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BorderColor: {r: 0, g: 1, b: 0.9384773, a: 1}
+    - _BorderColor: {r: 0.39210388, g: 0.98490566, b: 0.6167127, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _ObjectColor: {r: 0.016943322, g: 0.71839696, b: 0.6779991, a: 0}
+    - _ObjectColor: {r: 0, g: 0.8894992, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TextureColor: {r: 0, g: 45.880943, b: 46.61307, a: 0}
+    - _TextureColor: {r: 0, g: 15.487606, b: 14.815816, a: 0}
   m_BuildTextureStacks: []
