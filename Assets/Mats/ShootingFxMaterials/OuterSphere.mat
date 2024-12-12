@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: OuterSphere
-  m_Shader: {fileID: -6465566751694194690, guid: 490b7282bf5b76a4f9222e42125b4163,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 490b7282bf5b76a4f9222e42125b4163, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -98,8 +97,8 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BorderPower: 1
-    - _BorderSize: 2
+    - _BorderPower: 3
+    - _BorderSize: 0.5
     - _BumpScale: 1
     - _CastShadows: 1
     - _ClearCoatMask: 0
@@ -136,11 +135,11 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BorderColor: {r: 0, g: 1, b: 0.9715023, a: 1}
+    - _BorderColor: {r: 0, g: 0.9281589, b: 0.9924528, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TextureColor: {r: 0.07114382, g: 6.794222, b: 5.303556, a: 0}
+    - _TextureColor: {r: 0.10671534, g: 6.5086575, b: 6.794222, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1190010688416397815
 MonoBehaviour:
