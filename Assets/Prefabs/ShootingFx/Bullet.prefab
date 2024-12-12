@@ -409,7 +409,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 254658654777884905, guid: 2c8e92dc5121ca24ba1446ae124d09a2, type: 3}
       propertyPath: m_Name
-      value: BulletV2
+      value: InnerBullet
       objectReference: {fileID: 0}
     - target: {fileID: 534641655179731509, guid: 2c8e92dc5121ca24ba1446ae124d09a2, type: 3}
       propertyPath: m_LocalScale.x

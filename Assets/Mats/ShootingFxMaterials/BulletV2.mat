@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlasmaBulletV2
+  m_Name: BulletV2
   m_Shader: {fileID: -6465566751694194690, guid: d777c6ce42f1b9a4aae6f0229f819ef9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -108,7 +108,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _CorePower: 5
-    - _CoreSize: 2.5
+    - _CoreSize: 6
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
