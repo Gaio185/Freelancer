@@ -10,6 +10,10 @@ public class BehaviourTreeEditor : EditorWindow
 
     BehaviourTreeView treeView;
     InspectorView inspectorView;
+    IMGUIContainer blackboardView;
+
+    SerializedObject treeObject;
+    SerializedProperty blackboardProperty;
 
     [MenuItem("BehaviourTreeEditor/Editor ...")]
     public static void OpenWindow()
@@ -45,6 +49,14 @@ public class BehaviourTreeEditor : EditorWindow
 
         treeView = root.Q<BehaviourTreeView>();
         inspectorView = root.Q<InspectorView>();
+        blackboardView = root.Q<IMGUIContainer>();
+        blackboardView.onGUIHandler = () =>
+        {
+            treeObject.Update();
+            EditorGUILayout.PropertyField(blackboardProperty);
+            treeObject.ApplyModifiedProperties();
+        };
+
         treeView.OnNodeSelected = OnNodeSelectionChanged;
         OnSelectionChange();
     }
@@ -52,9 +64,37 @@ public class BehaviourTreeEditor : EditorWindow
     private void OnSelectionChange()
     {
         BehaviourTree tree = Selection.activeObject as BehaviourTree;
-        if (tree && AssetDatabase.CanOpenAssetInEditor(tree.GetInstanceID()))
+        if (!tree)
         {
-            treeView.PopulateView(tree);
+            if (Selection.activeGameObject)
+            {
+                BehaviourTreeRunner runner = Selection.activeGameObject.GetComponent<BehaviourTreeRunner>();
+                if (runner)
+                {
+                    tree = runner.tree;
+                }
+            }
+        }
+
+        if (Application.isPlaying)
+        {
+            if (tree)
+            {
+                treeView.PopulateView(tree);
+            }
+        }
+        else
+        {
+            if(tree && AssetDatabase.CanOpenAssetInEditor(tree.GetInstanceID()))
+            {
+                treeView.PopulateView(tree);
+            }
+        }
+
+        if(tree != null)
+        {
+            treeObject = new SerializedObject(tree);
+            blackboardProperty = treeObject.FindProperty("blackboard");
         }
     }
 
