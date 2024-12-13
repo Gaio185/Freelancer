@@ -18,9 +18,9 @@ public class TaserGun : MonoBehaviour
 
     private AudioSource taserAudioSource;  // Reference to the AudioSource component
 
-    public GameObject lightningPrefab;  // Prefab of your lightning effect (with Line Renderer)
     public ParticleSystem lightningParticles; // Particle system for the lightning effect
-    public Transform taserMuzzle;      // Transform where the lightning starts (front of the taser)
+    public GameObject shaderGraphLightningEffectPrefab; // Prefab for the Shader Graph-based VFX
+    public Transform taserMuzzle;            // Transform where effects originate (front of the taser)
 
     public GameObject stunGunUI;
 
@@ -43,7 +43,6 @@ public class TaserGun : MonoBehaviour
             cooldownManager.taserTimer = cooldownManager.taserCooldown;
             cooldownManager.taserSlider.value = 0;
         }
-
     }
 
     void Shoot()
@@ -54,27 +53,26 @@ public class TaserGun : MonoBehaviour
             taserAudioSource.Play();
         }
 
+        // Always spawn the Shader Graph effect at the taser muzzle
+        if (shaderGraphLightningEffectPrefab != null)
+        {
+            GameObject shaderEffect = Instantiate(
+                shaderGraphLightningEffectPrefab,
+                taserMuzzle.position,
+                Quaternion.identity
+            );
+
+            // Orient the effect forward from the taser muzzle
+            shaderEffect.transform.rotation = taserMuzzle.rotation;
+
+            // Destroy the shader effect after 2 seconds to prevent clutter
+            Destroy(shaderEffect, 2f);
+        }
+
+        // Check for a hit using Raycast
         RaycastHit hit;
         if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
         {
-            // Spawn the lightning effect
-            GameObject lightning = Instantiate(lightningPrefab, taserMuzzle.position, Quaternion.identity);
-
-            // Set the lightning to point from the taser to the target
-            LineRenderer lr = lightning.GetComponent<LineRenderer>();
-            if (lr != null)
-            {
-                lr.SetPosition(0, taserMuzzle.position); // Start position at taser's muzzle
-                lr.SetPosition(1, hit.point);           // End position at the hit point
-            }
-
-            // Trigger the particle system at the muzzle
-            if (lightningParticles != null)
-            {
-                lightningParticles.transform.position = taserMuzzle.position;
-                lightningParticles.Play();
-            }
-
             // Apply stun effect if the target is hit
             AiAgent target = hit.transform.GetComponent<AiAgent>();
             if (target != null)
@@ -86,10 +84,7 @@ public class TaserGun : MonoBehaviour
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
-
-            // Destroy the lightning effect after a short time
-            Destroy(lightning, 0.2f);
-        }
+        }   
     }
 
     private void OnEnable()
@@ -101,12 +96,6 @@ public class TaserGun : MonoBehaviour
     {
         stunGunUI.SetActive(false);
         taserAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
-
-        // Stop particle effects when taser is disabled
-        if (lightningParticles != null)
-        {
-            lightningParticles.Stop();
-        }
     }
 
     // To hide crosshair when switching to non-weapon items
