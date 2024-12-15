@@ -542,11 +542,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8051894795600161108, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.041355196
+      value: 0.028
       objectReference: {fileID: 0}
     - target: {fileID: 8051894795600161108, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.021697402
+      value: 0.003
       objectReference: {fileID: 0}
     - target: {fileID: 8051894795600161108, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
       propertyPath: m_LocalRotation.w
@@ -634,8 +634,11 @@ MonoBehaviour:
   - {fileID: 0}
   shootBullet: {fileID: 0}
   detection: {fileID: 0}
-  visor: {fileID: 8979495896829449989}
-  visorMaterial: {fileID: 0}
+  renderer: {fileID: 0}
+  material: {fileID: 0}
+  greenEmission: {fileID: 0}
+  yellowEmission: {fileID: 0}
+  redEmission: {fileID: 0}
 --- !u!4 &7754183822378978923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3755855717322859988, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
