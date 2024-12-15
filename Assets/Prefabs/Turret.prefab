@@ -12,9 +12,6 @@ GameObject:
   - component: {fileID: 2368357088827871682}
   - component: {fileID: 6322747946639733452}
   - component: {fileID: 4829406209878144511}
-  - component: {fileID: 8037295032540112592}
-  - component: {fileID: 4721974876757058339}
-  - component: {fileID: 3707768605287817609}
   m_Layer: 0
   m_Name: Head
   m_TagString: Sentry
@@ -111,73 +108,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8037295032540112592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941690240552278698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e44667c40bdcc4d9d369cef3470e96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionTimer: 0.6
-  radius: 32.75
-  awarenessRadius: 0
-  cutoffRadius: 6.21
-  angle: 14
-  cutoffAngle: 244
-  playerRef: {fileID: 0}
-  player: {fileID: 0}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 128
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 2048
-  rotationRef: {x: 0, y: 0, z: 0, w: 0}
-  forwardRef: {x: 0, y: 0, z: 0}
-  canSeePlayer: 0
-  shouldDetect: 0
-  playerDetected: 0
-  lightRef: {fileID: 2861657058217140444}
---- !u!114 &4721974876757058339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941690240552278698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e99baa53865c39049b6710f781dafdd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialState: 0
-  config: {fileID: 11400000, guid: 9df014cda2922ed41adeb4dced03f98e, type: 2}
-  agents: []
-  shootBullet: {fileID: 0}
-  detection: {fileID: 0}
-  visor: {fileID: 7779607508890949094}
-  visorMaterial: {fileID: 0}
---- !u!114 &3707768605287817609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941690240552278698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e07eab78675f4bd4e999348502dcb132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 254658654777884905, guid: ea7befcfb6670a84b89c2b672b42d3a6, type: 3}
-  bulletSpawn: {fileID: 5882156169559925899}
-  bullet: {fileID: 0}
-  bulletSpeed: 100
 --- !u!1 &1678257774806873999
 GameObject:
   m_ObjectHideFlags: 0
