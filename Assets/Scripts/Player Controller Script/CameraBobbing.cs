@@ -13,10 +13,15 @@ public class CameraBobbing : MonoBehaviour
     [SerializeField] private float _mouseSensitivityVertical = 150f;   // Sensitivity for vertical mouse movement (adjusted for speed)
     [SerializeField] private GameObject _hud = null;  // HUD reference, assignable in the Inspector
 
+    [Header("Objects to Bob")]
+    [SerializeField] private List<Transform> _bobbingObjects = new List<Transform>(); // Objects to bob along with the camera
+    [SerializeField, Range(0, 0.1f)] private float _objectAmplitudeMultiplier = 1.0f; // Multiplier for object bobbing amplitude
+
     private float _toggleSpeed = 3.0f;  // Speed threshold to trigger bobbing
     private Vector3 _startPos;  // Initial position of the camera
     private CharacterController _controller;  // Reference to the CharacterController
 
+    private Dictionary<Transform, Vector3> _initialPositions = new Dictionary<Transform, Vector3>(); // Store initial positions of bobbing objects
     private float _xRotation = 0f;  // For storing vertical rotation
 
     private void Awake()
@@ -30,6 +35,15 @@ public class CameraBobbing : MonoBehaviour
         {
             Debug.LogWarning("HUD is not assigned. Please assign it in the Inspector.");
         }
+
+        // Store initial positions of all bobbing objects
+        foreach (var obj in _bobbingObjects)
+        {
+            if (obj != null)
+            {
+                _initialPositions[obj] = obj.localPosition;
+            }
+        }
     }
 
     void Update()
@@ -38,7 +52,7 @@ public class CameraBobbing : MonoBehaviour
 
         HandleMouseInput(); // Handle camera rotation
         CheckMotion();  // Check if the player is moving and grounded
-        ResetPosition();  // Reset camera to its starting position when not moving
+        ResetPosition();  // Reset camera and objects to their starting positions when not moving
     }
 
     // Handles vertical and horizontal rotation from mouse input
@@ -77,19 +91,36 @@ public class CameraBobbing : MonoBehaviour
         PlayMotion(FootStepMotion());
     }
 
-    // Apply the bobbing motion to the camera's local position
+    // Apply the bobbing motion to the camera and bobbing objects
     private void PlayMotion(Vector3 motion)
     {
         _camera.localPosition += motion;  // Modify the camera's local position
+
+        foreach (var obj in _bobbingObjects)
+        {
+            if (obj != null)
+            {
+                obj.localPosition += motion * _objectAmplitudeMultiplier; // Apply scaled motion to each object
+            }
+        }
     }
 
-    // Smoothly reset the camera position when the player is not moving
+    // Smoothly reset the camera and objects' positions when the player is not moving
     private void ResetPosition()
     {
         // If the camera's local position is already at the start position, do nothing
-        if (_camera.localPosition == _startPos) return;
+        if (_camera.localPosition != _startPos)
+        {
+            _camera.localPosition = Vector3.Lerp(_camera.localPosition, _startPos, 1 * Time.deltaTime);
+        }
 
-        // Smoothly return the camera to its original position if the player is idle
-        _camera.localPosition = Vector3.Lerp(_camera.localPosition, _startPos, 1 * Time.deltaTime);
+        // Reset each bobbing object's position to its initial state
+        foreach (var obj in _bobbingObjects)
+        {
+            if (obj != null && _initialPositions.ContainsKey(obj))
+            {
+                obj.localPosition = Vector3.Lerp(obj.localPosition, _initialPositions[obj], 1 * Time.deltaTime);
+            }
+        }
     }
 }
