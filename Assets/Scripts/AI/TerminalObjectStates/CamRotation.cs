@@ -1,28 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CamRotation : MonoBehaviour
 {
+    private Quaternion rotationRef;
     private Quaternion initialRotation;
     private float timer = 0f;
     private bool startNextRotation = true;
+    private bool undoRotation = false;
 
     public bool rotateRight;
     public float yaw;
     public float rotationDuration;
+    public float rotationDelay;
 
     void Start()
     {
-        StartCoroutine(Rotate(yaw, rotationDuration));
+        //SetupStartRotation();
     }
 
     private void Update()
     {
-        if(startNextRotation && rotateRight)
+        if (startNextRotation && rotateRight)
         {
             StartCoroutine(Rotate(yaw, rotationDuration));
-        }else if(startNextRotation && !rotateRight)
+        }
+        else if (startNextRotation && !rotateRight)
         {
             StartCoroutine(Rotate(-yaw, rotationDuration));
         }
@@ -32,16 +37,44 @@ public class CamRotation : MonoBehaviour
     {
         startNextRotation = false;
 
-        initialRotation = transform.rotation;
+        rotationRef = transform.rotation;
 
-        while (timer <= 0f)
+        while (timer < duration)
         {
             timer += Time.deltaTime;
-            transform.rotation = initialRotation * Quaternion.AngleAxis(timer / duration * yaw, Vector3.up);
+            transform.rotation = rotationRef * Quaternion.AngleAxis(timer / duration * (yaw / 2), Vector3.up);
             yield return null;
         }
 
+        yield return new WaitForSeconds(rotationDelay);
+
+        timer = 0f;
+        rotationRef = transform.rotation;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            transform.rotation = rotationRef * Quaternion.AngleAxis(timer / duration * (-yaw / 2), Vector3.up);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(rotationDelay);
+
+        timer = 0f;
         startNextRotation = true;
-        rotateRight = ! rotateRight;
+        rotateRight = !rotateRight;
+        
+    }
+
+    private void SetupStartRotation()
+    {
+        if (rotateRight)
+        {
+            transform.localRotation = Quaternion.AngleAxis(-yaw / 2, Vector3.up);
+        }
+        else
+        {
+            transform.localRotation = Quaternion.AngleAxis(yaw / 2, Vector3.up);
+        }
     }
 }
