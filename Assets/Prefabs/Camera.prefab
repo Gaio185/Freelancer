@@ -542,11 +542,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8051894795600161108, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.041355196
+      value: 0.028
       objectReference: {fileID: 0}
     - target: {fileID: 8051894795600161108, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.021697402
+      value: 0.003
       objectReference: {fileID: 0}
     - target: {fileID: 8051894795600161108, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
       propertyPath: m_LocalRotation.w
@@ -567,6 +567,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2359599157786771981}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7428213431903784499, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1723212426314143527}
     - targetCorrespondingSourceObject: {fileID: 4318254994855167482, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8988518895439181785}
@@ -579,6 +582,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8051894795600161108, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
   m_PrefabInstance: {fileID: 6882379816257776575}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4077252143637456268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7428213431903784499, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
+  m_PrefabInstance: {fileID: 6882379816257776575}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1723212426314143527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4077252143637456268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27cae9b8c9615246a0afa43f2935dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateRight: 1
+  yaw: 85
+  rotationDuration: 5
+  rotationDelay: 2
 --- !u!1 &7236890922682347077 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4318254994855167482, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
@@ -634,8 +658,11 @@ MonoBehaviour:
   - {fileID: 0}
   shootBullet: {fileID: 0}
   detection: {fileID: 0}
-  visor: {fileID: 8979495896829449989}
-  visorMaterial: {fileID: 0}
+  renderer: {fileID: 0}
+  material: {fileID: 0}
+  greenEmission: {fileID: 0}
+  yellowEmission: {fileID: 0}
+  redEmission: {fileID: 0}
 --- !u!4 &7754183822378978923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3755855717322859988, guid: eed54a613be71b543a99e53a8e2914de, type: 3}
