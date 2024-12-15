@@ -12,10 +12,13 @@ public class OnState : TOState
     public void Enter(TOAgent agent)
     {
         Debug.Log("On");
+        if(agent.tag == "Sentry")
+        {
+            agent.material.SetTexture("_EmissionMap", agent.greenEmission);
+        }
         agent.material.SetColor("_EmissionColor", Color.green);
         agent.detection.lightRef.color = Color.green;
         agent.detection.lightRef.enabled = true;
-        agent.visorMaterial.color = Color.green;
     }
 
     public void Update(TOAgent agent)
@@ -29,25 +32,26 @@ public class OnState : TOState
             agent.stateMachine.ChangeState(TOStateId.Shoot);
         }
 
-        if (agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect && agent.tag == "Camera")
+        if (agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect)
         {
+            if(agent.tag == "Sentry")
+            {
+                agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
+            }
             agent.material.SetColor("_EmissionColor", Color.yellow);
             agent.detection.lightRef.color = Color.yellow;
         }
-        else if(agent.tag == "Camera")
+        else 
         {
+            if (agent.tag == "Sentry")
+            {
+                agent.material.SetTexture("_EmissionMap", agent.greenEmission);
+            }
             agent.material.SetColor("_EmissionColor", Color.green);
             agent.detection.lightRef.color = Color.green;
         }
 
-        if (agent.detection.canSeePlayer && !agent.detection.playerDetected && agent.detection.shouldDetect && agent.tag == "Sentry")
-        {
-            agent.detection.lightRef.color = Color.yellow;
-        }
-        else if(agent.tag == "Sentry")
-        {
-            agent.detection.lightRef.color = Color.green;
-        }
+        
     }
 
     public void Exit(TOAgent agent)

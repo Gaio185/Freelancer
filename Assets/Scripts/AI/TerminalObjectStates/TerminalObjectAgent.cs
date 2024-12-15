@@ -12,16 +12,25 @@ public class TOAgent : MonoBehaviour
     public AiAgent[] agents;
     public ShootBullet shootBullet;
     [HideInInspector] public Detection detection;
-    public GameObject visor;
-    [HideInInspector] public Material visorMaterial;
     [HideInInspector] public Renderer renderer;
     [HideInInspector] public Material material;
 
+    [HideInInspector] public Texture2D greenEmission;
+    [HideInInspector] public Texture2D yellowEmission;
+    [HideInInspector] public Texture2D redEmission;
+
+    private string greenEmissionPath = "Textures/TurretTextures/TurretEmissionGreen";
+    private string yellowEmissionPath = "Textures/TurretTextures/TurretEmissionYellow";
+    private string redEmissionPath = "Textures/TurretTextures/TurretEmissionRed";
+
     void Start()
     {
+        greenEmission = Resources.Load<Texture2D>(greenEmissionPath);
+        yellowEmission = Resources.Load<Texture2D>(yellowEmissionPath);
+        redEmission = Resources.Load<Texture2D>(redEmissionPath);
+
         renderer = GetComponent<Renderer>();
         material = renderer.material;
-        visorMaterial = visor.GetComponent<Renderer>().material;
         detection = GetComponent<Detection>();
         shootBullet = GetComponent<ShootBullet>();
         stateMachine = new TerminalObjectStateMachine(this);
