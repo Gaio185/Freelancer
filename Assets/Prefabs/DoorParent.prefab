@@ -244,6 +244,7 @@ MonoBehaviour:
   isOpening: 0
   doorAnimator: {fileID: 1225817132152972288}
   doorType: 0
+  isOpen: 0
 --- !u!1 &7414050341610102391
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +660,7 @@ MonoBehaviour:
   isOpening: 0
   doorAnimator: {fileID: 1225817132152972288}
   doorType: 0
+  isOpen: 0
 --- !u!1 &6722231971525721791 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8875449794350654438, guid: b581fdbd127292d44ab21c4b16d91d05, type: 3}
@@ -698,6 +700,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 3533300288180627630}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  workerLayer:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!4 &6722231971526206111 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8875449794350432198, guid: b581fdbd127292d44ab21c4b16d91d05, type: 3}

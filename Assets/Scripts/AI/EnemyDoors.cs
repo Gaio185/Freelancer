@@ -9,9 +9,12 @@ public class EnemyDoors : MonoBehaviour
 {
     public Door door;
 
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask workerLayer;
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Enemy") || other.gameObject.layer == LayerMask.NameToLayer("Worker"))
+        if((enemyLayer.value & (1 << other.gameObject.layer)) != 0 || (workerLayer.value & (1 << other.gameObject.layer)) != 0)
         {
             StartCoroutine(ToggleDoor());
         }

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
 
 public class AIIdleState : AiState
 {
+    private NavMeshPath path = new NavMeshPath();
+
     public AiStateId GetId()
     {
         return AiStateId.Idle;
@@ -14,12 +17,21 @@ public class AIIdleState : AiState
     public void Enter(AiAgent agent)
     {
         Debug.Log("Idle");
-        agent.navMeshAgent.destination = agent.startingPosition;
         agent.material.SetTexture("_BaseMap", agent.greenTexture);
         agent.material.SetTexture("_EmissionMap", agent.greenEmission);
         agent.material.SetColor("_EmissionColor", Color.white);
         //agent.visorMaterial.color = Color.green;
         agent.navMeshAgent.isStopped = false;
+
+        agent.navMeshAgent.CalculatePath(agent.startingPosition, path);
+        if (path.status == NavMeshPathStatus.PathComplete)
+        {
+            agent.navMeshAgent.destination = agent.startingPosition;
+        }
+        else
+        {
+            Debug.Log("Starting position is not reacheable");
+        }
     }
 
     public void Update(AiAgent agent)

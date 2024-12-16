@@ -33,7 +33,7 @@ public class WanderState : WorkerState
                     Random.Range(min.y, max.y),
                     Random.Range(min.z, max.z));
 
-                agent.navMeshAgent.SetDestination(randomPosition);
+                agent.navMeshAgent.destination = randomPosition;
                 timer = agent.config.wanderInterval;
                 agent.animator.SetBool("isWalking", true);
             }
@@ -44,6 +44,8 @@ public class WanderState : WorkerState
         }
         else if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
+            agent.animator.SetBool("isWalking", false);
+            agent.navMeshAgent.ResetPath();
             agent.navMeshAgent.isStopped = true;
         }
         else
@@ -51,8 +53,9 @@ public class WanderState : WorkerState
             agent.navMeshAgent.isStopped = false;
         }
 
-        if (agent.detection.playerDetected)
+        if (agent.detection.playerDetected && agent.enemyRef.stateMachine.currentState != AiStateId.Investigate)
         {
+            agent.navMeshAgent.ResetPath();
             agent.stateMachine.ChangeState(WorkerStateId.Alert);
         }
     }

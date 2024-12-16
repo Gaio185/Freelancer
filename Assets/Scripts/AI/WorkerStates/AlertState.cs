@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class WorkerAlertState : WorkerState
 {
-    private Transform agentPositionRef;
+    private bool hasReachedEnemy;
 
     WorkerStateId WorkerState.GetId()
     {
@@ -15,6 +15,8 @@ public class WorkerAlertState : WorkerState
 
     public void Enter(WorkerAgent agent)
     {
+        agent.animator.SetBool("isWalking", true);
+        hasReachedEnemy = false;
         agent.navMeshAgent.isStopped = false;
         agent.navMeshAgent.destination = agent.enemyRef.transform.position;
     }
@@ -23,12 +25,18 @@ public class WorkerAlertState : WorkerState
     {
         if (agent.navMeshAgent.destination != null)
         {
-            if(agent.navMeshAgent.remainingDistance <= 2.0f)
+            if(agent.navMeshAgent.remainingDistance <= 2.0f && !hasReachedEnemy)
             {
+                agent.animator.SetBool("isWalking", false);
                 agent.navMeshAgent.ResetPath();
+                agent.detection.player.movement.isHunted = true;
+                agent.enemyRef.stateMachine.ChangeState(AiStateId.Investigate); 
+                hasReachedEnemy = true;
+            }
 
-                agent.enemyRef.stateMachine.ChangeState(AiStateId.Investigate);
-
+            if (agent.enemyRef.stateMachine.currentState != AiStateId.Investigate && hasReachedEnemy)
+            {
+                agent.detection.player.movement.isHunted = false;
                 agent.stateMachine.ChangeState(WorkerStateId.Wander);
             }
         }

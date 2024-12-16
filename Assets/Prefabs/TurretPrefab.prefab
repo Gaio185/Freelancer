@@ -76,7 +76,7 @@ Light:
       e32: 0
       e33: 1
     m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
+  m_Cookie: {fileID: 2800000, guid: c50ae0d216bffae408a02e13fa32476a, type: 3}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 0
@@ -309,6 +309,9 @@ MonoBehaviour:
   detection: {fileID: 0}
   renderer: {fileID: 0}
   material: {fileID: 0}
+  greenEmission: {fileID: 0}
+  yellowEmission: {fileID: 0}
+  redEmission: {fileID: 0}
 --- !u!114 &296591800398640235
 MonoBehaviour:
   m_ObjectHideFlags: 0
