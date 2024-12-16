@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class AIPatrolState : AiState
 {
-    public int targetPoint;
+    private int targetPoint;
+    private NavMeshPath path = new NavMeshPath();
 
     public AiStateId GetId()
     {
@@ -19,13 +20,34 @@ public class AIPatrolState : AiState
         agent.material.SetTexture("_BaseMap", agent.greenTexture);
         agent.material.SetTexture("_EmissionMap", agent.greenEmission);
         agent.material.SetColor("_EmissionColor", Color.white);
-        ////agent.visorMaterial.color = Color.green;
         targetPoint = 0;
+
+        agent.navMeshAgent.CalculatePath(agent.patrolPoints[targetPoint].position, path);
+        if (path.status == NavMeshPathStatus.PathComplete)
+        {
+            agent.navMeshAgent.destination = agent.patrolPoints[targetPoint].position;
+        }else 
+        {
+            NavMeshHit hit;
+
+            if(NavMesh.SamplePosition(agent.patrolPoints[targetPoint].position, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                agent.navMeshAgent.destination = hit.position;
+            }
+            else
+            {
+                agent.navMeshAgent.destination = agent.returnPoint.position;
+            }
+        }
+        
+        
     }
 
     public void Update(AiAgent agent)
     {
-        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, Quaternion.LookRotation(agent.transform.forward), 5 * Time.deltaTime);
+        agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, 
+            Quaternion.LookRotation(agent.transform.forward), 
+            5 * Time.deltaTime);
 
         if (agent.navMeshAgent.remainingDistance <= 0.1f)
         {
@@ -35,6 +57,7 @@ public class AIPatrolState : AiState
                 targetPoint = 0;
             }
         }
+
         agent.navMeshAgent.destination = agent.patrolPoints[targetPoint].position;
 
         if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
@@ -60,6 +83,6 @@ public class AIPatrolState : AiState
 
     public void Exit(AiAgent agent)
     {
-       
+
     }
 }

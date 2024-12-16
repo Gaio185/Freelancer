@@ -17,6 +17,8 @@ public class AIInvestigateState : AiState
 
     public void Enter(AiAgent agent)
     {
+        Debug.Log("Investigate");
+
         if (playerTransform == null)
         {
             playerTransform = GameObject.FindWithTag("Player").transform;

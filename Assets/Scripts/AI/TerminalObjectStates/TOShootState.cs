@@ -26,18 +26,19 @@ public class TOShootState : TOState
         agent.material.SetTexture("_EmissionMap", agent.redEmission);
         agent.material.SetColor("_EmissionColor", Color.red);
         agent.detection.lightRef.color = Color.red;
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+
+        if (agent.detection.canSeePlayer)
         {
-            if (agent.detection.canSeePlayer)
+            timer -= Time.deltaTime;
+            if (timer <= 0)
             {
                 agent.shootBullet.Shoot();
                 timer = agent.config.shootInterval;
             }
         }
-
-        if (!agent.detection.canSeePlayer)
+        else
         {
+            agent.detection.playerDetected = false;
             agent.stateMachine.ChangeState(TOStateId.On);
         }
     }
