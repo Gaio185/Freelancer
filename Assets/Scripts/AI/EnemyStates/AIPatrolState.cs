@@ -36,7 +36,7 @@ public class AIPatrolState : AiState
             }
             else
             {
-                agent.navMeshAgent.destination = agent.returnPoint.position;
+                //agent.navMeshAgent.destination = agent.returnPoint.position;
             }
         }
         
