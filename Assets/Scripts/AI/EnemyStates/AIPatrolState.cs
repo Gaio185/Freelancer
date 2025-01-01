@@ -7,6 +7,8 @@ public class AIPatrolState : AiState
 {
     private int targetPoint;
     private NavMeshPath path = new NavMeshPath();
+    private Color emissionColor;
+    private float timeElapsed;
 
     public AiStateId GetId()
     {
@@ -19,8 +21,9 @@ public class AIPatrolState : AiState
         agent.navMeshAgent.isStopped = false;
         agent.material.SetTexture("_BaseMap", agent.greenTexture);
         agent.material.SetTexture("_EmissionMap", agent.greenEmission);
-        agent.material.SetColor("_EmissionColor", Color.white);
+        agent.material.SetColor("_EmissionColor", Color.green);
         targetPoint = 0;
+        agent.timeElapsed = 0;
 
         agent.navMeshAgent.CalculatePath(agent.patrolPoints[targetPoint].position, path);
         if (path.status == NavMeshPathStatus.PathComplete)
@@ -63,16 +66,17 @@ public class AIPatrolState : AiState
         if (agent.detection.canSeePlayer && agent.detection.shouldDetect)
         {
             agent.navMeshAgent.isStopped = true;
-            //agent.visorMaterial.color = Color.yellow;
             agent.material.SetTexture("_BaseMap", agent.yellowTexture);
             agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
+            agent.UpdateEmissionColor(Color.yellow, Color.red);
         }
         else
         {
-           agent.navMeshAgent.isStopped = false;
-            //agent.visorMaterial.color = Color.green;
+            agent.timeElapsed = 0;
+            agent.navMeshAgent.isStopped = false;
             agent.material.SetTexture("_BaseMap", agent.greenTexture);
             agent.material.SetTexture("_EmissionMap", agent.greenEmission);
+            agent.material.SetColor("_EmissionColor", Color.green);
         }
 
         if (agent.detection.playerDetected)

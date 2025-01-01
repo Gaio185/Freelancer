@@ -38,11 +38,10 @@ public class AiAgent : MonoBehaviour
     private string redEmissionPath = "Textures/SecurityBotTextures/BotEmissiveRed";
     private string stunnedTexturePath = "Textures/SecurityBotTextures/BotColorStunned";
 
+    [HideInInspector] public float timeElapsed;
+    private Color emissionColor;
 
-    //public GameObject visor;
-    //[HideInInspector] public Material visorMaterial;
 
-    // Start is called before the first frame update
     void Start()
     {
         //Load Textures
@@ -54,7 +53,6 @@ public class AiAgent : MonoBehaviour
         redEmission = Resources.Load<Texture2D>(redEmissionPath);
         stunnedTexture = Resources.Load<Texture2D>(stunnedTexturePath);
 
-        //visorMaterial = visor.GetComponent<Renderer>().material;
         renderer = GetComponent<Renderer>();
         material = renderer.material;
         startingPosition = transform.position;
@@ -71,7 +69,6 @@ public class AiAgent : MonoBehaviour
         stateMachine.ChangeState(initialState);
     }
 
-    // Update is called once per frame
     void Update()
     {
         stateMachine.Update();
@@ -87,5 +84,15 @@ public class AiAgent : MonoBehaviour
                 wheels[i].GetComponent<Animator>().SetBool("isMoving", true);
             }
         }
+    }
+
+    public void UpdateEmissionColor(Color startColor, Color endColor)
+    {
+        timeElapsed += Time.deltaTime;
+
+        float t = Mathf.Clamp01(timeElapsed / detection.detectionTimer);
+
+        emissionColor = Color.Lerp(Color.yellow, Color.red, t);
+        material.SetColor("_EmissionColor", emissionColor);
     }
 }

@@ -21,7 +21,7 @@ public class AlertState : TOState
                 agent.agents[i].stateMachine.currentState != AiStateId.Stunned) agent.agents[i].stateMachine.ChangeState(AiStateId.Investigate);
         }
         timer = agent.config.searchTime;
-
+        agent.timeElapsed = 0;
         agent.material.SetColor("_EmissionColor", Color.red);
         agent.detection.lightRef.color = Color.red;
     }

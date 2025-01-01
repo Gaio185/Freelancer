@@ -28,7 +28,7 @@ public class AIHuntPlayerState : AiState
         agent.detection.player.movement.isHunted = true;
         agent.material.SetTexture("_BaseMap", agent.redTexture);
         agent.material.SetTexture("_EmissionMap", agent.redEmission);
-        //agent.visorMaterial.color = Color.red;
+        agent.material.SetColor("_EmissionColor", Color.red);
 
         agent.navMeshAgent.isStopped = false;
         huntTimer = agent.config.huntTime;

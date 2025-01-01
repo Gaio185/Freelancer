@@ -23,6 +23,9 @@ public class TOAgent : MonoBehaviour
     private string yellowEmissionPath = "Textures/TurretTextures/TurretEmissionYellow";
     private string redEmissionPath = "Textures/TurretTextures/TurretEmissionRed";
 
+    [HideInInspector] public float timeElapsed;
+    private Color emissionColor;
+
     void Start()
     {
         greenEmission = Resources.Load<Texture2D>(greenEmissionPath);
@@ -45,5 +48,16 @@ public class TOAgent : MonoBehaviour
     void Update()
     {
         stateMachine.Update();
+    }
+
+    public void UpdateEmissionColor(Color startColor, Color endColor)
+    {
+        timeElapsed += Time.deltaTime;
+
+        float t = Mathf.Clamp01(timeElapsed / detection.detectionTimer);
+
+        emissionColor = Color.Lerp(Color.yellow, Color.red, t);
+        material.SetColor("_EmissionColor", emissionColor);
+        detection.lightRef.color = emissionColor;
     }
 }

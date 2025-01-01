@@ -13,6 +13,7 @@ public class OffState : TOState
     {
         Debug.Log("Off");
         agent.detection.lightRef.enabled = false;
+        agent.material.SetColor("_EmissionColor", Color.black);
     }
 
     public void Update(TOAgent agent)
