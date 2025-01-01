@@ -9,6 +9,8 @@ public class AIInvestigateState : AiState
     public Vector3 normalizedPosition;
     public float timer;
     public float interval;
+    private float timeElapsed;
+    private Color emissionColor;
 
     public AiStateId GetId()
     {
@@ -18,6 +20,7 @@ public class AIInvestigateState : AiState
     public void Enter(AiAgent agent)
     {
         Debug.Log("Investigate");
+        agent.timeElapsed = 0;
 
         if (playerTransform == null)
         {
@@ -35,7 +38,7 @@ public class AIInvestigateState : AiState
 
         agent.material.SetTexture("_BaseMap", agent.yellowTexture);
         agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
-        //agent.visorMaterial.color = Color.yellow;
+        agent.material.SetColor("_EmissionColor", Color.yellow);
 
         timer = agent.config.investigateTime;
         interval = 0;
@@ -46,6 +49,9 @@ public class AIInvestigateState : AiState
         agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, Quaternion.LookRotation(agent.transform.forward), 5 * Time.deltaTime);
         if (!agent.detection.canSeePlayer || agent.detection.canSeePlayer && !agent.detection.shouldDetect)
         {
+            agent.timeElapsed = 0;
+            agent.material.SetColor("_EmissionColor", Color.yellow);
+
             timer -= Time.deltaTime;
             interval -= Time.deltaTime;
             agent.navMeshAgent.isStopped = false;
@@ -80,6 +86,7 @@ public class AIInvestigateState : AiState
         {
             agent.navMeshAgent.isStopped = true;
             timer = agent.config.investigateTime;
+            agent.UpdateEmissionColor(Color.yellow, Color.red);
         }
 
         if (agent.detection.playerDetected)

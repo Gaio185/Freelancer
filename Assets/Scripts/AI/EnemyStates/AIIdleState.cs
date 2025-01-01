@@ -8,6 +8,8 @@ using UnityEngine.XR;
 public class AIIdleState : AiState
 {
     private NavMeshPath path = new NavMeshPath();
+    private float timeElapsed;
+    private Color emissionColor;
 
     public AiStateId GetId()
     {
@@ -19,9 +21,9 @@ public class AIIdleState : AiState
         Debug.Log("Idle");
         agent.material.SetTexture("_BaseMap", agent.greenTexture);
         agent.material.SetTexture("_EmissionMap", agent.greenEmission);
-        agent.material.SetColor("_EmissionColor", Color.white);
-        //agent.visorMaterial.color = Color.green;
+        agent.material.SetColor("_EmissionColor", Color.green);
         agent.navMeshAgent.isStopped = false;
+        agent.timeElapsed = 0;
 
         agent.navMeshAgent.CalculatePath(agent.startingPosition, path);
         if (path.status == NavMeshPathStatus.PathComplete)
@@ -45,14 +47,16 @@ public class AIIdleState : AiState
         {
             agent.material.SetTexture("_BaseMap", agent.yellowTexture);
             agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
-            //agent.visorMaterial.color = Color.yellow;
+            agent.UpdateEmissionColor(Color.yellow, Color.red);
+
             agent.navMeshAgent.isStopped = true; 
         }
         else
         {
+            agent.timeElapsed = 0;
             agent.material.SetTexture("_BaseMap", agent.greenTexture);
             agent.material.SetTexture("_EmissionMap", agent.greenEmission);
-            //agent.visorMaterial.color = Color.green;
+            agent.material.SetColor("_EmissionColor", Color.green);
             agent.navMeshAgent.isStopped = false;
         }
 

@@ -19,6 +19,7 @@ public class OnState : TOState
         agent.material.SetColor("_EmissionColor", Color.green);
         agent.detection.lightRef.color = Color.green;
         agent.detection.lightRef.enabled = true;
+        agent.timeElapsed = 0;
     }
 
     public void Update(TOAgent agent)
@@ -38,11 +39,11 @@ public class OnState : TOState
             {
                 agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
             }
-            agent.material.SetColor("_EmissionColor", Color.yellow);
-            agent.detection.lightRef.color = Color.yellow;
+            agent.UpdateEmissionColor(Color.yellow, Color.red);
         }
         else 
         {
+            agent.timeElapsed = 0;
             if (agent.tag == "Sentry")
             {
                 agent.material.SetTexture("_EmissionMap", agent.greenEmission);
