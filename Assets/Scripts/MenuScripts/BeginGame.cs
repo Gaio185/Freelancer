@@ -7,6 +7,7 @@ public class BeginGame : MonoBehaviour
 {
     public void StartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        // Load the Loading Screen Scene
+        SceneManager.LoadScene("LoadingScene"); // Replace with your Loading Scene's name
     }
 }
