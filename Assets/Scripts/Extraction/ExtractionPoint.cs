@@ -17,7 +17,6 @@ public class ExtractionPoint : MonoBehaviour
         audioSourceDeny = GameObject.FindWithTag("DenyAccess").GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F) && extractionZone.isInRange)
@@ -27,7 +26,9 @@ public class ExtractionPoint : MonoBehaviour
                 audioSourceVerify.PlayOneShot(audioSourceVerify.clip);
                 Cursor.visible = true; // Show cursor when opening workspace
                 Cursor.lockState = CursorLockMode.None; // Unlock cursor
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+
+                // Trigger Victory and load the Victory Screen
+                TriggerVictory();
             }
             else
             {
@@ -35,6 +36,11 @@ public class ExtractionPoint : MonoBehaviour
                 Debug.Log("You can't extract yet.");
             }
         }
-        
+    }
+
+    void TriggerVictory()
+    {
+        // Load the Victory Scene after extraction
+        SceneManager.LoadScene("VictoryScene"); // Change "VictoryScene" to the actual name of your victory scene
     }
 }

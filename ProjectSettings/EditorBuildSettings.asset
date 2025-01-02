@@ -11,10 +11,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: fbc75714100f3f246813802ec01533b1
   - enabled: 0
     path: Assets/Scenes/WorldBuildTesting.unity
     guid: d4a5616cdc3a22c459d57f753483d840
   - enabled: 1
     path: Assets/Scenes/Alpha.unity
     guid: d4d1fdfe5a4583d44b52fb2fae10768c
+  - enabled: 1
+    path: Assets/Scenes/VictoryScene.unity
+    guid: 65376d3d7fae3b649996c1f6d43315ed
+  - enabled: 1
+    path: Assets/Scenes/LosingScreen.unity
+    guid: 3e13519c7dbfafe499b1c1e700ab0114
   m_configObjects: {}
