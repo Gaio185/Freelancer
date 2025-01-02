@@ -12,5 +12,4 @@ public class AiAgentConfig : ScriptableObject
     public float investigateTime = 10.0f;
     public float investigateInterval = 3.0f;
     public float shootInterval = 20.0f;
-    public float timeElapsed = 0;
 }
