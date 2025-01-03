@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Toolbar : MonoBehaviour
 {
     public List<GameObject> tools;
+    public List<GameObject> Nums;
     private Player player;
 
-    private string selectedWeapon;
+    [SerializeField] public Color colorRef;
+
+    public string selectedWeapon { get; private set;  }
     private string selectedItem;
     private string selectedGadget;
 
@@ -16,7 +21,6 @@ public class Toolbar : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
         selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
         selectedItem = PlayerPrefs.GetString("SelectedItem", "Screwdriver");
         selectedGadget = PlayerPrefs.GetString("SelectedGadget", "OverrideKeyCard");
@@ -29,25 +33,27 @@ public class Toolbar : MonoBehaviour
             }else if(selectedWeapon == tools[i].name)
             {
                 tools[i].GetComponent<Image>().color = Color.grey;
+                Transform border = tools[i].transform.GetChild(0);
+                border.gameObject.GetComponent<Image>().color = Color.grey;
+                Nums[0].GetComponent<TextMeshProUGUI>().color = Color.grey;
                 tools[i].SetActive(true);
             }
         }
 
-
+        //colorRef = GetBorderColor();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (player.GetComponent<Switchweapon>().hasWeapon)
-        {
-            for (int i = 0; i < tools.Count; i++)
-            {
-                if (tools[i].name == selectedWeapon)
-                {
-                    tools[i].GetComponent <Image>().color = Color.white;
-                }
-            }
-        }
-    }
+    //private Color GetBorderColor()
+    //{
+    //    for (int i = 0; i < tools.Count; i++)
+    //    {
+    //        if (tools[i].activeSelf && i > 2)
+    //        {
+    //            Transform border = tools[i].transform.GetChild(0);
+    //            return border.gameObject.GetComponent<Image>().color;
+    //        }
+    //    }
+
+    //    return Color.white;
+    //}
 }

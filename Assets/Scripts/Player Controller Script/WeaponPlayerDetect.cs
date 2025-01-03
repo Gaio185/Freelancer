@@ -23,6 +23,7 @@ public class WeaponPlayerDetect : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && isInRange)
         {
             player.switchWeapon.hasWeapon = true;
+            player.switchWeapon.UnlockWeapon();
             gameObject.SetActive(false);
             //weaponHolder.SetActive(true);
             player.interactPanel.SetActive(false);
