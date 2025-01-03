@@ -21,7 +21,7 @@ public class CoinLauncher : MonoBehaviour
     bool readyToThrow;
 
     public GameObject coinsUI;
-    public TMP_Text countUI;
+    public List<GameObject> coinList;
 
     void Start()
     {
@@ -35,8 +35,6 @@ public class CoinLauncher : MonoBehaviour
         {
             ThrowCoin();
         }
-
-        countUI.text = "x" + coinCount;
 
         if (coinCount <= 0)
         {
@@ -66,9 +64,21 @@ public class CoinLauncher : MonoBehaviour
 
         rb.AddForce(forceToAdd, ForceMode.Impulse);
 
-        coinCount--;
+        --coinCount;
+
+        coinList[coinCount].SetActive(false);
 
         Invoke(nameof(ResetThrow), throwCooldown);
+    }
+
+    public void PickUpCoinUI()
+    {
+        if(coinCount < coinList.Count)
+        {
+            coinList[coinCount].SetActive(true);
+            coinCount++;
+        }
+        
     }
 
     private void ResetThrow()

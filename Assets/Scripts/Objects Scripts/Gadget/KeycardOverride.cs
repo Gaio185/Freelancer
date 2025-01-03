@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class KeycardOverride : MonoBehaviour
 {
-    public int usesLeft = 3; // Limited uses for the override keycard
+    [SerializeField] private int usesLeft = 3; // Limited uses for the override keycard
 
-    public GameObject overrideKeycardUI;
-    public TMP_Text countUI;
+    [SerializeField] private GameObject overrideKeycardUI;
+    [SerializeField] private List<GameObject> keycards;
 
     public bool CanUse()
     {
@@ -19,8 +19,9 @@ public class KeycardOverride : MonoBehaviour
     {
         if (CanUse())
         {
-            usesLeft--;
-            countUI.text = "x" + usesLeft;
+            --usesLeft;
+            keycards[usesLeft].SetActive(false);
+            keycards.RemoveAt(usesLeft);
             Debug.Log("Override Keycard used. Remaining uses: " + usesLeft);
         }
         else

@@ -22,10 +22,10 @@ public class Coin : MonoBehaviour
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, pickUpRange, targetMask);
 
-        if (rangeChecks.Length != 0 && Input.GetKeyDown(KeyCode.F))
+        if (rangeChecks.Length != 0 && Input.GetKeyDown(KeyCode.F) && coinLauncher.coinCount < coinLauncher.coinList.Count)
         {
             Destroy(this.gameObject);
-            coinLauncher.coinCount++;
+            coinLauncher.PickUpCoinUI();
         }
     }
 }

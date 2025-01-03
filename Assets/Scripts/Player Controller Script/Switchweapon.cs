@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Switchweapon : MonoBehaviour
 {
@@ -30,6 +33,8 @@ public class Switchweapon : MonoBehaviour
     // Crosshair reference
     public GameObject crosshair;
 
+    public Toolbar toolbar { get; private set; }
+
     public float radius = 3f;
     public LayerMask targetMask;
     private GameObject player;
@@ -37,6 +42,7 @@ public class Switchweapon : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+        toolbar = FindObjectOfType<Toolbar>();
         DeactivateAllModels();
         hasWeapon = false;
         hasWeaponEquipped = false;
@@ -66,7 +72,7 @@ public class Switchweapon : MonoBehaviour
     void HandleSwitching()
     {
         // Switch to weapons (press 1)
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && hasWeapon)
         {
             SwitchWeapon();
         }
@@ -82,14 +88,13 @@ public class Switchweapon : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.H))
         {
-            DeactivateAllModels();
+            EmptyHands();
         }
     }
 
     void SwitchWeapon()
     {
         DeactivateAllModels(); // Deactivate all models first
-
         if (hasWeapon)
         {
             hasWeaponEquipped = true;
@@ -102,12 +107,14 @@ public class Switchweapon : MonoBehaviour
                 activeWeapon = stunBatonHolder;
                 stunBatonHolder.SetActive(true); // Show the stun baton model
                 crosshair.SetActive(true); // Show crosshair when weapon is equipped
+                SelectedWeaponUI(selectedWeapon, 0);
             }
             else if (selectedWeapon == "TaserGun")
             {
                 activeWeapon = taserGunHolder;
                 taserGunHolder.SetActive(true); // Show the taser gun model
                 crosshair.SetActive(true); // Show crosshair when weapon is equipped
+                SelectedWeaponUI(selectedWeapon, 0);
             }
 
             Debug.Log($"Equipped: Weapon - {selectedWeapon}");
@@ -128,6 +135,7 @@ public class Switchweapon : MonoBehaviour
             activeItem = screwdriverModel;
             screwdriverModel.SetActive(true); // Show the screwdriver model
             crosshair.SetActive(false); // Hide crosshair when item is equipped
+            SelectedWeaponUI(selectedItem, 1);
             Debug.Log("Equipped: " + selectedItem);
         }
         else if (selectedItem == "Coin")
@@ -135,6 +143,7 @@ public class Switchweapon : MonoBehaviour
             activeItem = coinModel;
             coinModel.SetActive(true); // Show the coin model
             crosshair.SetActive(false); // Hide crosshair when item is equipped
+            SelectedWeaponUI(selectedItem, 1);
             Debug.Log("Equipped: " + selectedItem);
         }
     }
@@ -151,6 +160,7 @@ public class Switchweapon : MonoBehaviour
             activeGadget = overrideKeyCardModel;
             overrideKeyCardModel.SetActive(true); // Show the override keycard model
             crosshair.SetActive(false); // Hide crosshair when gadget is equipped
+            SelectedWeaponUI(selectedGadget, 2);
             Debug.Log("Equipped: " + selectedGadget);
         }
         else if (selectedGadget == "Flashdrive")
@@ -158,6 +168,7 @@ public class Switchweapon : MonoBehaviour
             activeGadget = flashdriveModel;
             flashdriveModel.SetActive(true); // Show the flashdrive model
             crosshair.SetActive(false); // Hide crosshair when gadget is equipped
+            SelectedWeaponUI(selectedGadget, 2);
             Debug.Log("Equipped: " + selectedGadget);
         }
     }
@@ -179,9 +190,59 @@ public class Switchweapon : MonoBehaviour
         coinModel.SetActive(false);
         overrideKeyCardModel.SetActive(false);
         flashdriveModel.SetActive(false);
-
+        ResetWeaponUI();
         hasWeaponEquipped = false;
         // Hide crosshair when not holding anything
         crosshair.SetActive(false);
+    }
+
+    private void SelectedWeaponUI(string selectedItem, int numKey)
+    {
+        for (int i = 0; i < toolbar.tools.Count; i++)
+        {
+            if (selectedItem == toolbar.tools[i].name)
+            {
+                Transform border = toolbar.tools[i].transform.GetChild(0);
+                border.gameObject.GetComponent<Image>().color = Color.white;
+            }
+        }
+
+        toolbar.Nums[numKey].GetComponent<TextMeshProUGUI>().color = Color.white;
+    }
+
+    private void ResetWeaponUI()
+    {
+        for (int i = 0; i < toolbar.tools.Count; i++)
+        {
+            if (!hasWeapon && i < 2)
+            {
+                i = 2;
+            }
+            Transform border = toolbar.tools[i].transform.GetChild(0);
+            border.gameObject.GetComponent<Image>().color = toolbar.colorRef;
+        }
+
+        for (int i = 0; i < toolbar.Nums.Count; i++)
+        {
+            if (!hasWeapon && i < 1)
+            {
+                i = 1;
+            }
+            toolbar.Nums[i].GetComponent<TextMeshProUGUI>().color = toolbar.colorRef;
+        }
+    }
+
+    public void UnlockWeapon()
+    {
+        for (int i = 0; i < toolbar.tools.Count; i++)
+        {
+            if (toolbar.tools[i].name == toolbar.selectedWeapon)
+            {
+                toolbar.tools[i].GetComponent<Image>().color = Color.white;
+                Transform border = toolbar.tools[i].transform.GetChild(0);
+                border.gameObject.GetComponent<Image>().color = toolbar.colorRef;
+                toolbar.Nums[0].GetComponent<TextMeshProUGUI>().color = toolbar.colorRef;
+            }
+        }
     }
 }
