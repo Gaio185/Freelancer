@@ -23,6 +23,8 @@ public class Switchweapon : MonoBehaviour
 
     // Single spawn point for all tools
     public Transform generalSpawnPoint;
+    public AnimationCurve curve;
+
 
     public bool hasWeapon;
     public bool hasWeaponEquipped;
@@ -193,8 +195,8 @@ public class Switchweapon : MonoBehaviour
         if (item != null)
         {
             // Start position is the spawn point
-            Vector3 startPos = generalSpawnPoint.position;
-            Vector3 endPos = item.transform.position;  // Final position (current position)
+            Vector3 startPos = item.transform.localPosition + Vector3.left;
+            Vector3 endPos = item.transform.localPosition;  // Final position (current position)
             float timeToMove = 0.45f; // Slightly slower movement duration
             float elapsedTime = 0f;
 
@@ -204,13 +206,19 @@ public class Switchweapon : MonoBehaviour
             while (elapsedTime < timeToMove)
             {
                 // Use Lerp to move smoothly from start to end
-                item.transform.position = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 1f, elapsedTime / timeToMove));
+                //item.transform.localPosition = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 1f, elapsedTime / timeToMove));
+                //item.transform.localPosition = Vector3.Lerp(startPos, endPos, (elapsedTime)/timeToMove);
+                //item.transform.localPosition = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0.0f, 1.3f, Mathf.SmoothStep(0.0f, 1.3f, elapsedTime)));
+                var normalizedProgress = elapsedTime / timeToMove; // 0-1
+                var easing = curve.Evaluate(normalizedProgress);
+                item.transform.localPosition = Vector3.Lerp(startPos, endPos, easing);
+
                 elapsedTime += Time.deltaTime;  // Increase time
                 yield return null;  // Wait for next frame
             }
 
             // Ensure that it finishes exactly at the final position
-            item.transform.position = endPos;
+            //item.transform.localPosition = endPos;
         }
     }
 
