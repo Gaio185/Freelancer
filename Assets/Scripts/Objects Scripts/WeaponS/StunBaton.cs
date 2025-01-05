@@ -17,6 +17,9 @@ public class StunBaton : MonoBehaviour
 
     public CoolDownManager cooldownManager;
 
+    // New field to receive the effect when the baton is equipped
+    public GameObject effect;  // This is the new field for the effect
+
     void Start()
     {
         stunAudioSource = stunSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
@@ -60,16 +63,27 @@ public class StunBaton : MonoBehaviour
         }
     }
 
-
     private void OnEnable()
     {
         stunBatonUI.SetActive(true);
+
+        // Just to show the effect when the stun baton is equipped
+        if (effect != null)
+        {
+            effect.SetActive(true);  // Display the effect
+        }
     }
 
     void OnDisable()
     {
         stunBatonUI.SetActive(false);
         stunAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
+
+        // Hide the effect when the stun baton is disabled
+        if (effect != null)
+        {
+            effect.SetActive(false);  // Hide the effect
+        }
     }
 
     // To hide crosshair when switching to non-weapon items

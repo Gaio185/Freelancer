@@ -20,17 +20,29 @@ public class TaserGun : MonoBehaviour
 
     public ParticleSystem lightningParticles; // Particle system for the lightning effect
     public GameObject shaderGraphLightningEffectPrefab; // Prefab for the Shader Graph-based VFX
-    public Transform taserMuzzle;            // Transform where effects originate (front of the taser)
 
     public GameObject stunGunUI;
 
     public CoolDownManager cooldownManager;
+    public Transform fireDirection;
 
     void Start()
     {
         taserAudioSource = taserSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
         taserAudioSource.Stop();  // Ensure the sound is stopped when the game starts
         crosshair.SetActive(true);  // Show crosshair by default when the weapon is equipped
+
+        // Deactivate particle system initially
+        if (lightningParticles != null)
+        {
+            lightningParticles.Stop();  // Stop particle system
+        }
+
+        // Ensure shader effect is deactivated initially
+        if (shaderGraphLightningEffectPrefab != null)
+        {
+            shaderGraphLightningEffectPrefab.SetActive(false);  // Ensure shader effect is inactive initially
+        }
     }
 
     void Update()
@@ -47,33 +59,35 @@ public class TaserGun : MonoBehaviour
 
     void Shoot()
     {
-        // Play the taser sound
+        // Play Taser sound if not already playing
         if (!taserAudioSource.isPlaying)
         {
             taserAudioSource.Play();
         }
 
-        // Always spawn the Shader Graph effect at the taser muzzle
-        if (shaderGraphLightningEffectPrefab != null)
+        // Play the particle effect (lightning)
+        if (lightningParticles != null)
         {
-            GameObject shaderEffect = Instantiate(
-                shaderGraphLightningEffectPrefab,
-                taserMuzzle.position,
-                Quaternion.identity
-            );
+            lightningParticles.Play();  // Play the particle system immediately
+        }
 
-            // Orient the effect forward from the taser muzzle
-            shaderEffect.transform.rotation = taserMuzzle.rotation;
+        // Instantiate and play the shader effect when shooting
+        if (shaderGraphLightningEffectPrefab != null && fireDirection != null)
+        {
+            // Instantiate the shader effect at the fire direction's position and rotation
+            GameObject shaderEffect = Instantiate(shaderGraphLightningEffectPrefab, fireDirection.position, fireDirection.rotation);
+
+            // Ensure the effect is activated at the moment of shooting
+            shaderEffect.SetActive(true);  // Activate the effect
 
             // Destroy the shader effect after 2 seconds to prevent clutter
             Destroy(shaderEffect, 2f);
         }
 
-        // Check for a hit using Raycast
+        // Raycast logic and impact effects
         RaycastHit hit;
         if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
         {
-            // Apply stun effect if the target is hit
             AiAgent target = hit.transform.GetComponent<AiAgent>();
             if (target != null)
             {
@@ -84,7 +98,7 @@ public class TaserGun : MonoBehaviour
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
-        }   
+        }
     }
 
     private void OnEnable()
