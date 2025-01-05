@@ -5,6 +5,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ItemType
+{
+    None,
+    Weapon,
+    Item,
+    Gadget
+}
+
 public class Switchweapon : MonoBehaviour
 {
     // Weapon models
@@ -25,7 +33,6 @@ public class Switchweapon : MonoBehaviour
     public Transform generalSpawnPoint;
     public AnimationCurve curve;
 
-
     public bool hasWeapon;
     public bool hasWeaponEquipped;
     public bool disableTools;
@@ -34,6 +41,8 @@ public class Switchweapon : MonoBehaviour
     private GameObject activeWeapon;
     private GameObject activeItem;
     private GameObject activeGadget;
+
+    private ItemType currentItemType = ItemType.None;  // Track which item is currently equipped
 
     // Crosshair reference
     public GameObject crosshair;
@@ -70,112 +79,126 @@ public class Switchweapon : MonoBehaviour
 
     void HandleSwitching()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && hasWeapon)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && hasWeapon)  // Press 1 to toggle weapon
         {
-            SwitchWeapon();
+            ToggleItem(ItemType.Weapon);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))  // Press 2 to toggle item
         {
-            SwitchItem();
+            ToggleItem(ItemType.Item);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3))  // Press 3 to toggle gadget
         {
-            SwitchGadget();
+            ToggleItem(ItemType.Gadget);
         }
-        else if (Input.GetKeyDown(KeyCode.H))
+        else if (Input.GetKeyDown(KeyCode.H))  // Press H to empty hands
         {
             EmptyHands();
         }
     }
 
-    void SwitchWeapon()
+    // Toggle visibility of the currently equipped item
+    void ToggleItem(ItemType itemType)
     {
-        DeactivateAllModels(); // Deactivate all models first
-        if (hasWeapon)
+        if (currentItemType == itemType)
         {
-            hasWeaponEquipped = true;
-
-            string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
-
-            // Immediately move and activate the selected weapon
-            if (selectedWeapon == "StunBaton")
-            {
-                StartCoroutine(SwitchToSpawnAndActivate(stunBatonHolder));
-                crosshair.SetActive(true);
-                SelectedWeaponUI(selectedWeapon, 0);
-            }
-            else if (selectedWeapon == "TaserGun")
-            {
-                StartCoroutine(SwitchToSpawnAndActivate(taserGunHolder));
-                crosshair.SetActive(true);
-                SelectedWeaponUI(selectedWeapon, 0);
-            }
-
-            Debug.Log($"Equipped: Weapon - {selectedWeapon}");
+            DeactivateAllModels();  // If the same item is toggled, deactivate it (holster it)
+            currentItemType = ItemType.None;
+        }
+        else
+        {
+            currentItemType = itemType;
+            DeactivateAllModels();  // Deactivate any previous item
+            ActivateItem(itemType);  // Activate the new item
         }
     }
 
-    void SwitchItem()
+    void ActivateItem(ItemType itemType)
     {
-        DeactivateAllModels(); // Deactivate all models first
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                ActivateWeapon();
+                break;
+            case ItemType.Item:
+                ActivateItemTools();
+                break;
+            case ItemType.Gadget:
+                ActivateGadget();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ActivateWeapon()
+    {
+        string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
+        hasWeaponEquipped = true;
+
+        if (selectedWeapon == "StunBaton")
+        {
+            StartCoroutine(SwitchToSpawnAndActivate(stunBatonHolder));
+            crosshair.SetActive(true);
+            SelectedWeaponUI(selectedWeapon, 0);
+        }
+        else if (selectedWeapon == "TaserGun")
+        {
+            StartCoroutine(SwitchToSpawnAndActivate(taserGunHolder));
+            crosshair.SetActive(true);
+            SelectedWeaponUI(selectedWeapon, 0);
+        }
+
+        Debug.Log($"Weapon Equipped: {selectedWeapon}");
+    }
+
+    void ActivateItemTools()
+    {
         string selectedItem = PlayerPrefs.GetString("SelectedItem", "Screwdriver");
 
-        hasWeaponEquipped = false;
-
-        // Immediately move and activate the selected item
         if (selectedItem == "Screwdriver")
         {
             StartCoroutine(SwitchToSpawnAndActivate(screwdriverModel));
             crosshair.SetActive(false);
             SelectedWeaponUI(selectedItem, 1);
-            Debug.Log("Equipped: " + selectedItem);
         }
         else if (selectedItem == "Coin")
         {
             StartCoroutine(SwitchToSpawnAndActivate(coinModel));
             crosshair.SetActive(false);
             SelectedWeaponUI(selectedItem, 1);
-            Debug.Log("Equipped: " + selectedItem);
         }
+
+        Debug.Log($"Item Equipped: {selectedItem}");
     }
 
-    void SwitchGadget()
+    void ActivateGadget()
     {
-        DeactivateAllModels(); // Deactivate all models first
         string selectedGadget = PlayerPrefs.GetString("SelectedGadget", "OverrideKeyCard");
 
-        hasWeaponEquipped = false;
-
-        // Immediately move and activate the selected gadget
         if (selectedGadget == "OverrideKeyCard")
         {
             StartCoroutine(SwitchToSpawnAndActivate(overrideKeyCardModel));
             crosshair.SetActive(false);
             SelectedWeaponUI(selectedGadget, 2);
-            Debug.Log("Equipped: " + selectedGadget);
         }
         else if (selectedGadget == "Flashdrive")
         {
             StartCoroutine(SwitchToSpawnAndActivate(flashdriveModel));
             crosshair.SetActive(false);
             SelectedWeaponUI(selectedGadget, 2);
-            Debug.Log("Equipped: " + selectedGadget);
         }
+
+        Debug.Log($"Gadget Equipped: {selectedGadget}");
     }
 
     void EmptyHands()
     {
-        // Deactivate all models
-        
-
-        activeWeapon = null;
-        activeItem = null;
-        activeGadget = null;
-        hasWeaponEquipped = false;
+        DeactivateAllModels();
+        currentItemType = ItemType.None;
         Debug.Log("Equipped: Empty Hands");
     }
 
-    // Function to deactivate all models
     public void DeactivateAllModels()
     {
         stunBatonHolder.SetActive(false);
@@ -194,31 +217,22 @@ public class Switchweapon : MonoBehaviour
     {
         if (item != null)
         {
-            // Start position is the spawn point
             Vector3 startPos = item.transform.localPosition + Vector3.left;
-            Vector3 endPos = item.transform.localPosition;  // Final position (current position)
-            float timeToMove = 0.45f; // Slightly slower movement duration
+            Vector3 endPos = item.transform.localPosition;
+            float timeToMove = 0.45f;
             float elapsedTime = 0f;
 
             item.SetActive(true); // Activate the item when starting the movement
 
-            // Smooth interpolation using Lerp
             while (elapsedTime < timeToMove)
             {
-                // Use Lerp to move smoothly from start to end
-                //item.transform.localPosition = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 1f, elapsedTime / timeToMove));
-                //item.transform.localPosition = Vector3.Lerp(startPos, endPos, (elapsedTime)/timeToMove);
-                //item.transform.localPosition = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0.0f, 1.3f, Mathf.SmoothStep(0.0f, 1.3f, elapsedTime)));
-                var normalizedProgress = elapsedTime / timeToMove; // 0-1
+                var normalizedProgress = elapsedTime / timeToMove;
                 var easing = curve.Evaluate(normalizedProgress);
                 item.transform.localPosition = Vector3.Lerp(startPos, endPos, easing);
 
-                elapsedTime += Time.deltaTime;  // Increase time
-                yield return null;  // Wait for next frame
+                elapsedTime += Time.deltaTime;
+                yield return null;
             }
-
-            // Ensure that it finishes exactly at the final position
-            //item.transform.localPosition = endPos;
         }
     }
 
@@ -258,13 +272,15 @@ public class Switchweapon : MonoBehaviour
         }
     }
 
-    // Unlock Weapon function to handle UI changes
+    // Restored UnlockWeapon function
     public void UnlockWeapon()
     {
+        // Update the UI for the unlocked weapon
         for (int i = 0; i < toolbar.tools.Count; i++)
         {
             if (toolbar.tools[i].name == toolbar.selectedWeapon)
             {
+                // Change the UI color to indicate that the weapon is unlocked
                 toolbar.tools[i].GetComponent<Image>().color = Color.white;
                 Transform border = toolbar.tools[i].transform.GetChild(0);
                 border.gameObject.GetComponent<Image>().color = toolbar.colorRef;
