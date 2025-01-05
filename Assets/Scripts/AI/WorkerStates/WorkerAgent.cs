@@ -12,6 +12,7 @@ public class WorkerAgent : MonoBehaviour
     public AiAgent enemyRef;
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
+    public Transform alertPoint;
 
     public Animator animator; // Reference to the Animator component
     private float idleThreshold = 0.1f; // Threshold for detecting idle (if velocity is small)
