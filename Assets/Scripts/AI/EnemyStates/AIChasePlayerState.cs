@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -50,7 +51,12 @@ public class AIHuntPlayerState : AiState
 
         if (agent.detection.canSeePlayer)
         {
-            agent.stateMachine.ChangeState(AiStateId.Shoot);
+            RaycastHit hit;
+            float distanceToTarget = Vector3.Distance(agent.transform.position, playerTransform.position);
+            if (!Physics.SphereCast(agent.transform.position, 1.0f, agent.transform.forward, out hit, distanceToTarget, agent.detection.obstacleMask))
+            {
+                agent.stateMachine.ChangeState(AiStateId.Shoot);
+            } 
         }
 
         if(timer < 0.0f)
@@ -66,17 +72,28 @@ public class AIHuntPlayerState : AiState
                 }
             }
             timer = agent.config.maxTime;
-        }   
+        }
 
         if (Vector3.Distance(agent.transform.position, playerTransform.position) > agent.detection.awarenessRadius)
         {
             huntTimer -= Time.deltaTime;
-            if(huntTimer < 0.0f)
+            if (huntTimer < 0.0f)
             {
                 Debug.Log("LeftHuntState");
                 agent.detection.playerDetected = false;
                 agent.stateMachine.ChangeState(AiStateId.Investigate);
             }
+        }
+        else if (playerTransform.gameObject.GetComponent<Player>().currentFloor != agent.initialFloor)
+        {
+            for (int i = 0; i < agent.aiAgents.Length; i++)
+            {
+                if(agent.aiAgents[i].initialFloor == playerTransform.gameObject.GetComponent<Player>().currentFloor && agent.aiAgents != null)
+                {
+                    agent.aiAgents[i].stateMachine.ChangeState(AiStateId.Investigate);
+                }
+            }
+            agent.stateMachine.ChangeState(agent.initialState);
         }
         else
         {

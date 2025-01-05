@@ -29,7 +29,21 @@ public class AIInvestigateState : AiState
         //agent.detection.isMoving = true;
         if (!agent.distraction)
         {
-            agent.navMeshAgent.destination = playerTransform.position;
+            if (playerTransform.gameObject.GetComponent<Player>().currentFloor != agent.initialFloor)
+            {
+                for (int i = 0; i < agent.aiAgents.Length; i++)
+                {
+                    if (agent.aiAgents[i].initialFloor == playerTransform.gameObject.GetComponent<Player>().currentFloor && agent.aiAgents != null)
+                    {
+                        agent.aiAgents[i].stateMachine.ChangeState(AiStateId.Investigate);
+                    }
+                }
+                agent.stateMachine.ChangeState(agent.initialState);
+            }
+            else
+            {
+                agent.navMeshAgent.destination = playerTransform.position;
+            }
         }
         else
         {
@@ -65,7 +79,6 @@ public class AIInvestigateState : AiState
 
                 if (!Physics.Raycast(agent.transform.position, directionToTarget, distanceToTarget, agent.detection.obstacleMask))
                 {
-                    //agent.visorMaterial.color = Color.yellow;
                     agent.material.SetTexture("_BaseMap", agent.yellowTexture);
                     agent.material.SetTexture("_EmissionMap", agent.yellowEmission);
                     randomPosition.y = agent.transform.position.y;

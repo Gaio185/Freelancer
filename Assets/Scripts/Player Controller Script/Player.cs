@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     public GameObject notePopUp;
     public TextMeshProUGUI interactionText;
 
+    public Floor currentFloor;
+
     private float timer = 2.0f;
     private float popUpTimer;
     public bool canPause;

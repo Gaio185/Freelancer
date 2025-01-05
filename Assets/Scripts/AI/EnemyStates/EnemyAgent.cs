@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,10 @@ public class AiAgent : MonoBehaviour
     public Transform[] patrolPoints;
     public ShootBullet shootBullet;
     public Transform distraction;
+    public AiAgent[] aiAgents;
+
+    public Floor initialFloor;
+
     [HideInInspector] public Vector3 startingPosition;
     [HideInInspector] public Detection detection;
 
