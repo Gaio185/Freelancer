@@ -23,6 +23,7 @@ public class CameraBobbing : MonoBehaviour
 
     private Dictionary<Transform, Vector3> _initialPositions = new Dictionary<Transform, Vector3>(); // Store initial positions of bobbing objects
     private float _xRotation = 0f;  // For storing vertical rotation
+    
 
     private void Awake()
     {
@@ -46,11 +47,11 @@ public class CameraBobbing : MonoBehaviour
         }
     }
 
+
     void Update()
     {
         if (!_enable) return;  // If bobbing is disabled, do nothing
-
-        HandleMouseInput(); // Handle camera rotation
+        //HandleMouseInput(); // Handle camera rotation
         CheckMotion();  // Check if the player is moving and grounded
         ResetPosition();  // Reset camera and objects to their starting positions when not moving
     }

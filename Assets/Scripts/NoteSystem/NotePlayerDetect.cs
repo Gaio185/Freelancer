@@ -22,11 +22,11 @@ public class NotePlayerDetect : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && isInRange)
         {
+            player.canPause = false; // Disable pause
             player.HUD.SetActive(false); // Hide the HUD
             notesPanel.SetActive(true); // Hide the notes UI
             noteInterface.SetActive(true); // Show the note UI
             player.GetComponent<PlayerMovement>().canMove = false; // Disable player movement
-            player.canPause = false; // Disable pause
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && notesPanel.activeSelf && noteInterface && isInRange && !player.canPause)
@@ -40,14 +40,13 @@ public class NotePlayerDetect : MonoBehaviour
                 player.interactPanel.SetActive(false); // Hide the interact panel
                 note.SetActive(false); // Hide the note
                 player.HUD.SetActive(true); // Show the HUD
-                player.canPause = true; // Enable pause
                 player.notePopUp.SetActive(true);
             }
             else
             {
                 player.HUD.SetActive(true); // Show the HUD
-                player.canPause = true; // Enable pause
             }
+            Invoke(nameof(EnablePause), 0.5f * Time.deltaTime);
         }
     }
 
@@ -76,6 +75,11 @@ public class NotePlayerDetect : MonoBehaviour
             player.interactPanel.SetActive(false); // Show the interact panel
             isInRange = false;
         }
+    }
+
+    private void EnablePause()
+    {
+        player.canPause = true;
     }
 
 }

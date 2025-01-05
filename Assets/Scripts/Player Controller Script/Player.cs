@@ -77,6 +77,7 @@ public class Player : MonoBehaviour
             noteInterface.SetActive(true);
         }
 
+
         if (notePopUp.activeSelf)
         {
             popUpTimer -= Time.deltaTime;

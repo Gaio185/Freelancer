@@ -87,6 +87,8 @@ public class ConversationStarter : MonoBehaviour
             // If player is in range and presses 'F', start the conversation
             if (Input.GetKeyDown(KeyCode.F))
             {
+                player.canPause = false;
+                player.movement.canMove = false;
                 conversationManager.SetActive(true);
                 player.HUD.SetActive(false);
                 StartConversation();
@@ -124,6 +126,9 @@ public class ConversationStarter : MonoBehaviour
         // Lock and hide the cursor after conversation
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        player.canPause = true;
+        player.movement.canMove = true;
 
         isInConversation = false;
     }

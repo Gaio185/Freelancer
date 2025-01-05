@@ -65,7 +65,7 @@ public class SafeDoorController : MonoBehaviour
         }
 
         // Optional: Press Escape to close the UI
-        if (isUIPinActive && Input.GetKeyDown(KeyCode.Escape))
+        if (isUIPinActive && Input.GetKeyDown(KeyCode.Escape) && isPlayerNear)
         {
             ClosePINUI();
             player.GetComponent<Switchweapon>().disableTools = false; // Enable player tools
