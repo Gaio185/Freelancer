@@ -13,13 +13,26 @@ public class KeycardReader : MonoBehaviour
 
     private bool isInRange;
 
+    private Renderer lightMaterial;
+
     public LayerMask targetMask;
 
     public AudioClip accessGranted;
     public AudioClip accessDenied;
 
+    public GameObject GetChildByIndex(GameObject parent, int index)
+    {
+        if (index < 0 || index >= parent.transform.childCount)
+        {
+            return null; 
+        }
+
+        return parent.transform.GetChild(index).gameObject;
+    }
+
     private void Start()
     {
+        lightMaterial = GetChildByIndex(gameObject, 0).GetComponent<Renderer>();
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         audioSource = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
     }
@@ -65,6 +78,8 @@ public class KeycardReader : MonoBehaviour
             doorFrame.GetComponent<BoxCollider>().enabled = true;
             player.interactPanel.SetActive(false);
             gameObject.GetComponent<BoxCollider>().enabled = false;
+            lightMaterial.material.SetColor("_BaseColor", Color.green);
+            lightMaterial.material.SetColor("_EmissionColor", Color.green);
             Debug.Log("Door unlocked with override keycard.");
             return;
         }
@@ -80,6 +95,8 @@ public class KeycardReader : MonoBehaviour
                 doorFrame.GetComponent<BoxCollider>().enabled = true;
                 player.interactPanel.SetActive(false);
                 gameObject.GetComponent<BoxCollider>().enabled = false;
+                lightMaterial.material.SetColor("_BaseColor", Color.green);
+                lightMaterial.material.SetColor("_EmissionColor", Color.green);
                 Debug.Log("Door unlocked with keycard for " + requiredDivisionType);
                 return;
             }
