@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour
 {
     public Camera playerCamera;
@@ -24,44 +26,53 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
-
-    Quaternion initialRotation;
-    public float amt, slerpAmt;
-    private float targetZ;
+    private AudioSource audioSource;
 
     public bool canMove = true;
 
-    // Variables for door interaction
-    public float interactionRange = 10f;  // Raycast range for door interaction
+    public AudioClip walkSound;
+    public AudioClip runSound;
+    public AudioClip landSound;
+
+    private bool isGroundedLastFrame = true;
+    private bool isFootstepPlaying = false;
+
+    private bool isRunning = false;
+    private bool isWalking = false;
+
+    private bool isJumping = false;
+    private float landDelayTimer = 0f;
+    public float landDelay = 0.1f;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         isHunted = false;
         hasClearance = true;
         canExtract = false;
-
-        initialRotation = transform.localRotation;  // Save the initial rotation
-        targetZ = initialRotation.eulerAngles.z;    // Set initial target z-axis rotation
     }
 
     void Update()
     {
-        // Player movement logic
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+        bool isRunningInput = Input.GetKey(KeyCode.LeftShift) && characterController.isGrounded;
+        float speed = (canMove && isRunningInput) ? runSpeed : walkSpeed;
+
+        float curSpeedX = canMove ? speed * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? speed * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
+
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpPower;
+            isJumping = true;
         }
         else
         {
@@ -88,7 +99,12 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        // Looking around with mouse
+        HandleFootsteps(isRunningInput);
+        HandleLanding();
+
+        isRunning = isRunningInput;
+        isWalking = !isRunning && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0);
+
         if (canMove)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -96,61 +112,44 @@ public class PlayerMovement : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
-
-        // Check for player leaning
-        if(canMove) LeanCheck();
-
-        //// Try interacting with door when the player presses "F"
-        //if (Input.GetKeyDown(KeyCode.F) && canMove)
-        //{
-        //    TryInteractWithDoor();
-        //}
     }
 
-    // Raycast to find doors and interact with them
-    //void TryInteractWithDoor()
-    //{
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, interactionRange))
-    //    {
-    //        Door targetDoor = hit.transform.GetComponent<Door>();
-    //        if (targetDoor != null)
-    //        {
-    //            targetDoor.TryOpenDoor();  // Call the method to open the door if unlocked
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("No door in front of you.");
-    //        }
-    //    }
-    //}
-
-    void LeanCheck()
+    private void HandleFootsteps(bool isRunningInput)
     {
-        // Get the current Euler angles (yaw, pitch, and roll)
-        Vector3 currentEulerAngles = transform.localEulerAngles;
+        bool isMoving = (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && characterController.isGrounded;
 
-        // Determine target z-axis based on input
-        if (Input.GetKey(KeyCode.Q))
+        if (isMoving)
         {
-            // Lean left: increase the z-axis rotation gradually
-            targetZ = initialRotation.eulerAngles.z + amt;
-        }
-        else if (Input.GetKey(KeyCode.E))
-        {
-            // Lean right: decrease the z-axis rotation gradually
-            targetZ = initialRotation.eulerAngles.z - amt;
+            if (!audioSource.isPlaying)
+            {
+                AudioClip stepSound = isRunningInput ? runSound : walkSound;
+                audioSource.clip = stepSound;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
         }
         else
         {
-            // No input: smoothly return to the initial z-axis rotation
-            targetZ = initialRotation.eulerAngles.z;
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
         }
+    }
 
-        // Smoothly interpolate the z-axis rotation
-        currentEulerAngles.z = Mathf.LerpAngle(currentEulerAngles.z, targetZ, Time.deltaTime * slerpAmt);
-
-        // Apply the updated rotation back to the transform
-        transform.localRotation = Quaternion.Euler(currentEulerAngles);
+    private void HandleLanding()
+    {
+        if (!isGroundedLastFrame && characterController.isGrounded)
+        {
+            PlaySound(landSound);
+        }
+        isGroundedLastFrame = characterController.isGrounded;
+    }
+    private void PlaySound(AudioClip clip, float volume = 1f)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip, volume);
+        }
     }
 }
