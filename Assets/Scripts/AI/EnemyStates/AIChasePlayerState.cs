@@ -52,11 +52,16 @@ public class AIHuntPlayerState : AiState
         if (agent.detection.canSeePlayer)
         {
             RaycastHit hit;
-            float distanceToTarget = Vector3.Distance(agent.transform.position, playerTransform.position);
-            if (!Physics.SphereCast(agent.transform.position, 1.0f, agent.transform.forward, out hit, distanceToTarget, agent.detection.obstacleMask))
+            float distanceToTarget = Vector3.Distance(agent.transform.position, agent.detection.playerRef.transform.position);
+            if (!Physics.SphereCast(agent.transform.position, 0.75f, agent.transform.forward, out hit, distanceToTarget, agent.detection.obstacleMask))
             {
-                agent.stateMachine.ChangeState(AiStateId.Shoot);
-            } 
+                if (Physics.Raycast(agent.transform.position, agent.transform.forward, out hit, distanceToTarget, agent.detection.targetMask))
+                {
+                    agent.stateMachine.ChangeState(AiStateId.Shoot);
+                }
+                
+            }
+            
         }
 
         if(timer < 0.0f)

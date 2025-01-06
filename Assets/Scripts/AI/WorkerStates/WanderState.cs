@@ -14,6 +14,7 @@ public class WanderState : WorkerState
     public void Enter(WorkerAgent agent)
     {
         timer = 0.0f;
+        agent.navMeshAgent.speed = 1.5f;
     }
 
     public void Update(WorkerAgent agent)
