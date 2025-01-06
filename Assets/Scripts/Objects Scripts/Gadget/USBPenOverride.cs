@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class USBPenOverride : MonoBehaviour
 {
-//<<<<<<< HEAD
     public float interactionRange = 3f;  // Range within which the pen drive can interact with the terminal
     private Transform playerTransform;
     private bool playerInRange = false;  // Track if player is in range of a terminal
     private TerminalManagement targetTerminal; // Reference to the terminal within range
-    public float useCount = 3;
+    public int useCount = 3;
 
     public GameObject overridePenDriveUI;
-    public TMP_Text countUI;
+    public GameObject[] penUI;
 
     private void Start()
     {
@@ -29,16 +28,16 @@ public class USBPenOverride : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (playerTransform == null) return;
+    //private void Update()
+    //{
+    //    if (playerTransform == null) return;
 
-        // Check if player is close enough and clicks Mouse1 (left mouse button)
-        //if (Input.GetMouseButtonDown(0))  // Left mouse button pressed
-        //{
-        //    TryBypassTerminal();
-        //}
-    }
+    //    ////Check if player is close enough and clicks Mouse1 (left mouse button)
+    //    //if (Input.GetMouseButtonDown(0))  // Left mouse button pressed
+    //    //{
+    //    //    TryBypassTerminal();
+    //    //}
+    //}
 
     //private void TryBypassTerminal()
     //{
@@ -62,7 +61,7 @@ public class USBPenOverride : MonoBehaviour
     //                computerInterface.BypassPassword(); // Call the terminal's bypass method
     //                Debug.Log("Terminal bypassed with USB Pen Drive.");
     //            }
-                
+
     //        }
     //        else
     //        {

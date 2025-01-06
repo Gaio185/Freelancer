@@ -8,18 +8,19 @@ public class TerminalInteract : MonoBehaviour
 
     public Player playerScript;
 
-    private GameObject overridePenDrive;
+    public USBPenOverride overridePenDrive;
 
     public TerminalCollisionCheck terminalCollisionCheck;
 
     private AudioSource audioSourceVerify;
     private AudioSource audioSourceDeny;
 
+
     private void Start()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<Player>();
         audioSourceVerify = GameObject.FindWithTag("VerifyAccess").GetComponent<AudioSource>();
-        audioSourceDeny = GameObject.FindWithTag("DenyAccess").GetComponent<AudioSource>();
+        audioSourceDeny = GameObject.FindWithTag("DenyAccess").GetComponent<AudioSource>(); 
     }
 
     void Update()
@@ -30,7 +31,7 @@ public class TerminalInteract : MonoBehaviour
             TerminalManagement terminalManagement = computerInterface.GetComponent<TerminalManagement>();
 
             terminalCollisionCheck.player.interactPanel.SetActive(true); // Show the interact panel
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && !overridePenDrive.enabled)
             {
                 playerScript.canPause = false; // Disable pause
                 playerScript.HUD.SetActive(false); // Hide the HUD
@@ -44,14 +45,13 @@ public class TerminalInteract : MonoBehaviour
             }
             
 
-            if (Input.GetMouseButtonDown(0) && overridePenDrive.activeSelf)
+            if (Input.GetKeyDown(KeyCode.F) && overridePenDrive.enabled)
             {
-                USBPenOverride usbPen = overridePenDrive.GetComponent<USBPenOverride>();
                 TerminalManagement terminal = computerInterface.GetComponent<TerminalManagement>();
                 if (!terminal.isUnlocked && terminal.canBeHacked)
                 {
-                    --usbPen.useCount;
-                    usbPen.countUI.text = "x" + usbPen.useCount;
+                    --overridePenDrive.useCount;
+                    overridePenDrive.penUI[overridePenDrive.useCount].SetActive(false);
                     terminal.passwordInterface.SetActive(false); // Hide the password interface
                     terminal.workspaceInterface.SetActive(true); // Show the workspace interface
                     playerScript.canPause = false; // Disable pause
@@ -70,10 +70,6 @@ public class TerminalInteract : MonoBehaviour
                 {
                     audioSourceDeny.PlayOneShot(audioSourceDeny.clip); 
                 }
-            }
-            else if(overridePenDrive == null)
-            {
-                overridePenDrive = GameObject.FindWithTag("USBPen");
             }
         }
     }

@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
 
     public Floor currentFloor;
 
+    public USBPenOverride penDrive;
+
     private float timer = 2.0f;
     private float popUpTimer;
     public bool canPause;
