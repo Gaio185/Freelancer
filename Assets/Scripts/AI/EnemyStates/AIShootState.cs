@@ -19,6 +19,7 @@ public class AIShootState : AiState
         agent.navMeshAgent.isStopped = true;
         timer = agent.config.shootInterval;
         agent.detection.player.movement.isHunted = true;
+        agent.shootBullet.Invoke(nameof(agent.shootBullet.Shoot), 1.0f * Time.deltaTime);
     }
 
     public void Update(AiAgent agent)
@@ -36,7 +37,7 @@ public class AIShootState : AiState
                 timer = agent.config.shootInterval;
             }
         }
-        
+
         if(!agent.detection.canSeePlayer)
         {
             agent.stateMachine.ChangeState(AiStateId.Hunt);
