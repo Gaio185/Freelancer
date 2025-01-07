@@ -140,9 +140,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BorderColor: {r: 0.054902077, g: 0, b: 1, a: 1}
+    - _BorderColor: {r: 0.023529408, g: 0, b: 0.7490196, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CoreColor: {r: 0, g: 1.9823923, b: 2, a: 0}
+    - _CoreColor: {r: 0, g: 0.7424254, b: 0.7490196, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ObjectColor: {r: 0, g: 0.8894992, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
