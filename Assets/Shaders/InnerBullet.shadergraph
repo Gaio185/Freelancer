@@ -4,22 +4,10 @@
     "m_ObjectId": "4a4d0a43f3ba4dc2a588e68ba6a22ea2",
     "m_Properties": [
         {
-            "m_Id": "9151b18806ae4ad4b19aa7053743f5ba"
-        },
-        {
-            "m_Id": "cb70fd2275334aea840760e529bf890d"
-        },
-        {
-            "m_Id": "47dc3512a3294571986e3a377d9d24fe"
-        },
-        {
             "m_Id": "2f3a76b0683840bea9dcd381ded8c120"
         },
         {
             "m_Id": "8ffef300085344ddac58a111c4cbc30c"
-        },
-        {
-            "m_Id": "6a9a41a8becd4597a2bb0905ad8a7b31"
         },
         {
             "m_Id": "f42e6b4945e54ad48c375296644da245"
@@ -1478,36 +1466,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
-    "m_ObjectId": "47dc3512a3294571986e3a377d9d24fe",
-    "m_Guid": {
-        "m_GuidSerialized": "33e6ee9c-83ee-4aef-9537-a1af6c4f281e"
-    },
-    "m_Name": "ElectricityTexture",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "ElectricityTexture",
-    "m_DefaultReferenceName": "_ElectricityTexture",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"ced8e6b7fe87e4a4991ddc2676c28588\",\"type\":3}}",
-        "m_Guid": ""
-    },
-    "isMainTexture": false,
-    "useTilingAndOffset": false,
-    "m_Modifiable": true,
-    "m_DefaultType": 0
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "4af0f832beaf4c35868af555185c1258",
     "m_Group": {
@@ -1996,34 +1954,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "6a9a41a8becd4597a2bb0905ad8a7b31",
-    "m_Guid": {
-        "m_GuidSerialized": "4b9a6b6d-0303-4e70-8c30-38c3620cce89"
-    },
-    "m_Name": "DistortionSpeed",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "DistortionSpeed",
-    "m_DefaultReferenceName": "_DistortionSpeed",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.10000000149011612,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "6bc1d53916a04432bf5a3306eac02f72",
@@ -2475,34 +2405,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "9151b18806ae4ad4b19aa7053743f5ba",
-    "m_Guid": {
-        "m_GuidSerialized": "3dba0a93-2b5a-4d5b-aa8f-98f3cd7ad928"
-    },
-    "m_Name": "ScrollingSpeed",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "ScrollingSpeed",
-    "m_DefaultReferenceName": "_ScrollingSpeed",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.25,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "94cd7ed608b743fc93093ac945ec4a2f",
@@ -2591,22 +2493,10 @@
     "m_Name": "",
     "m_ChildObjectList": [
         {
-            "m_Id": "9151b18806ae4ad4b19aa7053743f5ba"
-        },
-        {
-            "m_Id": "cb70fd2275334aea840760e529bf890d"
-        },
-        {
-            "m_Id": "47dc3512a3294571986e3a377d9d24fe"
-        },
-        {
             "m_Id": "2f3a76b0683840bea9dcd381ded8c120"
         },
         {
             "m_Id": "8ffef300085344ddac58a111c4cbc30c"
-        },
-        {
-            "m_Id": "6a9a41a8becd4597a2bb0905ad8a7b31"
         },
         {
             "m_Id": "f42e6b4945e54ad48c375296644da245"
@@ -3256,36 +3146,6 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Metallic"
-}
-
-{
-    "m_SGVersion": 3,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
-    "m_ObjectId": "cb70fd2275334aea840760e529bf890d",
-    "m_Guid": {
-        "m_GuidSerialized": "415d1e32-4c83-4d29-8b57-f8f3173e5ceb"
-    },
-    "m_Name": "TextureColor",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "TextureColor",
-    "m_DefaultReferenceName": "_TextureColor",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "r": 0.0,
-        "g": 4.0,
-        "b": 5.0890045166015629,
-        "a": 0.0
-    },
-    "isMainColor": false,
-    "m_ColorMode": 1
 }
 
 {
