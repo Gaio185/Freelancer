@@ -46,7 +46,6 @@ public class AiAgent : MonoBehaviour
     [HideInInspector] public float timeElapsed;
     private Color emissionColor;
 
-
     void Start()
     {
         //Load Textures
