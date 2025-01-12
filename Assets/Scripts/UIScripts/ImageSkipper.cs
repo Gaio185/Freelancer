@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ImageSkipper : MonoBehaviour
 {
     public GameObject[] images; // Array of GameObjects to cycle through
+    public GameObject[] imageText;
     private int currentIndex = 0; // Tracks the current active image
 
     void Start()
@@ -15,6 +16,10 @@ public class ImageSkipper : MonoBehaviour
         {
             images[i].SetActive(i == 0); // Activate the first image, deactivate the rest
         }
+        for (int i = 0; i < imageText.Length; i++)
+        {
+            imageText[i].SetActive(i == 0); // Activate the first image, deactivate the rest
+        }
     }
 
     public void SkipImage()
@@ -23,11 +28,13 @@ public class ImageSkipper : MonoBehaviour
 
         // Deactivate the current image
         images[currentIndex].SetActive(false);
+        imageText[currentIndex].SetActive(false);
 
         // Move to the next image, looping back if needed
         currentIndex = (currentIndex + 1) % images.Length;
 
         // Activate the next image
         images[currentIndex].SetActive(true);
+        imageText[currentIndex].SetActive(true);
     }
 }
