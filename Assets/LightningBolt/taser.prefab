@@ -5221,9 +5221,9 @@ MonoBehaviour:
   taserSoundObject: {fileID: 0}
   lightningParticles: {fileID: 5947261882418390698}
   shaderGraphLightningEffectPrefab: {fileID: 5370745707897551048}
-  taserMuzzle: {fileID: 1662265439840403342}
   stunGunUI: {fileID: 0}
   cooldownManager: {fileID: 0}
+  fireDirection: {fileID: 0}
 --- !u!54 &7584555344586933474
 Rigidbody:
   m_ObjectHideFlags: 0
