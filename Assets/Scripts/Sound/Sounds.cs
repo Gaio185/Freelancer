@@ -21,7 +21,9 @@ public static class Sounds
                 Vector3 directionToTarget = (distraction.position - enemy.transform.position).normalized;
                 float distanceToTarget = Vector3.Distance(enemy.transform.position, distraction.position);
 
-                if (!Physics.Raycast(enemy.transform.position, directionToTarget, distanceToTarget, obstacleMask))
+                if (!Physics.Raycast(enemy.transform.position, directionToTarget, distanceToTarget, obstacleMask) 
+                    && enemy.stateMachine.currentState != AiStateId.Hunt
+                    && enemy.stateMachine.currentState != AiStateId.Shoot)
                 {
                     enemy.distraction = distraction;
                     enemy.stateMachine.ChangeState(AiStateId.Investigate);
