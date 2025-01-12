@@ -30,19 +30,23 @@ public class PlayerMovement : MonoBehaviour
 
     public bool canMove = true;
 
+    // Sons para caminhada, corrida e aterrissagem
     public AudioClip walkSound;
     public AudioClip runSound;
     public AudioClip landSound;
 
+    // Variáveis para o controle de áudio
     private bool isGroundedLastFrame = true;
-    private bool isFootstepPlaying = false;
-
     private bool isRunning = false;
     private bool isWalking = false;
 
     private bool isJumping = false;
-    private float landDelayTimer = 0f;
-    public float landDelay = 0.1f;
+
+    // Variáveis para o Lean
+    public float amt = 10f; // Quantidade de lean
+    public float slerpAmt = 10f; // Velocidade de transição do lean
+    private Quaternion initialRotation;
+    private float targetZ;
 
     void Start()
     {
@@ -50,23 +54,21 @@ public class PlayerMovement : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        isHunted = false;
-        hasClearance = true;
-        canExtract = false;
+
+        initialRotation = transform.localRotation;  // Salva a rotação inicial
+        targetZ = initialRotation.eulerAngles.z;    // Define a rotação inicial no eixo Z
     }
 
     void Update()
     {
+        // Movimentação do jogador
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
         bool isRunningInput = Input.GetKey(KeyCode.LeftShift) && characterController.isGrounded;
-        float speed = (canMove && isRunningInput) ? runSpeed : walkSpeed;
-
-        float curSpeedX = canMove ? speed * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? speed * Input.GetAxis("Horizontal") : 0;
+        float curSpeedX = canMove ? (isRunningInput ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? (isRunningInput ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
-
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
@@ -99,12 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(moveDirection * Time.deltaTime);
 
-        HandleFootsteps(isRunningInput);
-        HandleLanding();
-
-        isRunning = isRunningInput;
-        isWalking = !isRunning && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0);
-
+        // Olhando ao redor com o mouse
         if (canMove)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
@@ -112,6 +109,13 @@ public class PlayerMovement : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+
+        // Leaning: Verifica se o jogador está tentando inclinar
+        if (canMove) LeanCheck();
+
+        // Controlando os sons de movimento e aterrissagem
+        HandleFootsteps(isRunningInput);
+        HandleLanding();
     }
 
     private void HandleFootsteps(bool isRunningInput)
@@ -141,15 +145,38 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGroundedLastFrame && characterController.isGrounded)
         {
-            PlaySound(landSound);
+            PlaySound(landSound); // Toca o som de aterrissar quando o jogador toca no solo
         }
         isGroundedLastFrame = characterController.isGrounded;
     }
+
     private void PlaySound(AudioClip clip, float volume = 1f)
     {
         if (clip != null && audioSource != null)
         {
             audioSource.PlayOneShot(clip, volume);
         }
+    }
+
+    // Função para o Lean
+    void LeanCheck()
+    {
+        Vector3 currentEulerAngles = transform.localEulerAngles;
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            targetZ = initialRotation.eulerAngles.z + amt; // Inclinar para a esquerda
+        }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            targetZ = initialRotation.eulerAngles.z - amt; // Inclinar para a direita
+        }
+        else
+        {
+            targetZ = initialRotation.eulerAngles.z; // Voltar à rotação inicial
+        }
+
+        currentEulerAngles.z = Mathf.LerpAngle(currentEulerAngles.z, targetZ, Time.deltaTime * slerpAmt);
+        transform.localRotation = Quaternion.Euler(currentEulerAngles);
     }
 }
