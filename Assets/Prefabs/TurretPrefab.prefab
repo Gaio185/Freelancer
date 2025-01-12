@@ -213,10 +213,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Sentry
       objectReference: {fileID: 0}
+    - target: {fileID: -8061869827109355529, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7921954276207858558, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5576466731488570540, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -5576466731488570540, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d26d104ecf19c5542bce830a14351bd0, type: 2}
+    - target: {fileID: -1170177202206061258, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -1170177202206061258, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -228,6 +244,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 2786339922011371331, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9194509242015492025, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9194509242015492025, guid: 0ab356fa5972ae940b4471a82cfc657a, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -312,6 +336,7 @@ MonoBehaviour:
   greenEmission: {fileID: 0}
   yellowEmission: {fileID: 0}
   redEmission: {fileID: 0}
+  timeElapsed: 0
 --- !u!114 &296591800398640235
 MonoBehaviour:
   m_ObjectHideFlags: 0
