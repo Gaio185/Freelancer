@@ -4,19 +4,70 @@ using UnityEngine;
 
 public class VentDoor : MonoBehaviour
 {
-    public GameObject ventObject;  // Reference to the vent GameObject (the one to be deactivated)
-    public Transform destination;  // Destination for teleportation (can be an empty GameObject)
-    public float interactionDistance = 5f; // Distance to interact with the vent
+    [SerializeField] private Transform ventSpawnPoint;  // Destination for teleportation (can be an empty GameObject)
 
-    public GameObject player; // Manually assign the player here
+    [SerializeField] private VentDoor ventToTravelTo;
 
-    private MeshRenderer ventRenderer; // MeshRenderer to deactivate
+    private Player player; // Manually assign the player here
+
     private bool ventIsOpen = false; // Track whether the vent is opened or not
+
+    private bool isInRange;
+
+    [SerializeField] private GameObject screwdriver;
 
     // Initialize the MeshRenderer reference
     private void Awake()
     {
-        ventRenderer = ventObject.GetComponent<MeshRenderer>();
+        player = FindObjectOfType<Player>();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player" && screwdriver.activeSelf && !ventIsOpen)
+        {
+            isInRange = true;
+            player.interactionText.text = "Press F to Open Vent";
+            player.interactPanel.SetActive(true);
+        }
+        else if(other.gameObject.tag == "Player" && ventIsOpen)
+        {
+            isInRange = true;
+            player.interactionText.text = "Press F to Use Vent";
+            player.interactPanel.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            isInRange = false;
+            player.interactPanel.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && isInRange && !ventIsOpen)
+        {
+            OpenVent();
+            player.interactionText.text = "Press F to Use Vent";
+        }
+        else if (Input.GetKeyDown(KeyCode.F) && isInRange && ventIsOpen)
+        {
+            EnterVent();
+        }
+
+        if (isInRange && !ventIsOpen && screwdriver.activeSelf)
+        {
+            player.interactionText.text = "Press F to Open Vent";
+            player.interactPanel.SetActive(true);
+        }
+        else if (isInRange && !ventIsOpen && !screwdriver.activeSelf)
+        {
+            player.interactPanel.SetActive(false);
+        }
     }
 
     // Method to open the vent (called when screwdriver is used)
@@ -25,59 +76,31 @@ public class VentDoor : MonoBehaviour
         if (!ventIsOpen)
         {
             ventIsOpen = true;
-            DeactivateVentMesh(); // Deactivate the MeshRenderer
-        }
-    }
-
-    // Method to deactivate the vent mesh (making it disappear visually)
-    private void DeactivateVentMesh()
-    {
-        if (ventRenderer != null)
-        {
-            ventRenderer.enabled = false; // Hide the vent object
-            Debug.Log("Vent mesh has been deactivated.");
-        }
-        else
-        {
-            Debug.LogError("MeshRenderer is missing on ventObject.");
+            //DeactivateVentMesh(); // Deactivate the MeshRenderer
         }
     }
 
     // Method to handle teleportation when 'F' is pressed
     public void EnterVent()
     {
-        if (player != null && destination != null)
+        if (player != null && ventToTravelTo.ventSpawnPoint != null)
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
+            ventToTravelTo.ventIsOpen = true;
 
-            // Check if player is close enough to the vent to interact
-            if (distance <= interactionDistance)
-            {
-                // Check if player is already at the destination to prevent unnecessary teleport
-                if (Vector3.Distance(player.transform.position, destination.position) < 0.1f)
-                {
-                    Debug.Log("Player is already at the destination, no teleport needed.");
-                    return;
-                }
+            // Temporarily disable CharacterController or Rigidbody if present
+            CharacterController characterController = player.gameObject.GetComponent<CharacterController>();
 
-                Debug.Log("Teleporting player to destination.");
+            if (characterController != null) characterController.enabled = false;
 
-                // Temporarily disable CharacterController or Rigidbody if present
-                CharacterController characterController = player.GetComponent<CharacterController>();
-                Rigidbody rb = player.GetComponent<Rigidbody>();
+            // Teleport the player to the destination
+            player.gameObject.transform.position = ventToTravelTo.ventSpawnPoint.position;
 
-                if (characterController != null) characterController.enabled = false;
-                if (rb != null) rb.isKinematic = true;
+            // Reactivate CharacterController or Rigidbody
+            if (characterController != null) characterController.enabled = true;
 
-                // Teleport the player to the destination
-                player.transform.position = destination.position;
-
-                // Reactivate CharacterController or Rigidbody
-                if (characterController != null) characterController.enabled = true;
-                if (rb != null) rb.isKinematic = false;
-
-                Debug.Log("Player teleported to destination: " + destination.position);
-            }
+            player.interactPanel.SetActive(false);
+            isInRange = false;
+            Debug.Log("Player teleported to destination: " + ventToTravelTo.ventSpawnPoint.position);
         }
         else
         {

@@ -19,6 +19,7 @@ public class ExtractionZone : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             isInRange = true;
+            player.interactionText.text = "Press F to Leave";
             player.interactPanel.SetActive(true);
         }
     }

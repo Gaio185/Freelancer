@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a979bc795aacd944f88b7e85f362ff99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickUpRange: 4
+  pickUpRange: 2
   targetMask:
     serializedVersion: 2
     m_Bits: 128

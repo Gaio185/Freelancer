@@ -6,8 +6,7 @@ using UnityEngine.EventSystems;
 public class UnlockSecretPassage : MonoBehaviour
 {
     public GameObject pinUI; // Assign the PIN UI GameObject here
-    public GameObject bookShelf; // Reference to the safe door object that should be destroyed
-    public GameObject wall; // Reference to the wall object that should be destroyed
+    public GameObject shelfPivot; // Reference to the wall object that should be destroyed
     private Player player; 
     public GameObject numPad; // Reference to the secret passage numpad
 
@@ -76,10 +75,10 @@ public class UnlockSecretPassage : MonoBehaviour
     {
         player.GetComponent<Switchweapon>().disableTools = false; // Enable player tools
         player.interactPanel.SetActive(false); // Hide the interact panel
-        Destroy(bookShelf); // Destroy the safe door
-        Destroy(wall); // Destroy the safe door
-        Destroy(numPad); // Destroy the secret passage numpad
+        shelfPivot.GetComponent<Animator>().Play("OpenPassage", -1, 0);
         ClosePINUI(); // Close the PIN UI and re-lock cursor after unlocking
+        GetComponent<BoxCollider>().enabled = false;
+        enabled = false;
         Debug.Log("Safe unlocked, door and numerario destroyed");
     }
 

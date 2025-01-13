@@ -23,46 +23,46 @@ public class Screwdriver : MonoBehaviour
         screwdriverUI.SetActive(false); // Make the screwdriver UI inactive when disabled
     }
 
-    void Update()
-    {
-        // Find all colliders in range, filtering only by ventLayer
-        Collider[] ventsInRange = Physics.OverlapSphere(transform.position, interactionDistance, ventLayer);
-        closestVent = null;
+    //void Update()
+    //{
+    //    // Find all colliders in range, filtering only by ventLayer
+    //    Collider[] ventsInRange = Physics.OverlapSphere(transform.position, interactionDistance, ventLayer);
+    //    closestVent = null;
 
-        // Check which vent is the closest
-        float closestDistance = Mathf.Infinity;
-        foreach (var collider in ventsInRange)
-        {
-            float distance = Vector3.Distance(transform.position, collider.transform.position);
-            if (distance < closestDistance)
-            {
-                closestVent = collider.gameObject;
-                closestDistance = distance;
-            }
-        }
+    //    // Check which vent is the closest
+    //    float closestDistance = Mathf.Infinity;
+    //    foreach (var collider in ventsInRange)
+    //    {
+    //        float distance = Vector3.Distance(transform.position, collider.transform.position);
+    //        if (distance < closestDistance)
+    //        {
+    //            closestVent = collider.gameObject;
+    //            closestDistance = distance;
+    //        }
+    //    }
 
-        // If there is a vent within range and it's the closest, handle interaction
-        if (closestVent != null)
-        {
-            ventScript = closestVent.GetComponent<VentDoor>();
-            if (ventScript != null && Input.GetMouseButtonDown(0)) // Left-click to open the vent
-            {
-                ventScript.OpenVent(); // This will deactivate the vent's MeshRenderer
-                Debug.Log("Screwdriver has opened the vent.");
-            }
-        }
+    //    // If there is a vent within range and it's the closest, handle interaction
+    //    if (closestVent != null)
+    //    {
+    //        ventScript = closestVent.GetComponent<VentDoor>();
+    //        if (ventScript != null && Input.GetMouseButtonDown(0)) // Left-click to open the vent
+    //        {
+    //            ventScript.OpenVent(); // This will deactivate the vent's MeshRenderer
+    //            Debug.Log("Screwdriver has opened the vent.");
+    //        }
+    //    }
 
-        // Handle teleportation if the vent is open
-        if (ventScript != null && ventScript.IsVentOpen() && Input.GetKey(KeyCode.F))
-        {
-            if (player != null)
-            {
-                ventScript.EnterVent(); // Teleport the player to the destination
-            }
-            else
-            {
-                Debug.LogError("Player reference is missing! Please assign the player in the Inspector.");
-            }
-        }
-    }
+    //    // Handle teleportation if the vent is open
+    //    if (ventScript != null && ventScript.IsVentOpen() && Input.GetKey(KeyCode.F))
+    //    {
+    //        if (player != null)
+    //        {
+    //            ventScript.EnterVent(); // Teleport the player to the destination
+    //        }
+    //        else
+    //        {
+    //            Debug.LogError("Player reference is missing! Please assign the player in the Inspector.");
+    //        }
+    //    }
+    //}
 }
