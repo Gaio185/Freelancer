@@ -21,7 +21,6 @@ public class TerminalManagement : MonoBehaviour
     [HideInInspector] public AudioSource audioSourceDeny;
 
     private Player playerScript; // Reference to player script
-    public GameObject usbPen; // Reference to the USB pen GameObject
 
     public bool canBeHacked;
     public bool isUnlocked;
@@ -37,24 +36,12 @@ public class TerminalManagement : MonoBehaviour
 
     public void CheckPassword()
     {
-        // Check if the USB pen is being used
-        bool isUsingUsbPen = usbPen != null && usbPen.activeInHierarchy;
-
-        // If the USB pen is being used, directly open the workspace
-        //if (isUsingUsbPen && canBeHacked)
-        //{
-        //    BypassPassword(); // Bypass password if USB pen is in use
-        //}
-        //else if(isUsingUsbPen && !canBeHacked)
-        //{
-        //    audioSourceDeny.PlayOneShot(audioSourceDeny.clip); // Play sound for successful login 
-        //}
-        
         if (input.text == correctPassword)
         {
             audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
             OpenWorkspace();
             input.text = ""; // Clear the input field after successful login
+            isUnlocked = true;
             Debug.Log("Correct Password");
         }
         else
@@ -64,15 +51,6 @@ public class TerminalManagement : MonoBehaviour
             input.placeholder.GetComponent<TextMeshProUGUI>().text = "Incorrect Password"; 
         }
     }
-
-    //public void BypassPassword()
-    //{
-    //    Debug.Log("BypassPassword method called."); // Debugging line
-    //    audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
-    //    passwordInterface.SetActive(false); // Hide the password interface
-    //    workspaceInterface.SetActive(true); // Show the workspace interface
-    //    Debug.Log("Workspace unlocked with Override Pen Drive.");
-    //}
 
     private void OpenWorkspace()
     {
