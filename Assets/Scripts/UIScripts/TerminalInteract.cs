@@ -45,6 +45,7 @@ public class TerminalInteract : MonoBehaviour
                         terminal.passwordInterface.SetActive(false); // Hide the password interface
                         terminal.workspaceInterface.SetActive(true); // Show the workspace interface
                         audioSourceVerify.PlayOneShot(audioSourceVerify.clip); // Play sound for successful login
+                        terminal.isUnlocked = true;
                         Debug.Log("Terminal bypassed with USB Pen Drive.");
                     }
                     else if (!terminal.isUnlocked)
