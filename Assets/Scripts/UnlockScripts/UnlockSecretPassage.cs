@@ -77,6 +77,8 @@ public class UnlockSecretPassage : MonoBehaviour
         player.interactPanel.SetActive(false); // Hide the interact panel
         shelfPivot.GetComponent<Animator>().Play("OpenPassage", -1, 0);
         ClosePINUI(); // Close the PIN UI and re-lock cursor after unlocking
+        GetComponent<BoxCollider>().enabled = false;
+        enabled = false;
         Debug.Log("Safe unlocked, door and numerario destroyed");
     }
 
