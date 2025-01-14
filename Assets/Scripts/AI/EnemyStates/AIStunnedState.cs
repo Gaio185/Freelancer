@@ -20,6 +20,7 @@ public class AIStunnedState : AiState
         agent.material.SetTexture("_BaseMap", agent.stunnedTexture);
         agent.material.SetColor("_EmissionColor", Color.black);
         agent.audioSource.clip = agent.enemyStunned;
+        agent.audioSource.volume = 1.0f;
         agent.audioSource.Play();
     }
 

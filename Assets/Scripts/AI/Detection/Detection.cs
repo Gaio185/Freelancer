@@ -63,6 +63,7 @@ public class Detection : MonoBehaviour
             if (!audioSource.isPlaying && audioSource != null)
             {
                 audioSource.clip = detecting;
+                audioSource.volume = 1.0f;
                 audioSource.Play();
             }
             timer -= Time.deltaTime;
