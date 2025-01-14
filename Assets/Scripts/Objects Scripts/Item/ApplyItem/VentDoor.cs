@@ -16,6 +16,10 @@ public class VentDoor : MonoBehaviour
 
     [SerializeField] private GameObject screwdriver;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip unlockVentSound;
+    [SerializeField] private AudioClip enterVentSound;
+
     // Initialize the MeshRenderer reference
     private void Awake()
     {
@@ -75,6 +79,9 @@ public class VentDoor : MonoBehaviour
     {
         if (!ventIsOpen)
         {
+            audioSource.Stop();
+            audioSource.clip = unlockVentSound;
+            audioSource.Play();
             ventIsOpen = true;
             //DeactivateVentMesh(); // Deactivate the MeshRenderer
         }
@@ -94,6 +101,10 @@ public class VentDoor : MonoBehaviour
 
             // Teleport the player to the destination
             player.gameObject.transform.position = ventToTravelTo.ventSpawnPoint.position;
+
+            audioSource.Stop();
+            audioSource.clip = enterVentSound;
+            audioSource.Play();
 
             // Reactivate CharacterController or Rigidbody
             if (characterController != null) characterController.enabled = true;

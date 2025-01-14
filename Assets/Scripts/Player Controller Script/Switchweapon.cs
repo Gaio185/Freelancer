@@ -49,6 +49,10 @@ public class Switchweapon : MonoBehaviour
 
     public Toolbar toolbar { get; private set; }
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip useTool;
+    [SerializeField] private AudioClip holsterTool;
+
     private void Start()
     {
         toolbar = FindObjectOfType<Toolbar>();
@@ -133,6 +137,10 @@ public class Switchweapon : MonoBehaviour
 
     void ActivateWeapon()
     {
+        audioSource.Stop();
+        audioSource.clip = useTool;
+        audioSource.Play();
+
         string selectedWeapon = PlayerPrefs.GetString("SelectedWeapon", "StunBaton");
         hasWeaponEquipped = true;
 
@@ -154,6 +162,10 @@ public class Switchweapon : MonoBehaviour
 
     void ActivateItemTools()
     {
+        audioSource.Stop();
+        audioSource.clip = useTool;
+        audioSource.Play();
+
         string selectedItem = PlayerPrefs.GetString("SelectedItem", "Screwdriver");
 
         if (selectedItem == "Screwdriver")
@@ -174,6 +186,10 @@ public class Switchweapon : MonoBehaviour
 
     void ActivateGadget()
     {
+        audioSource.Stop();
+        audioSource.clip = useTool;
+        audioSource.Play();
+
         string selectedGadget = PlayerPrefs.GetString("SelectedGadget", "OverrideKeyCard");
 
         if (selectedGadget == "OverrideKeyCard")
@@ -194,6 +210,9 @@ public class Switchweapon : MonoBehaviour
 
     void EmptyHands()
     {
+        audioSource.Stop();
+        audioSource.clip = holsterTool;
+        audioSource.Play();
         DeactivateAllModels();
         currentItemType = ItemType.None;
         Debug.Log("Equipped: Empty Hands");

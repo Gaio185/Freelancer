@@ -46,6 +46,10 @@ public class AiAgent : MonoBehaviour
     [HideInInspector] public float timeElapsed;
     private Color emissionColor;
 
+    public AudioSource audioSource;
+    public AudioClip enemyStunned;
+    [SerializeField] private AudioClip enemyMoving;
+
     void Start()
     {
         //Load Textures
@@ -82,10 +86,24 @@ public class AiAgent : MonoBehaviour
             if (navMeshAgent.isStopped || !navMeshAgent.hasPath)
             {
                 wheels[i].GetComponent<Animator>().SetBool("isMoving", false);
+                if(audioSource.isPlaying && audioSource.clip == enemyMoving)
+                {
+                    audioSource.Stop();
+                    audioSource.loop = false;
+                }
+                
             }
             else
             {
                 wheels[i].GetComponent<Animator>().SetBool("isMoving", true);
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.loop = true;
+                    audioSource.clip = enemyMoving;
+                    audioSource.volume = 0.15f;
+                    audioSource.Play();
+                }
+                
             }
         }
     }

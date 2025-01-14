@@ -21,6 +21,7 @@ public class ShootBullet : MonoBehaviour
         Rigidbody bulletRig = bulletObj.GetComponent<Rigidbody>();
         if (bulletSpeed > 0) bulletRig.AddForce(this.gameObject.transform.forward * bullet.speed, 
                                                 ForceMode.VelocityChange);
+        bulletObj.GetComponent<Bullet>().PlayAmbientAudio();
         Destroy(bulletObj, bullet.autoDestroyTime);
     }
 }

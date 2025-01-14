@@ -31,6 +31,10 @@ public class Detection : MonoBehaviour
 
     public Light lightRef;
 
+    public AudioSource audioSource;
+    public AudioClip detecting;
+    public AudioClip stunned;
+
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
@@ -56,10 +60,19 @@ public class Detection : MonoBehaviour
 
         if (canSeePlayer && !playerDetected && shouldDetect)
         {
+            if (!audioSource.isPlaying && audioSource != null)
+            {
+                audioSource.clip = detecting;
+                audioSource.volume = 1.0f;
+                audioSource.Play();
+            }
             timer -= Time.deltaTime;
         }
         else
         {
+            if (audioSource != null && audioSource.isPlaying && audioSource.clip == detecting) {
+                audioSource.Stop();
+            }
             timer = detectionTimer;
         }
     }
@@ -101,7 +114,6 @@ public class Detection : MonoBehaviour
                         {
                             playerDetected = true;
                         }
-                        else { playerDetected = false; }
                     }
                     else
                     {
