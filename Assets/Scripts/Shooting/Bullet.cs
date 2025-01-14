@@ -14,6 +14,10 @@ public class Bullet : MonoBehaviour
     public GameObject trail;
     public GameObject innerBullet;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip ambientSound;
+    [SerializeField] private AudioClip explosionSound;
+
     private const string DISABLE_METHOD_NAME = "Disable";
 
     private void Awake()
@@ -42,6 +46,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    public void PlayAmbientAudio()
+    {
+        audioSource.volume = 1.0f;
+        audioSource.pitch = 1.0f;
+        audioSource.PlayOneShot(ambientSound);
+    }
+
     private void Disable()
     {
         CancelInvoke(DISABLE_METHOD_NAME);
@@ -63,6 +74,10 @@ public class Bullet : MonoBehaviour
         rb.AddForce(this.gameObject.transform.forward * -speed, ForceMode.VelocityChange);
         topExplosion.Play();
         bottomExplosion.Play();
+        audioSource.Stop();
+        audioSource.volume = 0.3f;
+        audioSource.pitch = 0.8f;
+        audioSource.PlayOneShot(explosionSound);
         if (topExplosion != null && bottomExplosion != null && !topExplosion.isPlaying && !bottomExplosion)
         {
             Destroy(this.gameObject);
