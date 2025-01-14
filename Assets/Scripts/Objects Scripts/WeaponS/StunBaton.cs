@@ -11,7 +11,8 @@ public class StunBaton : MonoBehaviour
     public GameObject crosshair;  // Reference to the crosshair object
     public GameObject stunSoundObject;  // Reference to the GameObject with the audio source (Stun sound GameObject)
 
-    private AudioSource stunAudioSource;  // Reference to the AudioSource component
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip taseSound;
 
     public GameObject stunBatonUI;
 
@@ -22,8 +23,7 @@ public class StunBaton : MonoBehaviour
 
     void Start()
     {
-        stunAudioSource = stunSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
-        stunAudioSource.Stop();  // Ensure the sound is stopped when the game starts
+        audioSource.Stop();  // Ensure the sound is stopped when the game starts
         crosshair.SetActive(true);  // Show crosshair by default when the weapon is equipped
     }
 
@@ -42,9 +42,11 @@ public class StunBaton : MonoBehaviour
     void UseStunBaton()
     {
         // Play the sound instantly when the player clicks, without any cooldown
-        if (!stunAudioSource.isPlaying)
+        if (!audioSource.isPlaying)
         {
-            stunAudioSource.Play();
+            audioSource.Stop();
+            audioSource.clip = taseSound;
+            audioSource.Play();
         }
 
         RaycastHit hit;
@@ -72,12 +74,13 @@ public class StunBaton : MonoBehaviour
         {
             effect.SetActive(true);  // Display the effect
         }
+
+        audioSource.Stop();
     }
 
     void OnDisable()
     {
         stunBatonUI.SetActive(false);
-        stunAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
 
         // Hide the effect when the stun baton is disabled
         if (effect != null)

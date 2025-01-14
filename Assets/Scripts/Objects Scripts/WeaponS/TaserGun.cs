@@ -16,7 +16,8 @@ public class TaserGun : MonoBehaviour
     public GameObject crosshair;  // Reference to the crosshair object
     public GameObject taserSoundObject;  // Reference to the GameObject with the audio source (Taser sound GameObject)
 
-    private AudioSource taserAudioSource;  // Reference to the AudioSource component
+    [SerializeField] private AudioSource audioSource;  // Reference to the AudioSource component
+    [SerializeField] private AudioClip taseSound;
 
     public ParticleSystem lightningParticles; // Particle system for the lightning effect
     public GameObject shaderGraphLightningEffectPrefab; // Prefab for the Shader Graph-based VFX
@@ -28,8 +29,8 @@ public class TaserGun : MonoBehaviour
 
     void Start()
     {
-        taserAudioSource = taserSoundObject.GetComponent<AudioSource>();  // Get the AudioSource from the GameObject
-        taserAudioSource.Stop();  // Ensure the sound is stopped when the game starts
+        audioSource.Stop();  // Ensure the sound is stopped when the game starts
+        
         crosshair.SetActive(true);  // Show crosshair by default when the weapon is equipped
 
         // Deactivate particle system initially
@@ -60,9 +61,11 @@ public class TaserGun : MonoBehaviour
     void Shoot()
     {
         // Play Taser sound if not already playing
-        if (!taserAudioSource.isPlaying)
+        if (!audioSource.isPlaying)
         {
-            taserAudioSource.Play();
+            audioSource.Stop();
+            audioSource.clip = taseSound;
+            audioSource.Play();
         }
 
         // Play the particle effect (lightning)
@@ -109,7 +112,7 @@ public class TaserGun : MonoBehaviour
     void OnDisable()
     {
         stunGunUI.SetActive(false);
-        taserAudioSource.Stop();  // Stop sound when weapon is disabled (e.g., switched away)
+        audioSource.Stop();
     }
 
     // To hide crosshair when switching to non-weapon items
