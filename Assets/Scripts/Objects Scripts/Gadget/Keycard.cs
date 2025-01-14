@@ -17,6 +17,8 @@ public class Keycard : MonoBehaviour
     private bool isInRange;
     public GameObject interactPanel;
     private Player player;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip pickUp;
 
     public DivisionType GetDivisionType()
     {
@@ -34,6 +36,8 @@ public class Keycard : MonoBehaviour
         {
             interactPanel.SetActive(true);
             if (Input.GetKeyDown(KeyCode.F)){
+                audioSource.clip = pickUp;
+                audioSource.Play();
                 player.GetComponent<Player>().keycards.Add(this);
                 interactPanel.SetActive(false);
                 Destroy(gameObject);
