@@ -10,6 +10,12 @@ public class Door : MonoBehaviour
 
     public Animator doorAnimator;  // Animator for the door
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip openDoorRegular;
+    [SerializeField] private AudioClip closeDoorRegular;
+    [SerializeField] private AudioClip openDoorBathroom;
+    [SerializeField] private AudioClip closeDoorBathroom;
+
     // Enum to define door types
     public enum DoorType
     {
@@ -55,11 +61,15 @@ public class Door : MonoBehaviour
             {
                 doorAnimator.Play("DoorOpen", -1, 0f); // Start opening from 0s to 1s
                 doorAnimator.speed = 1; // Ensure animation plays at normal speed
+                audioSource.clip = openDoorRegular;
+                audioSource.Play();
             }
             else if (doorType == DoorType.Bathroom)
             {
                 doorAnimator.Play("BathroomDoor", -1, 0f); // Bathroom door opening part
                 doorAnimator.speed = 1; // Ensure animation plays at normal speed
+                audioSource.clip = openDoorBathroom;
+                audioSource.Play();
             }
 
             // Wait for the opening animation to finish (1s mark)
@@ -77,11 +87,15 @@ public class Door : MonoBehaviour
             {
                 doorAnimator.Play("DoorOpen", -1, 0.8f); // Start closing from 4s to 5s
                 doorAnimator.speed = 1; // Ensure animation plays at normal speed
+                audioSource.clip = closeDoorRegular;
+                audioSource.Play();
             }
             else if (doorType == DoorType.Bathroom)
             {
                 doorAnimator.Play("BathroomDoor", -1, 0.8f); // Bathroom door closing part
                 doorAnimator.speed = 1; // Ensure animation plays at normal speed
+                audioSource.clip = closeDoorBathroom;
+                audioSource.Play();
             }
 
             // Wait for the closing animation to finish (until 5s)
