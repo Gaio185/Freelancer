@@ -95,9 +95,11 @@ public class AIHuntPlayerState : AiState
             {
                 if(agent.aiAgents[i].initialFloor == playerTransform.gameObject.GetComponent<Player>().currentFloor && agent.aiAgents != null)
                 {
+                    agent.detection.playerDetected = false;
                     agent.aiAgents[i].stateMachine.ChangeState(AiStateId.Investigate);
                 }
             }
+            agent.detection.playerDetected = false;
             agent.stateMachine.ChangeState(agent.initialState);
         }
         else

@@ -46,6 +46,9 @@ public class AiAgent : MonoBehaviour
     [HideInInspector] public float timeElapsed;
     private Color emissionColor;
 
+    public AudioSource audioSource;
+    public AudioClip enemyStunned;
+
     void Start()
     {
         //Load Textures

@@ -7,8 +7,6 @@ public class AIPatrolState : AiState
 {
     private int targetPoint;
     private NavMeshPath path = new NavMeshPath();
-    private Color emissionColor;
-    private float timeElapsed;
 
     public AiStateId GetId()
     {
