@@ -473,8 +473,8 @@ MonoBehaviour:
   audioSource: {fileID: 996938476214654901}
   openDoorRegular: {fileID: 8300000, guid: 4eb90a0b815d6074e8d1064fdb4f1d1a, type: 3}
   closeDoorRegular: {fileID: 8300000, guid: 7025acc58b9d47f4192f96a258025334, type: 3}
-  openDoorBathroom: {fileID: 8300000, guid: 9401a71c0a3d8a74b8716a4c70a958e0, type: 3}
-  closeDoorBathroom: {fileID: 8300000, guid: 0339115eb22783c4287af95f5a58746f, type: 3}
+  openDoorBathroom: {fileID: 8300000, guid: 31f1bdee57081db4aaa862e5b62725c4, type: 3}
+  closeDoorBathroom: {fileID: 8300000, guid: 9401a71c0a3d8a74b8716a4c70a958e0, type: 3}
   doorType: 0
   isOpen: 0
 --- !u!82 &996938476214654901
