@@ -19,9 +19,8 @@ public class AIStunnedState : AiState
         timer = agent.config.stunTime;
         agent.material.SetTexture("_BaseMap", agent.stunnedTexture);
         agent.material.SetColor("_EmissionColor", Color.black);
-        agent.audioSource.Stop();
-        agent.audioSource.PlayOneShot(agent.enemyStunned);
-        //agent.visorMaterial.color = Color.grey;
+        agent.audioSource.clip = agent.enemyStunned;
+        agent.audioSource.Play();
     }
 
     public void Update(AiAgent agent)

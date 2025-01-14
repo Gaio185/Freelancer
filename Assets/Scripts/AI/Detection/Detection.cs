@@ -33,6 +33,7 @@ public class Detection : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip detecting;
+    public AudioClip stunned;
 
     void Start()
     {
@@ -61,13 +62,16 @@ public class Detection : MonoBehaviour
         {
             if (!audioSource.isPlaying && audioSource != null)
             {
-                audioSource.PlayOneShot(detecting);
+                audioSource.clip = detecting;
+                audioSource.Play();
             }
             timer -= Time.deltaTime;
         }
         else
         {
-            if(audioSource != null) audioSource.Stop();
+            if (audioSource != null && audioSource.isPlaying && audioSource.clip == detecting) {
+                audioSource.Stop();
+            }
             timer = detectionTimer;
         }
     }
