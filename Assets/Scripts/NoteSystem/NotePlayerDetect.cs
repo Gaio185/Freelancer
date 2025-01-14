@@ -9,6 +9,10 @@ public class NotePlayerDetect : MonoBehaviour
     public GameObject notesPanel;
     public GameObject note; // Reference to the note
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip noteOpen;
+    [SerializeField] private AudioClip notePickUp;
+
     private bool isInRange;
     private Player player;
 
@@ -22,6 +26,8 @@ public class NotePlayerDetect : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && isInRange)
         {
+            audioSource.clip = noteOpen;
+            audioSource.Play();
             player.canPause = false; // Disable pause
             player.HUD.SetActive(false); // Hide the HUD
             notesPanel.SetActive(true); // Hide the notes UI
@@ -41,6 +47,8 @@ public class NotePlayerDetect : MonoBehaviour
                 note.SetActive(false); // Hide the note
                 player.HUD.SetActive(true); // Show the HUD
                 player.notePopUp.SetActive(true);
+                audioSource.clip = notePickUp;
+                audioSource.Play();
             }
             else
             {
