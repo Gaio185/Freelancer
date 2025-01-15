@@ -51,7 +51,6 @@ public class Switchweapon : MonoBehaviour
 
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip useTool;
-    [SerializeField] private AudioClip holsterTool;
 
     private void Start()
     {
@@ -211,8 +210,6 @@ public class Switchweapon : MonoBehaviour
     void EmptyHands()
     {
         audioSource.Stop();
-        audioSource.clip = holsterTool;
-        audioSource.Play();
         DeactivateAllModels();
         currentItemType = ItemType.None;
         Debug.Log("Equipped: Empty Hands");
