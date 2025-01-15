@@ -60,7 +60,7 @@ public class Detection : MonoBehaviour
 
         if (canSeePlayer && !playerDetected && shouldDetect)
         {
-            if (!audioSource.isPlaying && audioSource != null)
+            if (audioSource != null && !audioSource.isPlaying)
             {
                 audioSource.clip = detecting;
                 audioSource.volume = 1.0f;
