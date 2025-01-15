@@ -89,9 +89,10 @@ public class AiAgent : MonoBehaviour
                 if(audioSource.isPlaying && audioSource.clip == enemyMoving)
                 {
                     audioSource.Stop();
-                    audioSource.loop = false;
                 }
-                
+
+                audioSource.loop = false;
+
             }
             else
             {
